@@ -1,0 +1,30 @@
+<div class="background" (window:resize)="setupSize()" [style.opacity]="((pagepos) / (pageStart - 200))">
+    <img [style.width]="bgwidth + 'px'" [style.height]="bgheight + 'px'" [style.left]="-bgleft + 'px'" [style.top]="-bgtop + 'px'" src="/images/home-background.png" />
+    <div id="player"></div>
+</div>
+
+<div class="background-shield"></div>
+
+<div class="blackbox"
+    *ngIf="showContent"
+    [style.top]="-(_app.scrollpos * 0.4) + 'px'" 
+    [style.opacity]="((pagepos + 75) / (pageStart - 175))">
+
+    <h1><span class="light">improv</span><strong>plus</strong></h1>
+
+    <div class="columns centered block" *ngIf="!improv">
+        <h2>[i]mprov</h2>
+        <h2 class="primary">+</h2>
+        <div><h3>Develop</h3> <hr /> <h3>Talent</h3></div>
+        <h2>=</h2>
+        <iplus class="large" [text]="'mprovplus'"></iplus>
+    </div>
+
+    <div class="block center" *ngIf="improv">
+        <h2>adding new dimension to the global Improv community</h2>
+    </div>
+
+
+</div>
+
+<i class="fa fa-chevron-down clickable" *ngIf="showContent" [style.bottom]="(_app.scrollpos + 16) + 'px'" (click)="scrollBelowLanding()"></i>

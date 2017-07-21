@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../app/src/model/address.ts"],"names":[],"mappings":";;AAAA;IAAA;IAMA,CAAC;IAAD,cAAC;AAAD,CANA,AAMC,IAAA;AANY,0BAAO","file":"address.js","sourcesContent":["export class Address {\r\n    address: string;\r\n    city: string;\r\n    state: string;\r\n    zip: string;\r\n    country: string;\r\n}"]}

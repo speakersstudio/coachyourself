@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../app/src/util/preference.util.ts"],"names":[],"mappings":";;AAAA;IAAA;IACA,CAAC;IAAD,qBAAC;AAAD,CADA,AACC,IAAA;AADY,wCAAc","file":"preference.util.js","sourcesContent":["export class PreferenceUtil {\r\n}"]}

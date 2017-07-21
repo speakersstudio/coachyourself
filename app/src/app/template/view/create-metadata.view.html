@@ -1,0 +1,42 @@
+<div class="dialog-dismiss" (click)="cancel()"></div>
+
+<div class="dialog" *ngIf="type" [@dialog]="'default'">
+    <form #createForm="ngForm">
+        <div class="dialog-content">
+            <h3>New {{outputType}}</h3>
+
+            <input name="name"
+                required
+                formInput
+                placeholder="Name"
+                [(ngModel)]="name" />
+
+            <div class="columns">
+                <input name="min"
+                    required
+                    formInput
+                    placeholder="{{'Min ' + outputType}} (or 0 for 'any')"
+                    [(ngModel)]="min"
+                    type="text" />
+                <input name="max"
+                    required
+                    formInput
+                    type="text"
+                    placeholder="{{'Max ' + outputType}} (or 0 for 'any')"
+                    [(ngModel)]="max" />
+            </div>
+
+            <textarea formInput name="description" [(ngModel)]="description" placeholder="Description"></textarea>
+            
+        </div>
+        <div class="button-group" *ngIf="!isPosting">
+            <div class="button" (click)="cancel()">cancel</div>
+
+            <input type="submit" class="button raised" value="create" (click)="createMetadata()" [disabled]="!createForm.form.valid" />
+        </div>
+
+        <div class="button-group" *ngIf="isPosting">
+            <div class="button"><i class="loading"></i></div>
+        </div>
+    </form>
+</div>

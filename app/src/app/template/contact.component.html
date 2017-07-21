@@ -1,0 +1,126 @@
+<div class="toolbar"
+    [class.on]="_app.toolbarVisible"
+    [title]="title"
+    ></div>
+
+<!--<div class="curtain" [style.top]="(-(scrollpos * 0.5)) + 'px'">
+    <h2>{{title}}</h2>
+</div>-->
+
+<div class="page">
+
+    <div class="tabs">
+        <span class="tab" 
+            *ngFor="let tab of tabs"
+            [class.active]="tab.id == selectedTab"
+            (click)="selectTab(tab)">
+            <i class="fa fa-{{tab.icon}}"></i>
+            <span>{{tab.name}}</span>
+        </span>
+    </div>
+
+    <div class="paper has-brackets" *ngIf="selectedTab == 'featurerequest' && !sent">
+
+        <div class="content">
+
+            <p>Would you like to see a feature added to ImprovPlus that we haven't managed to get working yet? Drop us a note and let us know what you want!</p>
+
+            <hr />
+
+            <h5>Dear Proprietors of <span class="light">improv</span><strong>plus</strong>,</h5>
+            
+            <textarea formInput placeholder="In order to make ImprovPlus even more awesome..." name="gordon" [(ngModel)]="featureMessage" rows="10"></textarea>
+
+            <div class="pull-right">
+                <p>Sincerely,</p>
+                
+                <div id="contactSigOutput">{{name}}</div>
+
+                <p>{{email}}</p>
+
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="right button-group" *ngIf="!sending">
+                <p *ngIf="error" class="error">{{error}}</p>
+
+                <button class="button raised" (click)="sendFeatureRequest()">Send</button>
+            </div>
+
+        </div>
+
+        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
+        <div class="right-bracket"><h1>request a feature</h1></div>
+
+    </div>
+
+    <div class="paper has-brackets" *ngIf="selectedTab == 'reportbug' && !sent">
+
+        <div class="content">
+
+            <p>Did something not quite meet your expectations (especially if your expectations are that it, you know, works)? Let us know what went wrong and how you expected it to work.</p>
+
+            <p><em>Developers note: please provide as much detail as possible in your report, including all of the steps you took to find the bug. The more we know, the more easily we will be able to track down the problem.</em></p>
+
+            <hr />
+
+            <h5>Dear Proprietors of <span class="light">improv</span><strong>plus</strong>,</h5>
+            
+            <textarea formInput placeholder="Something went wrong while I was trying to..." name="bugTryingTo" [(ngModel)]="bugTryingTo" rows="5"></textarea>
+            
+            <textarea formInput placeholder="I expected it to..." name="bugExpectation" [(ngModel)]="bugExpectation" rows="5"></textarea>
+            
+            <textarea formInput placeholder="But unfortunately it actually..." name="bugReality" [(ngModel)]="bugReality" rows="5"></textarea>
+            
+            <textarea formInput placeholder="The steps I took to cause the problem were..." name="bugSteps" [(ngModel)]="bugSteps" rows="5"></textarea>
+
+            <div class="pull-right">
+                <p>Sincerely,</p>
+                
+                <div id="contactSigOutput">{{name}}</div>
+
+                <p>{{email}}</p>
+
+            </div>
+            <div class="clearfix"></div>
+
+            <div class="right button-group" *ngIf="!sending">
+                <p *ngIf="error" class="error">{{error}}</p>
+
+                <button class="button raised" (click)="sendBugReport()">Send</button>
+            </div>
+
+        </div>
+
+        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
+        <div class="right-bracket"><h1>report a bug</h1></div>
+    </div>
+
+    <div class="paper has-brackets" *ngIf="sent">
+
+        <div class="content">
+
+            <h4>Message Delivered</h4>
+
+            <div class="description">
+                <p>Thank you, sincerely, for your feedback.</p>
+                
+                <p *ngIf="selectedTab == 'reportbug'">If you wrote to point out a bug, know that we will look into it immediately.</p>
+
+                <p *ngIf="selectedTab == 'featurerequest'">If you wrote to request a feature, we will do what we can to make it happen (as long as it's actually possible).</p>
+                    
+                <p>If you wrote to complain, know that we are rubber and you are glue and everything you say bounces off us and sticks to you.</p>
+
+                <div class="center">
+                    <a routerLink="/app/dashboard" class="button raised">Return to your Dashboard</a>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
+        <div class="right-bracket"><h1>contact us</h1></div>
+    
+    </div>
+
+</div>

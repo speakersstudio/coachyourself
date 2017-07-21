@@ -1,0 +1,182 @@
+<form name="edit-user" class="content" (ngSubmit)="submitForm()" #userForm="ngForm">
+            
+    <div class="section">
+        <input name="email"
+            [(ngModel)]="user.email"
+            placeholder="Email"
+            formInput
+            required
+            type="text" />
+        <span class="error" *ngIf="emailConflict">{{emailError}}</span>
+
+        <div class="columns responsive">
+            <input name="first-name"
+                [(ngModel)]="user.firstName"
+                placeholder="First Name"
+                formInput
+                required
+                type="text" />
+            <input name="last-name"
+                [(ngModel)]="user.lastName"
+                placeholder="Last Name"
+                formInput
+                required
+                type="text" />
+        </div>
+
+        <div class="columns responsive">
+            <input name="title"
+                [(ngModel)]="user.title"
+                placeholder="Title"
+                formInput
+                type="text" />
+            <input name="company"
+                [(ngModel)]="user.company"
+                placeholder="Company"
+                formInput
+                type="text" />
+        </div>
+    </div>
+
+    <div class="section">
+        <div class="columns responsive">
+            <div>
+                <input name="address"
+                    [(ngModel)]="user.address"
+                    placeholder="Address"
+                    formInput
+                    type="text" />
+                <div class="columns">
+                    <input name="city"
+                        [(ngModel)]="user.city"
+                        placeholder="City"
+                        formInput
+                        type="text" />
+                    <input name="state"
+                        [(ngModel)]="user.state"
+                        placeholder="State"
+                        maxlength="2"
+                        formInput
+                        type="text" />
+                    <input name="zip"
+                        [(ngModel)]="user.zip"
+                        placeholder="Zip"
+                        maxlength="5"
+                        formInput
+                        type="text" />
+                </div>
+                <input name="country"
+                    [(ngModel)]="user.country"
+                    placeholder="Country"
+                    formInput
+                    type="text" />
+            </div>
+            
+            <div>
+                <input name="phone"
+                    [(ngModel)]="user.phone"
+                    placeholder="Phone"
+                    formInput
+                    type="text" />
+                <input name="url"
+                    [(ngModel)]="user.url"
+                    placeholder="URL"
+                    formInput
+                    type="text" />
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section" *ngIf="!newUser">
+        <div class="columns">
+            <textarea formInput placeholder="Description" name="description" [(ngModel)]="user.description" rows="4"></textarea>
+        </div>
+    </div>
+
+    <div class="section" *ngIf="!newUser">
+
+        <div class="spanhalf">
+            <label>Birthday
+                <div class="columns">
+                    <div class="form-input">
+                        <select name="birthday-month" [(ngModel)]="birthdayMonth">
+                            <option value='0'>Janaury</option>
+                            <option value='1'>February</option>
+                            <option value='2'>March</option>
+                            <option value='3'>April</option>
+                            <option value='4'>May</option>
+                            <option value='5'>June</option>
+                            <option value='6'>July</option>
+                            <option value='7'>August</option>
+                            <option value='8'>September</option>
+                            <option value='9'>October</option>
+                            <option value='10'>November</option>
+                            <option value='11'>December</option>
+                        </select>
+                    </div>
+                    <input formInput placeholder="Day" type="text" name="birthday-day" [(ngModel)]="birthdayDay" />
+                    <input formInput placeholder="Year" type="text" name="birthday-year" [(ngModel)]="birthdayYear" />
+                </div>
+            </label>
+        </div>
+
+    </div>
+
+    <div class="section">
+        <div class="columns">
+            <label>Improv Experience
+                <select name="improv-experience" [(ngModel)]="user.improvExp">
+                    <option value="1">1 (none)</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5 (ton)</option>
+                </select>
+            </label>
+            <label>Facilitation Experience
+                <select name="facilitation-experience" [(ngModel)]="user.facilitationExp">
+                    <option value="1">1 (none)</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5 (ton)</option>
+                </select>
+            </label>
+        </div>
+
+        <label class="checkbox center">
+            <input type="checkbox" formSwitch class="inline-block" name="training-interest" value="true" [(ngModel)]="user.trainingInterest" />
+            <span>Interested in Facilitation or Improv Training (for yourself)?</span>
+        </label>
+    </div>
+
+    <div class="section">
+        <div class="columns responsive">
+            <input name="change-password"
+                [(ngModel)]="password"
+                type="password"
+                placeholder="Password"
+                [required]="newUser ? 'required' : 'false'"
+                formInput />
+            <input name="change-password-confirm"
+                [(ngModel)]="passwordConfirm"
+                type="password"
+                placeholder="Confirm Password"
+                [required]="newUser ? 'required' : 'false'"
+                formInput />
+        </div>
+        <label *ngIf="!newUser">(Leave the password blank if you don't want to change it)</label>
+        <label class="error" *ngIf="passwordMatchError">The two passwords you entered do not match.</label>
+    </div>
+    
+    <div class="button-group" *ngIf="!isPosting && !isValidating">
+        <input type="button" class="button" [value]="backText" (click)="goBack()" *ngIf="backText" />
+
+        <input type="submit" class="button raised" [value]="saveText" [disabled]="!userForm.form.valid || emailConflict || password != passwordConfirm" />
+    </div>
+
+    <div class="button-group" *ngIf="isPosting || isValidating">
+        <div class="button"><i class="loading"></i></div>
+    </div>
+</form>

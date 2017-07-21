@@ -1,0 +1,100 @@
+// media query names
+$media-desktop: "only screen and (min-width: 500px)";
+$media-tablet: "only screen and (max-width: 768px)";
+$media-mobile: "only screen and (max-width: 500px)";
+
+// The default animation curves used by material design.
+$md-linear-out-slow-in-timing-function: cubic-bezier(0, 0, 0.2, 0.1) !default;
+$md-fast-out-slow-in-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !default;
+$md-fast-out-linear-in-timing-function: cubic-bezier(0.4, 0, 1, 1) !default;
+
+$ease-in-out-curve-function: cubic-bezier(0.35, 0, 0.25, 1) !default;
+
+$swift-ease-out-duration: 400ms !default;
+$swift-ease-out-timing-function: cubic-bezier(0.25, 0.8, 0.25, 1) !default;
+$swift-ease-out: all $swift-ease-out-duration $swift-ease-out-timing-function !default;
+
+$swift-ease-in-duration: 300ms !default;
+$swift-ease-in-timing-function: cubic-bezier(0.55, 0, 0.55, 0.2) !default;
+$swift-ease-in: all $swift-ease-in-duration $swift-ease-in-timing-function !default;
+
+$swift-ease-in-out-duration: 500ms !default;
+$swift-ease-in-out-timing-function: $ease-in-out-curve-function !default;
+$swift-ease-in-out: all $swift-ease-in-out-duration $swift-ease-in-out-timing-function !default;
+
+$swift-linear-duration: 80ms !default;
+$swift-linear-timing-function: linear !default;
+$swift-linear: all $swift-linear-duration $swift-linear-timing-function !default;
+
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
+  }
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@mixin background-linear-gradient-down($from, $start, $to, $end, $default:$from) {
+    $standard: $from $start, $to $end;
+
+    background: $default;
+    background: -moz-linear-gradient(top, $standard);
+    background: -webkit-linear-gradient(top, $standard);
+    background: linear-gradient(to bottom, $standard);
+}
+
+@mixin background-linear-gradient-right($from, $to, $default:$from) {
+    background-color: $default;
+    background-color: transparent;
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from($from), to($to));
+    background-image: -webkit-linear-gradient(right, $from, $to);
+    background-image: -o-linear-gradient(right, $from, $to);
+    background-image: linear-gradient(to left, $from, $to);
+    background-image: -moz-linear-gradient(right, $from, $to);
+    background-position: center top;
+    background-repeat: repeat-y;
+    filter: progid:dximagetransform.microsoft.gradient(startColorstr='$from', endColorstr='$to', GradientType=0);
+}
+
+@mixin border-box {
+    @include box-sizing(border-box);
+}
+
+@mixin iconsprite($name, $w, $spriteX) {
+    &[class*='#{$name}'] {
+        background-position: (-$w * $spriteX) 0;
+
+        &:hover {
+            background-position: (-$w * $spriteX) (-$w);
+        }
+        &.active {
+            background-position: (-$w * $spriteX) (-($w * 2));
+        }
+        @content;
+    }
+}
+
+@mixin position($position, $top, $right, $bottom, $left, $zindex: 1) {
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+    z-index: $zindex;
+}
+
+@mixin abs($top: null, $right: null, $bottom: null, $left: null, $zindex: null) {
+    @include position(absolute, $top, $right, $bottom, $left, $zindex);
+}
+
+@mixin fixed($top: null, $right: null, $bottom: null, $left: null, $zindex: null) {
+    @include position(fixed, $top, $right, $bottom, $left, $zindex);
+}

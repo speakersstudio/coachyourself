@@ -1,0 +1,205 @@
+<div class="toolbar" 
+    [showBack]="true"
+    [class.on]="_app.toolbarVisible"
+    [tools]="tools"
+    (toolClicked)="onToolClicked($event)"
+    (goBack)="closePage()"></div>
+
+<!--<div class="curtain" [style.top]="(-(scrollpos * 0.5)) + 'px'">
+    <h2 *ngIf="game && game.names && game.names[0]">{{game.names[0].name}}</h2>
+    <h2 *ngIf="game && (!game.names || !game.names[0])">New Game</h2>
+</div>-->
+
+<div class="page" *ngIf="game">
+
+    <!--<div class="tabs">
+        <span class="tab" 
+            *ngFor="let tab of tabs"
+            [class.active]="tab.id == selectedTab"
+            (click)="selectTab(tab)">
+            <i class="fa fa-{{tab.icon}}"></i>
+            <span>{{tab.name}}</span>
+        </span>
+    </div>-->
+
+    <div class="paper has-brackets" [@shrinkHeight]>
+
+        <div class="content">
+
+            <h4 class="right">
+                <span *ngIf="!addNameShown && !editNameShown"
+                    [class.clickable]="can('name_edit')"
+                    (click)="showEditName()">{{game.names[0] ? game.names[0].name : 'New Game'}}</span>
+
+                <input name="editName"
+                    *ngIf="addNameShown || editNameShown"
+                    [(ngModel)]="editName"
+                    (keydown.enter)="saveEditName()"
+                    (blur)="saveEditName()" />
+
+                <i *ngIf="can('name_create') && !addNameShown && !editNameShown && game.names[0]" (click)="showAddName()" 
+                    class="fa fa-plus-circle clickable" title="Add an alternate name."></i>
+            </h4>
+
+            <div class="metadata right">
+
+                <div *ngIf="game.names.length === 2">
+                    <h5>AKA {{game.names[1].name}}</h5>
+                </div>
+                <div *ngIf="game.names.length > 2">
+                    <h5 (click)="toggleNames()" class="clickable"><i class="fa fa-sort-down"
+                        [class.open]="namesOpen"></i> {{game.names.length - 1}} known aliases</h5>
+
+                    <ol *ngIf="namesOpen" [@expand]>
+                        <li *ngFor="let name of game.names" [class.hide]="name.name === game.names[0].name">{{name.name}}</li>
+                    </ol>
+                </div>
+
+                <span class="bullet improvplus-editable-metadata"
+                    [model]="game.playerCount"
+                    [blankText]="'No Player Count Specified'"
+                    [icon]="'users'"
+                    [canEdit]="can('game_edit')"
+                    [options]="allPlayerCounts"
+                    [optionCreate]="can('metadata_create')"
+                    (save)="savePlayerCount($event)"
+                    (createOption)="showCreateMetadataDialog($event, 'playerCount')"></span>
+
+                <span class="improvplus-editable-metadata"
+                    [model]="game.duration"
+                    [blankText]="'No Duration Specified'"
+                    [icon]="'clock-o'"
+                    [canEdit]="can('game_edit')"
+                    [options]="allDurations"
+                    [optionCreate]="can('metadata_create')"
+                    (save)="saveDuration($event)"
+                    (createOption)="showCreateMetadataDialog($event, 'duration')"></span>
+
+                <ul class="taglist">
+                    <li *ngIf="can('game_tag_add') && !addTagShown"
+                        title="Add Tag" (click)="showAddTag()" class="clickable" [class.flat]="game.tags.length">
+                            <i class="fa fa-plus-circle"></i></li>
+
+                    <li *ngIf="addTagShown">
+                        <i class="fa fa-hashtag"></i> 
+                        <input type="text" name="addTag" [(ngModel)]="newTagText" (keydown)="newTagKeyDown($event)" />
+
+                        <ul class="tag-hints" *ngIf="tagHints && tagHints.length">
+                            <li *ngFor="let hint of tagHints" 
+                                [class.hover]="hint.name === newTagText"
+                                (click)="addTag(hint)" class="clickable">{{hint.name}}</li>
+                        </ul>
+                    </li>
+
+                    <li *ngFor="let tag of game.tags" 
+                        [title]="tag.description || ''"
+                        [class.clickable]="can('game_tag_remove')"
+                        (click)="removeTag(tag)">
+                        
+                        <i class="fa fa-hashtag"></i> 
+                        {{tag.name}}
+
+                        <div *ngIf="tagToRemove == tag" class="remove" [class.hidden]="!tagToRemove">
+                            <span (click)="cancelRemoveTag($event)"><i class="fa fa-arrow-left"></i></span>
+                            <span (click)="doRemoveTag()"><i class="fa fa-trash"></i></span>
+                        </div>
+
+                    </li>
+
+                    <li *ngIf="tagSaving">
+                        <i class="loading"></i>
+                    </li>
+                </ul>
+            </div>
+
+            <hr />
+
+            <div class="description" 
+                [innerHTML]="descriptionHtml"
+                *ngIf="!editDescriptionShown"></div>
+
+            <textarea name="description"
+                class="description"
+                [(ngModel)]="newDescriptionText" 
+                *ngIf="editDescriptionShown"></textarea>
+
+            <div class="button-group" *ngIf="can('game_edit')">
+                <div class="button" *ngIf="!editDescriptionShown" (click)="showEditDescription()">EDIT Description</div>
+                
+                <label class="left" *ngIf="editDescriptionShown">Hey! We support <a href="http://www.markdowntutorial.com/" target="_blank">Markdown</a>!</label>
+                <div class="button" *ngIf="editDescriptionShown" (click)="cancelEditDescription()">cancel</div>
+                <div class="button raised" *ngIf="editDescriptionShown" (click)="saveDescription()">SAVE</div>
+            </div>
+
+        </div>
+
+        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
+        <div class="right-bracket"><h1>game details</h1></div>
+    </div>
+
+    <div *ngIf="getPublicNotes().length" class="paper has-brackets" [class.closed]="!showPublicNotes">
+
+        <div class="content list" *ngIf="showPublicNotes" [@shrinkHeight]>
+
+            <div *ngFor="let note of getPublicNotes()" class="item large improvplus-game-note" [note]="note" [game]="game" (remove)="removeNote($event)"></div>
+
+        </div>
+
+        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
+        <div class="right-bracket">
+            <h1>
+                <label (click)="togglePublicNotes()">
+                    <span>director's commentary</span>
+                    <input class="paper-toggle" formSwitch name="showPublicNotes" type="checkbox" [(ngModel)]="showPublicNotes" />
+                </label>
+            </h1>
+        </div>
+    </div>
+
+    <div *ngIf="getTeamNotes().length" class="paper has-brackets" [class.closed]="!showTeamNotes">
+        <div class="content list" *ngIf="showTeamNotes" [@shrinkHeight]>
+
+            <div *ngFor="let note of getTeamNotes()" class="item large improvplus-game-note" [note]="note" [game]="game" (remove)="removeNote($event)"></div>
+
+        </div>
+
+        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div><div class="right-bracket">
+            <h1>
+                <label (click)="toggleTeamNotes()">
+                    <span>company commentary</span>
+                    <input class="paper-toggle" formSwitch name="showTeamNotes" type="checkbox" [(ngModel)]="showTeamNotes" />
+                </label>
+            </h1>
+        </div>
+    </div>
+
+    <div *ngIf="game.names[0]" class="paper has-brackets" [class.closed]="!showPrivateNotes">
+
+        <div class="content list" *ngIf="showPrivateNotes" [@shrinkHeight]>
+
+            <div *ngFor="let note of getPrivateNotes()" class="item large improvplus-game-note" [note]="note" [game]="game" (remove)="removeNote($event)"></div>
+
+            <p *ngIf="!getPrivateNotes().length">You haven't saved any notes about this game. Use this area to save anything you want to remember about this game. Only you will see your notes (unless you share them with your team), so feel free to put anything you want.</p>
+
+            <div class="item large improvplus-game-note" (create)="noteCreated($event)" [game]="game"></div>
+
+        </div>
+
+        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div><div class="right-bracket">
+            <h1>
+                <label (click)="togglePrivateNotes()">
+                    <span>your commentary</span>
+                    <input class="paper-toggle" formSwitch name="showPrivateNotes" type="checkbox" [(ngModel)]="showPrivateNotes" />
+                </label>
+            </h1>
+        </div>
+    </div>
+
+</div>
+
+<div class="page" *ngIf="gameNotFound">
+    <not-found [injected]="true"></not-found>
+</div>
+
+<create-metadata *ngIf="can('metadata_create')" class="dialog-container" [class.show]="createMetadataType"
+    [type]="createMetadataType" (done)="onCreateMetadataDone($event)"></create-metadata>

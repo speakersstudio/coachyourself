@@ -1,0 +1,164 @@
+html {
+    background: $color-bg;
+}
+
+body {
+    font-family: $font-family;
+    color: $color-text;
+}
+
+a {
+    color: $color-primary;
+
+    &:visited {
+        color: $color-primary;
+    }
+    &.active {
+        color: $color-active;
+        text-decoration: none;
+    }
+}
+
+h2, h3, h4, h5, p, button, textarea, .content-item {
+    margin: $small 0;
+}
+
+p {
+    line-height: 1.1;
+}
+
+hr {
+    margin: $large 0;
+    border: 0px;
+    height: 1px;
+    background: $color-hr;
+}
+
+img {
+    max-width: 100%;
+}
+
+ul {
+    list-style-type: disc;
+    padding: 0 $large;
+}
+
+em {
+    font-style: italic;
+}
+
+strong {
+    font-weight: bold;
+}
+
+.light {
+    font-weight: 300;
+}
+
+improvplus {
+    @include abs(0px, 0px, 0px, 0px, 2);
+    overflow: hidden;
+    position: relative;
+    display: block;
+}
+
+input, textarea, select {
+    display: block;
+    background: none;
+    border-width: 0 0 1px 0;
+    border-color: $color-text;
+    padding: $std 0 ($std - 1);
+    margin: $small 0;
+    width: 100%;
+    font-size: $font-size-input;
+    position: relative;
+    transition: border-color $anim-duration;
+    color: $color-text;
+    font-family: $font-family;
+
+    &:focus {
+        outline: none;
+        border-color: $color-primary;
+    }
+
+    &.inline-block {
+        display: inline-block;
+        width: auto;
+    }
+}
+
+input[type="radio"] {
+    display: inline-block;
+    width: auto;
+    margin-right: $std;
+}
+
+label {
+    color: $color-hr;
+    font-size: 12px;
+    display: block;
+    margin-top: $small;
+
+    & > input, & > textarea, & > select {
+        margin-top: 0px;
+        padding-top: $small;
+    }
+
+    &.checkbox {
+        font-size: 16px;
+
+        input {
+            margin-right: $small;
+        }
+    }
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: $color-text;
+    opacity: 0.5;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: $color-text;
+    opacity: 0.5;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: $color-text;
+    opacity: 0.5;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: $color-text;
+    opacity: 0.5;
+}
+
+form {
+    h3 {
+        font-size: 1.8em;
+        color: $color-primary;
+    }
+
+    .section {
+        margin: $large 0;
+    }
+
+    & > input:first-child {
+        margin-top: 0px;
+    }
+
+    .error {
+        margin: $small 0;
+        text-align: center;
+    }
+}
+
+sup {
+    vertical-align: super;
+    font-size: 0.9em;
+    line-height: 0;
+    font-weight: bold;
+    position: relative;
+    top: 11px;
+}
+
+[draggable] {
+    user-select: none;
+}

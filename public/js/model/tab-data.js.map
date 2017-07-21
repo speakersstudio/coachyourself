@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../app/src/model/tab-data.ts"],"names":[],"mappings":";;AAAA;IAAA;IAIA,CAAC;IAAD,cAAC;AAAD,CAJA,AAIC,IAAA;AAJY,0BAAO","file":"tab-data.js","sourcesContent":["export class TabData {\r\n    name: string;\r\n    id: string;\r\n    icon: string;\r\n}"]}

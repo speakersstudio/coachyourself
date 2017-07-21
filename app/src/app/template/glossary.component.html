@@ -1,0 +1,73 @@
+<div class="toolbar"
+    [class.on]="_app.toolbarVisible"
+    [tools]="_tools"
+    [title]="title"
+    [showSearch]="true"
+    [showBack]="filter"
+    (searchResultClick)="onSearch($event)"
+    (goBack)="clearFilter()"
+    ></div>
+
+<div class="page">
+
+    <div class="paper-label">
+        <span>
+            Important Things to Know
+        </span>
+
+        <div class="button-group">
+            <label *ngIf="superAdmin" (click)="allTagsToggle()">
+                <input formSwitch type="checkbox" [(ngModel)]="toggleGamelessTags" />
+                Gameless
+            </label>
+            <label *ngIf="superAdmin" (click)="allTagsToggle()">
+                <input formSwitch type="checkbox" [(ngModel)]="toggleAllTags" />
+                Show all
+            </label>
+        </div>
+    </div>
+
+    <div class="list paper" infiniteScroll [disable]="isLoadingTags || allTagsAreDisplayed" (load)="loadMoreTags($event)">
+        <div class="item" *ngFor="let tag of tags"
+            [class.clickable] = "superAdmin"
+            [class.selected] = "tag === selectedTag"
+            (click)="onSelect(tag)">
+
+            <div class="badge"></div>
+
+            <div class="metadata">
+                <div class="row">
+                    <h5 *ngIf="tag != selectedTag">{{tag.name}}</h5>
+                    <span *ngIf="tag === selectedTag">
+                        <input type="text" [(ngModel)]="tagName" />
+                    </span>
+                </div>
+                <div class="row">
+                    <p *ngIf="tag != selectedTag && tag != savingTag">{{tag.description}}</p>
+
+                    <span class="loading" *ngIf="tag === savingTag"></span>
+                    
+                    <span class="fill" *ngIf="tag === selectedTag">
+                        <textarea [(ngModel)]="tagDescription" rows="3"></textarea>
+                    </span>
+                </div>
+                <div class="button-group" *ngIf="tag === selectedTag">
+                    <a class="button" (click)="deleteTag()">Delete</a>
+                    <a class="button" (click)="saveTag()">Save</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="item center" *ngIf="filter && !tags.length">
+            <h5>Nothing matched your search.</h5>
+        </div>
+
+        <div class="item center" *ngIf="isLoadingTags">
+            <span class="loading"></span>
+        </div>
+    </div>
+
+</div>
+
+<button class="fab" *ngIf="userService.can('tag_create') && !selectedTag && !savingTag" (click)="createTag()"><i class="fa fa-plus"></i></button>

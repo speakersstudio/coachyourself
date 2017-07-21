@@ -1,0 +1,21 @@
+<script src="/node_modules/core-js/client/shim.min.js"></script>
+<script src="/node_modules/zone.js/dist/zone.js"></script>
+<script src="/node_modules/reflect-metadata/Reflect.js"></script>
+<script src="/node_modules/systemjs/dist/system.src.js"></script>
+
+<script src="https://www.youtube.com/iframe_api"></script>
+{{!--<script src="https://js.stripe.com/v2/"></script>--}}
+<script src="https://js.stripe.com/v3/"></script>
+
+<script src="/systemjs.config.js"></script>
+<script>
+    System.import('app').catch(function(err){ console.error(err); });
+</script>
+
+<div id="siteLoader" class="loader show">
+    <i class="iplus white">
+        <span class="bracket">[</span><span class="i">i</span><span class="plus">+</span><span class="bracket">]</span>
+    </i>
+</div>
+
+<improvplus></improvplus>

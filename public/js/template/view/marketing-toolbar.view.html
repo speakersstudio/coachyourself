@@ -1,0 +1,16 @@
+<div class="toolbar" [class.on]="on || (onWhenOpen && open)" [class.open]="open" #toolbar>
+
+    <iplus class="white" (click)="clickIcon()" *ngIf="!_app.loaderVisible"></iplus>
+
+    <div class="toolbar-row">
+
+        <a routerLink="/welcome" routerLinkActive="active">Welcome</a>
+
+        <span></span>
+
+        <a routerLink="/signup" *ngIf="!_app.user" routerLinkActive="active">Join</a>
+        <span *ngIf="_app.user"></span>
+
+        <a (click)="login()" [innerHTML]="_app.user ? 'To the App <i class=\'fa fa-chevron-right\'></i>' : 'Log In'"></a>
+    </div>
+</div>

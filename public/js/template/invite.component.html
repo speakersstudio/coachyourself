@@ -1,0 +1,31 @@
+<div class="dialog" [@dialog]="dialogStatus">
+
+    <form class="block" name="invite" (ngSubmit)="submitInvite()" #userForm="ngForm">
+        <div class="dialog-content">
+            <h3>Join <span class="light">improv</span><strong>plus</strong></h3>
+
+            <p>We are excited to have you! Please fill out this form, and we will get you signed up.</p>
+
+            <input name="email" formInput [asterisk]="false"
+                [(ngModel)]="email" required type="text" placeholder="Verify your Email" />
+
+            <input name="password" formInput [asterisk]="false"
+                [(ngModel)]="password" required type="password" placeholder="Password" />
+
+            <input name="name" formInput [asterisk]="false"
+                [(ngModel)]="userName" required type="text" placeholder="Your Name" />
+
+            <div class="error" *ngIf="error" [innerHTML]="error"></div>
+        </div>
+
+        <div class="button-group" *ngIf="!isPosting">
+            <a routerLink="/welcome" class="button">Cancel</a>
+            <input type="submit" class="button raised" value="Submit" [disabled]="!userForm.form.valid" />
+        </div>
+
+        <div class="button-group" *ngIf="isPosting">
+            <div class="button"><i class="loading"></i></div>
+        </div>
+    </form>
+
+</div>

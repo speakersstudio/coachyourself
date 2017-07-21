@@ -1,0 +1,384 @@
+@import "vars";
+@import "./mixins/elevation";
+
+.card-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    align-items: stretch;
+    position: relative;
+    z-index: 3;
+    padding: 0 $std;
+
+    .card {
+        flex-grow: 1;
+        max-width: calc(50% - #{$std * 2});
+
+        @media #{$media-mobile} {
+            max-width: 100%;
+        }
+
+        &.full {
+            max-width: 100%;
+            width: 100%;
+        }
+    }
+
+    .paper-label {
+        width: 100%;
+    }
+    
+    &.span3 {
+        .card {
+            max-width: calc(30% - #{$std * 2});
+
+            @media #{$media-mobile} {
+                max-width: 100%;
+            }
+        }
+    }
+
+    @media #{$media-mobile} {
+        flex-direction: column;
+        align-items: center;
+    }
+
+}
+
+.card {
+    display: inline-block;
+
+    padding: $std;
+    background: $color-white;
+    margin: $std;
+    border-radius: $border-radius;
+    position: relative;
+    box-sizing: border-box;
+    @include md-elevation($card-elevation-default);
+    @include md-elevation-transition(("width 500ms", "height 500ms", "opacity 500ms", "max-width 500ms"));
+
+    & > * {
+        transition: opacity $anim-duration;
+    }
+
+    &.flat {
+        @include md-elevation(0);
+    }
+
+    &.nopadding {
+        padding: 0;
+        overflow: hidden;
+    }
+
+    color: $color-text;
+    text-decoration: none;
+
+    @media #{$media-mobile} {
+        display: block;
+        // width: 90%;
+        // max-width: 90%;
+        box-sizing: border-box;
+        margin: $std 0;
+    }
+
+    &.clickable:hover {
+        @include md-elevation($card-elevation-active);
+    }
+
+    &.small {
+        max-width: 300px;
+        width: 29%;
+    }
+
+    &.disabled {
+        opacity: 0.5;
+    }
+
+    ul {
+        margin: $std 0 $large 0;
+        list-style: none;
+
+        li {
+            margin-bottom: $small;
+
+            &:last-child {
+                margin: 0;
+            }
+        }
+    }
+
+    .taglist {
+        margin: 0;
+
+        li, li:last-child {
+            margin: $small / 4;
+        }
+    }
+
+    .message {
+        @include abs(null, 0, $small, 0);
+        text-align: center;
+        display: block;
+    }
+
+    .top {
+        margin: -$std;
+        margin-bottom: 0;
+        position: relative;
+        color: $color-white;
+        background: $color-text;
+        border-radius: $border-radius $border-radius 0 0;
+        
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            padding-top: 50%;
+        }
+
+        .content {
+            @include abs(null, null, 0, 0);
+            padding: $large;
+
+            h3 {
+                font-size: 1.5em;
+                margin: 2px 0;
+            }
+            h4 {
+                font-size: 1em;
+                margin: 2px 0;
+            }
+        }
+
+        & > h3 {
+            @include abs(null, null, 0, 0);
+            padding: $large;
+            font-size: 1.5em;
+        }
+
+        & > em {
+            @include abs($small, $small, null, null);
+            font-size: 0.7em;
+            opacity: 0.5;
+        }
+
+        & > .fa {
+            @include abs($large, $large);
+            font-size: $icon-size;
+        }
+    }
+
+    .body {
+        margin: 0 (-$std);
+        padding: $large;
+        position: relative;
+        z-index: 2;
+    }
+
+    .action {
+        margin: 0 (-$std) (-$std);
+        padding: $small 0;
+        border-top: 1px solid $color-hr;
+
+        .button:first-child {
+            margin-left: $small;
+        }
+    }
+
+    &.red {
+        .top {
+            background-color: $color-red;
+        }
+    }
+
+    &.blue {
+        .top {
+            background-color: $color-blue;
+        }
+    }
+
+    &.orange {
+        .top {
+            background-color: $color-orange;
+        }
+    }
+
+    &.yellow {
+        .top {
+            background-color: $color-yellow;
+        }
+    }
+
+    &.green {
+        .top {
+            background-color: $color-green;
+        }
+    }
+
+    $bracket-thickness: 10px;
+
+    &.brackets {
+        text-align: center;
+        //border: $bracket-width solid $color-text;
+        padding: $large ($std * 2);
+        position: relative;
+        overflow: hidden;
+
+        &:before {
+            content: "";
+            @include abs($bracket-thickness, null, $bracket-thickness, $bracket-thickness, 1);
+            border-width: $bracket-thickness 0 $bracket-thickness $bracket-thickness;
+            border-color: $color-text;
+            border-style: solid;
+            width: $bracket-thickness + $std;
+            transition: width 200ms, border-color 200ms;
+        }
+
+        &:after {
+            content: "";
+            @include abs($bracket-thickness, $bracket-thickness, $bracket-thickness, null, 1);
+            border-width: $bracket-thickness $bracket-thickness $bracket-thickness 0;
+            border-color: $color-text;
+            border-style: solid;
+            width: $bracket-thickness + $std;
+            transition: width 200ms, border-color 200ms;
+        }
+
+        & > .fa {
+            @include abs(3px, null, null, 0, 1);
+            margin-left: 50%;
+            transform: translateX(-50%);
+            font-size: $icon-size;
+        }
+
+        h4 {
+            font-size: 34px;
+            transition: color 200ms;
+            margin-top: $large;
+
+            &:last-child {
+                margin-bottom: $large;
+            }
+        }
+        p, ul {
+            font-size: 19px;
+            margin: $large 0;
+            font-weight: 300;
+
+            &:first-child {
+                margin-top: 0;
+            }
+        }
+
+        .body-default, .body-open {
+            opacity: 1;
+            position: relative;
+            z-index: 2;
+            transition: height 600ms, opacity 200ms;
+            padding: $large;
+            margin: 0 (-$std);
+            box-sizing: border-box;
+
+            & > *:first-child {
+                margin-top: 0;
+            }
+            & > *:last-child {
+                margin-bottom: 0;
+            }
+
+            @media #{$media-mobile} {
+                transition: height 2000ms, opacity 200ms;
+            }
+        }
+        &.card-closed {
+            .body-default, .body-open {
+                opacity: 0;
+            }
+        }
+
+        .body-open {
+            @include abs($large, ($std * 2), null, ($std * 2), 1);
+            opacity: 0;
+        }
+
+        &.card-open {
+            .body-default {
+                z-index: 1;
+            }
+            .body-open {
+                z-index: 2;
+            }
+        }
+
+        .action {
+            border: 0px;
+            padding-bottom: $std;
+        }
+
+        &.clickable:hover {
+            &:before {
+                width: $bracket-thickness + $large;
+            }
+            &:after {
+                width: $bracket-thickness + $large;
+            }
+        }
+
+        &.red {
+            &:after,
+            &:before {
+                border-color: $color-red;
+            }
+
+            & > .fa {
+                color: $color-red;
+            }
+        }
+
+        &.blue {
+            &:after,
+            &:before {
+                border-color: $color-blue;
+            }
+
+            & > .fa {
+                color: $color-blue;
+            }
+        }
+
+        &.orange {
+            &:after,
+            &:before {
+                border-color: $color-orange;
+            }
+
+            & > .fa {
+                color: $color-orange;
+            }
+        }
+
+        &.yellow {
+            &:after,
+            &:before {
+                border-color: $color-yellow;
+            }
+
+            & > .fa {
+                color: $color-yellow;
+            }
+        }
+
+        &.green {
+            &:after,
+            &:before {
+                border-color: $color-green;
+            }
+
+            & > .fa {
+                color: $color-green;
+            }
+        }
+    }
+}

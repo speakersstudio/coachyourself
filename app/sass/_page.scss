@@ -1,0 +1,282 @@
+@import "./mixins/elevation";
+@import "./mixins/mixins";
+
+@import "vars";
+
+$paper-bg: $color-white;
+
+.left-bracket,
+.right-bracket {
+    @include abs(($toolbar-height / 2), null, ($toolbar-height / 2), null, 5);
+    border: 1px solid $color-text;
+    width: $page-bracket-width;
+    transition: border-color 200ms;
+
+    h1 {
+        font-size: 18px;
+        line-height: $large;
+        padding: 0 $std;
+        background: $paper-bg;
+        transform: translateY(-55%);
+
+        label {
+            font-size: 18px;
+            line-height: $large;
+            color: $color-text;
+            margin: 0;
+        }
+    }
+
+    &.white {
+        border-color: $color-white;
+    }
+}
+
+.left-bracket {
+    left: ($toolbar-height / 2);
+    border-right-width: 0px;
+
+    h1 {
+        @include abs(0, null, null, ($toolbar-height / 2));
+    }
+
+    @media #{$media-mobile} {
+        left: ($toolbar-height / 4);
+
+        h1 {
+            display: none;
+        }
+    }
+}
+
+.right-bracket {
+    right: ($toolbar-height / 2);
+    border-left-width: 0px;
+
+    h1 {
+        @include abs(0, ($toolbar-height / 2), null, null);
+        font-style: italic;
+        font-weight: bold;
+        white-space: nowrap;
+        min-width: 50px;
+        text-align: right;
+    }
+
+    @media #{$media-mobile} {
+        right: ($toolbar-height / 4);
+
+        h1 {
+            right: ($toolbar-height / 2);
+        }
+    }
+}
+
+@media #{$media-mobile} {
+    improvplus > .left-bracket,
+    improvplus > .right-bracket {
+        display: none;
+    }
+}
+
+.curtain {
+    @include abs(0, 0, null, 0, 1);
+    height: $curtain-height;
+
+    @include background-linear-gradient-down($color-curtain-fade, 12px, $color-curtain, ($toolbar-height * 1.8), $color-curtain);
+
+    img {
+        width: 100%;
+    }
+}
+
+.background {
+    @include abs(0,0,0,0,0);
+    background: $color-curtain;
+    transform-origin: 50% 0;
+}
+
+.page {
+    min-height: 100vh;
+    box-sizing: border-box;
+    position: relative;
+    padding: $toolbar-height $page-bracket-width $page-bracket-width;
+
+    @media #{$media-mobile} {
+        padding: $toolbar-height $std $page-bracket-width;
+    }
+
+    .curtain {
+        display: none;
+        @include abs(0, 0, null, 0, 1);
+        height: $curtain-height;
+
+        @include background-linear-gradient-down($color-curtain-fade, 12px, $color-curtain, ($toolbar-height * 1.8), $color-curtain); 
+    }
+
+    .paper-label {
+        font-size: 16px;
+        padding: $std;
+        margin: 0 ($toolbar-height / 2)+2;
+        position: relative;
+        z-index: 2;
+
+        @media #{$media-mobile} {
+            margin: 0 ($toolbar-height / 4) + 2;
+        }
+
+        &.big {
+            padding: ($large * 2) $std;
+            font-size: 32px;
+            text-align: center;
+        }
+
+        .button-group {
+            float: right;
+            margin-top: -($std - ($small / 2));
+
+            @media #{$media-mobile} {
+                float: none;
+                margin: 0;
+                text-align: left;
+            }
+        }
+    }
+
+    h4 {
+        font-size: 28px;
+
+        input {
+            font-size: 20px;
+        }
+    }
+
+    h5 {
+        font-size: 18px;
+    }
+
+    .tabs {
+        margin: 0 ($toolbar-height / 2)+2 0;
+        // position: relative;
+        // z-index: 3;
+        padding: 0 $border-radius;
+
+        &:first-child {
+            margin-top: ($curtain-height * 0.3);
+        }
+
+        .tab {
+            position: relative;
+            z-index: 3;
+        }
+
+        @media #{$media-mobile} {
+            margin: 0;
+        }
+    }
+
+    .paper {
+        border-radius: $border-radius;
+        @include md-elevation($card-elevation-default);
+        background: $paper-bg;
+        padding: $std;
+        position: relative;
+        z-index:  2;
+        margin: 0 ($toolbar-height / 2)+2 $std;
+        @include md-elevation-transition('padding 200ms');
+
+        @media #{$media-mobile} {
+            margin: 0 0 $std;
+        }
+
+        &:first-child {
+            margin-top: ($curtain-height * 0.3);
+        }
+
+        &.list {
+            padding: 0;
+        }
+
+        &.has-brackets {
+            padding: $toolbar-height ($toolbar-height + $std);
+
+            @media #{$media-mobile} {
+                padding: $toolbar-height (($toolbar-height * 0.75) + $std);
+            }
+        }
+
+        & > .content {
+            position: relative;
+            z-index: 6;
+        }
+
+        & .metadata {
+            position: relative;
+            z-index: 7;
+
+            &.horizontal {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
+            }
+        }
+
+        .description, .description p {
+            line-height: 1.25;
+        }
+
+        .paper-toggle {
+            margin-left: $std;
+        }
+
+        .left-bracket, .right-bracket {
+            transition: opacity 200ms, border-color 200ms;
+
+            h1 {
+                transition: right 200ms, left 200ms;
+            }
+        }
+
+        &.closed {
+            @include md-elevation(1);
+            padding-bottom: 0;
+
+            .left-bracket {
+                opacity: 0;
+            }
+            .right-bracket {
+                border-color: $color-white;
+
+                h1 {
+                    right: (-$std);
+                }
+            }
+        }
+    }
+
+    &.fullbg {
+        //background: $color-secondary;
+
+        .paper:first-child {
+            margin-top: 0;
+        }
+    }
+}
+
+game-details {
+    h4 {
+        span {
+            vertical-align: middle;
+        }
+        .fa-plus-circle {
+            font-size: 0.5em;
+            vertical-align: middle;
+            display: inline-block;
+        }
+        input {
+            text-align: right;
+        }
+    }
+    textarea {
+        height: 10em;
+    }
+}

@@ -1,0 +1,64 @@
+<i class="fa fa-{{icon}}" *ngIf="icon"></i> 
+                    
+<span *ngIf="!editShown"
+    [class.clickable]="canEdit"
+    (click)="showEdit()"
+    [innerHTML]="text"></span>
+
+<input name="editMetadata" #metadataInput
+    *ngIf="editShown && type=='text'"
+    [(ngModel)]="editModel"
+    (keydown.enter)="pressEnter()"
+    (keydown.escape)="closeEdit()"
+    (blur)="saveEdit()" />
+
+<div *ngIf="editShown && type=='address'">
+
+    <input name="address" #metadataInput
+        [(ngModel)]="address"
+        placeholder="Address"
+        (keydown.enter)="saveEdit()"
+        (keydown.escape)="closeEdit()" />
+
+    <div class="columns">
+        <input name="city"
+            [(ngModel)]="city"
+            placeholder="City"
+            (keydown.enter)="saveEdit()"
+            (keydown.escape)="closeEdit()" />
+        <input name="state"
+            [(ngModel)]="state"
+            placeholder="State"
+            (keydown.enter)="saveEdit()"
+            (keydown.escape)="closeEdit()" />
+        <input name="zip"
+            [(ngModel)]="zip"
+            placeholder="Zip"
+            (keydown.enter)="saveEdit()"
+            (keydown.escape)="closeEdit()" />
+    </div>
+
+    <input name="country"
+        [(ngModel)]="country"
+        placeholder="Country"
+        (keydown.enter)="saveEdit()"
+        (keydown.escape)="closeEdit()" />
+
+</div>
+
+<select *ngIf="editShown && type=='dropdown'"
+    name="editMetadata"
+    #metadataInput
+    [(ngModel)]="editModel"
+    (ngModelChange)="saveEdit()">
+
+    <option *ngFor="let option of options"
+            [selected]="(optionId && option[optionId] == editModel) || (option == editModel)"
+            [ngValue]="optionId ? option[optionId] : option"
+            [title]="optionDescription ? option[optionDescription] : ''">
+                <i *ngIf="option.icon" class="fa fa-{{option.icon}}"></i>
+                {{optionText ? option[optionText] : option}}
+            </option>
+
+    <option *ngIf="optionCreate" [ngValue]="-1">Other...</option>
+</select>

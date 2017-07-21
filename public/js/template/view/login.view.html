@@ -1,0 +1,74 @@
+<div class="dialog-dismiss"></div>
+
+<div class="dialog login-form" *ngIf="show && !showRecoverPassword && !recoverPasswordDone" [@dialog]="state">
+
+    <form class="block" name="login" (ngSubmit)="submitLogin()" #loginForm="ngForm">
+        <div class="dialog-content">
+            <h3>Login</h3>
+
+            <input name="email" formInput [asterisk]="false" [(ngModel)]="email" required type="text" placeholder="Email" />
+
+            <input name="password" formInput [helpLink]="'Trouble?'" [asterisk]="false" (helpClicked)="recoverPassword()"
+                [(ngModel)]="password" required type="password" placeholder="Password" />
+
+            <div class="error" *ngIf="loginError" [innerHTML]="loginError"></div>
+        </div>
+
+        <div class="button-group" *ngIf="!isPosting && state != 'runaway'">
+            <a (click)="cancel()" class="button">Cancel</a>
+            <input type="submit" class="button raised" value="LOGIN" [disabled]="!loginForm.form.valid" />
+        </div>
+
+        <div class="button-group" *ngIf="isPosting">
+            <div class="button"><i class="loading"></i></div>
+        </div>
+    </form>
+
+    <div class="dialog-content right">
+        <a routerLink="/signup">Sign up!</a>
+    </div>
+
+</div>
+
+<div class="dialog login-form" *ngIf="show && showRecoverPassword" [@dialog]="state">
+
+    <form class="block" name="login" (ngSubmit)="submitRecoverPassword()" #recoverPasswordForm="ngForm">
+        <div class="dialog-content">
+            <h3>Password Rescue</h3>
+
+            <p>Enter the email address on your account, and we will send you a link to change your password.</p>
+
+            <input name="email" formInput [asterisk]="false" [(ngModel)]="email" required type="text" placeholder="Email" />
+
+            <div class="error" *ngIf="recoverPasswordError" [innerHTML]="recoverPasswordError"></div>
+        </div>
+
+        <div class="button-group" *ngIf="!isPosting">
+            <a (click)="cancelRecoverPassword()" class="button">Back</a>
+            <input type="submit" class="button raised" value="Submit" [disabled]="!recoverPasswordForm.form.valid" />
+        </div>
+
+        <div class="button-group" *ngIf="isPosting">
+            <div class="button"><i class="loading"></i></div>
+        </div>
+    </form>
+
+</div>
+
+<div class="dialog login-form" *ngIf="show && recoverPasswordDone" [@dialog]="state">
+
+    <form class="block" name="login" (ngSubmit)="submitRecoverPassword()" #recoverPasswordForm="ngForm">
+        <div class="dialog-content">
+            <h3>Password Rescue</h3>
+
+            <p>You're all set. Check your email for a link to continue the process (please note that this email could take a few minutes to get to you).</p>
+        </div>
+
+        <div class="button-group" *ngIf="!isPosting">
+            <a (click)="cancel()" class="button">Okay Bye</a>
+        </div>
+    </form>
+
+</div>
+
+<i class="fa fa-star starburst" *ngIf="state=='runaway'" [@starburst]></i>

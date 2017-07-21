@@ -1,0 +1,45 @@
+@import '../vars';
+
+@include keyframes (shake) {
+    0%, 100% {
+        transform: translateX(0px);
+    }
+    10%, 50%, 90% {
+        transform: translateX(20px);
+    }
+    30%, 70% {
+        transform: translateX(-20px);
+    }
+}
+@include keyframes (bubble_in) {
+  0% {
+    transform: translateX(20px) scaleX(0) scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0px) scaleX(1) scaleY(1);
+    opacity: 1;
+  }
+}
+
+@include keyframes (spin) {
+    0% {
+        transform: rotateZ(0deg);
+    }
+    100% {
+        transform: rotateZ(359deg);
+    }
+}
+
+// @keyframes loadingSpin { to { transform: translateY(-15.0em); } }
+
+@keyframes loadingSpinLeft {
+    0% { transform: translateX(0) }
+    43% { transform: translateX(0) }
+    100% { transform: translateX(-$std) }
+}
+@keyframes loadingSpinRight {
+    0% { transform: translateX(0) }
+    43% { transform: translateX(0) }
+    100% { transform: translateX($std) }
+}
