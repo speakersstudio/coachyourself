@@ -30,20 +30,6 @@ import { UserService } from '../../service/user.service';
 export class ContactComponent implements OnInit {
     title: string = '<span class="light">contact</span><strong>us</strong>';
 
-    tabs: TabData[] = [
-        {
-            name: 'Request a Feature',
-            id: 'featurerequest',
-            icon: 'exclamation-circle'
-        },
-        {
-            name: 'Report a Bug',
-            id: 'reportbug',
-            icon: 'bug'
-        }
-    ];
-    selectedTab: string = 'featurerequest';
-
     month: string;
     day: number;
     year: number;
@@ -77,21 +63,8 @@ export class ContactComponent implements OnInit {
     ]
 
     ngOnInit(): void {
-        this.route.params.forEach((params: Params) => {
-            this.selectedTab = params['type'] || 'featurerequest';
-        });
-
         this.name = this.userService.getUserName() || 'A humble user';
         this.email = this.userService.getLoggedInUser().email;
-    }
-
-    selectTab(tab: TabData): void {
-        this.selectedTab = tab.id;
-
-        this._app.setPath('/app/contact/' + tab.id);
-
-        this.error = "";
-        this.errorField = "";
     }
 
     sendFeatureRequest(): void {

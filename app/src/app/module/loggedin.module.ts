@@ -7,7 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // import { PathLocationStrategy } from '@angular/common';
 
 import { SharedModule } from '../../module/shared.module';
-import { ImprovPlusRoutingModule } from './improvplus-routing.module';
+import { LoggedInRoutingModule } from './loggedin-routing.module';
 
 // services
 import { GameDatabaseService } from "../service/game-database.service";
@@ -31,7 +31,6 @@ import { HelpComponent } from "../component/help.component";
 import { LegalComponent } from "../component/legal.component";
 import { AdminComponent } from '../component/admin.component';
 import { TeamListComponent } from '../component/team-list.component';
-import { TeamDetailsComponent } from '../component/team-details.component';
 import { VideosComponent } from '../component/videos.component';
 import { GlossaryComponent } from '../component/glossary.component';
 
@@ -57,7 +56,7 @@ import { GameNoteView } from '../view/game-note.view';
         // HttpModule,
         CommonModule,
         SharedModule,
-        ImprovPlusRoutingModule
+        LoggedInRoutingModule
      ],
     declarations: [
         UnauthorizedComponent,
@@ -69,7 +68,6 @@ import { GameNoteView } from '../view/game-note.view';
         UserComponent,
         HelpComponent,
         TeamListComponent,
-        TeamDetailsComponent,
         GameDetailsComponent,
         LegalComponent,
         AdminComponent,
@@ -98,4 +96,4 @@ import { GameNoteView } from '../view/game-note.view';
     ]
 })
 
-export class ImprovPlusModule { }
+export class LoggedInModule { }

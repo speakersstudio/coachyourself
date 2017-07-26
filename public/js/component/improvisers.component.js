@@ -69,22 +69,22 @@ var ImprovisersComponent = (function () {
             });
         }
     };
+    ImprovisersComponent = __decorate([
+        core_1.Component({
+            moduleId: module.id,
+            selector: "for-improvisers",
+            templateUrl: "../template/improvisers.component.html",
+            animations: [
+                anim_util_1.DialogAnim.dialog,
+                anim_util_1.ToggleAnim.fade
+            ]
+        }),
+        __metadata("design:paramtypes", [app_component_1.AppComponent,
+            router_1.Router,
+            http_1.Http])
+    ], ImprovisersComponent);
     return ImprovisersComponent;
 }());
-ImprovisersComponent = __decorate([
-    core_1.Component({
-        moduleId: module.id,
-        selector: "for-improvisers",
-        templateUrl: "../template/improvisers.component.html",
-        animations: [
-            anim_util_1.DialogAnim.dialog,
-            anim_util_1.ToggleAnim.fade
-        ]
-    }),
-    __metadata("design:paramtypes", [app_component_1.AppComponent,
-        router_1.Router,
-        http_1.Http])
-], ImprovisersComponent);
 exports.ImprovisersComponent = ImprovisersComponent;
 
 //# sourceMappingURL=improvisers.component.js.map

@@ -9,14 +9,13 @@ import { AppHttp } from '../data/app-http';
 
 // main components
 import { AppComponent } from '../component/app.component';
-import { WelcomeComponent } from '../component/ms.welcome.component';
 
 import { AppRoutingModule } from './app-routing.module';
 
 // the shared module is where all of the views and services live
 import { SharedModule } from './shared.module';
 
-import { ImprovPlusModule } from '../app/module/improvplus.module';
+import { LoggedInModule } from '../app/module/loggedin.module';
 
 import { LoginScreenComponent } from '../component/login-screen.component';
 import { SignupComponent } from '../component/signup.component';
@@ -35,12 +34,11 @@ import { MarketingToolbarView } from '../view/marketing-toolbar.view';
         BrowserAnimationsModule,
         SharedModule,
         AppRoutingModule,
-        ImprovPlusModule
+        LoggedInModule
      ],
     declarations: [
         LoginScreenComponent,
         AppComponent,
-        WelcomeComponent,
         SignupComponent,
         ChangePasswordComponent,
         InviteComponent,

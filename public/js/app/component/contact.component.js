@@ -23,34 +23,11 @@ var ContactComponent = (function () {
         this.http = http;
         this.userService = userService;
         this.title = '<span class="light">contact</span><strong>us</strong>';
-        this.tabs = [
-            {
-                name: 'Request a Feature',
-                id: 'featurerequest',
-                icon: 'exclamation-circle'
-            },
-            {
-                name: 'Report a Bug',
-                id: 'reportbug',
-                icon: 'bug'
-            }
-        ];
-        this.selectedTab = 'featurerequest';
         this._tools = [];
     }
     ContactComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.route.params.forEach(function (params) {
-            _this.selectedTab = params['type'] || 'featurerequest';
-        });
         this.name = this.userService.getUserName() || 'A humble user';
         this.email = this.userService.getLoggedInUser().email;
-    };
-    ContactComponent.prototype.selectTab = function (tab) {
-        this.selectedTab = tab.id;
-        this._app.setPath('/app/contact/' + tab.id);
-        this.error = "";
-        this.errorField = "";
     };
     ContactComponent.prototype.sendFeatureRequest = function () {
         var _this = this;
@@ -97,21 +74,21 @@ var ContactComponent = (function () {
             });
         }
     };
+    ContactComponent = __decorate([
+        core_1.Component({
+            moduleId: module.id,
+            selector: "contact",
+            templateUrl: "../template/contact.component.html",
+            styles: ["\n        #contactSigOutput {\n            font-family: 'Alex Brush';\n            font-size: 52px;\n            transform: rotateZ(-5deg);\n            transform-origin: 0%;\n            color: #333;\n        }\n    "]
+        }),
+        __metadata("design:paramtypes", [app_component_1.AppComponent,
+            router_1.Router,
+            router_1.ActivatedRoute,
+            app_http_1.AppHttp,
+            user_service_1.UserService])
+    ], ContactComponent);
     return ContactComponent;
 }());
-ContactComponent = __decorate([
-    core_1.Component({
-        moduleId: module.id,
-        selector: "contact",
-        templateUrl: "../template/contact.component.html",
-        styles: ["\n        #contactSigOutput {\n            font-family: 'Alex Brush';\n            font-size: 52px;\n            transform: rotateZ(-5deg);\n            transform-origin: 0%;\n            color: #333;\n        }\n    "]
-    }),
-    __metadata("design:paramtypes", [app_component_1.AppComponent,
-        router_1.Router,
-        router_1.ActivatedRoute,
-        app_http_1.AppHttp,
-        user_service_1.UserService])
-], ContactComponent);
 exports.ContactComponent = ContactComponent;
 
 //# sourceMappingURL=contact.component.js.map

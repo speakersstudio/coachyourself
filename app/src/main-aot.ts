@@ -4,6 +4,7 @@ import { enableProdMode } from '@angular/core';
 import { AppModuleNgFactory } from '../aot/app/src/module/app.module.ngfactory';
 
 import { CONFIG_TOKEN } from './constants';
+import 'whatwg-fetch';
 
 fetch('/config').then(response => {
     response.json().then(configData => {

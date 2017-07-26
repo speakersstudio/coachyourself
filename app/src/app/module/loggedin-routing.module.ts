@@ -13,7 +13,6 @@ import { GameDetailsComponent } from '../component/game-details.component';
 import { UserComponent } from '../component/user.component';
 import { LegalComponent } from "../component/legal.component";
 import { TeamListComponent } from '../component/team-list.component';
-import { TeamDetailsComponent } from '../component/team-details.component';
 import { VideosComponent } from '../component/videos.component';
 import { GlossaryComponent } from '../component/glossary.component';
 
@@ -87,20 +86,6 @@ const routes: Routes = [
                         }
                     },
                     {
-                        path: 'teams',
-                        component: TeamListComponent,
-                        data: {
-                            action: 'team_page_view'
-                        }
-                    },
-                    {
-                        path: 'team/:id',
-                        component: TeamDetailsComponent,
-                        data: {
-                            action: 'team_page_view'
-                        }
-                    },
-                    {
                         path: 'contact/:type',
                         component: ContactComponent,
                         data: {
@@ -159,4 +144,4 @@ const routes: Routes = [
     exports: [ RouterModule ]
 })
 
-export class ImprovPlusRoutingModule {};
+export class LoggedInRoutingModule {};

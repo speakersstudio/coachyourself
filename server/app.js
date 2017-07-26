@@ -8,6 +8,10 @@ var exphbs = require('express-handlebars');
 var mongoose = require('mongoose');
 var Promise = require('bluebird');
 
+if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
+
 var config = require('./config')();
 
 var app = express();

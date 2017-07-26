@@ -51,7 +51,6 @@ export class MaterialsLibraryComponent implements OnInit {
     }
 
     getLibrary(): void {
-        this._app.showLoader();
 
         this.libraryService.getOwnedMaterials()
             .then(materials => {
@@ -77,7 +76,6 @@ export class MaterialsLibraryComponent implements OnInit {
                 })
             });
         })
-
         
     }
 

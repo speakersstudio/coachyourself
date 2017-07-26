@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var ms_welcome_component_1 = require("../component/ms.welcome.component");
 var login_screen_component_1 = require("../component/login-screen.component");
 var signup_component_1 = require("../component/signup.component");
 var change_password_component_1 = require("../component/change-password.component");
@@ -16,12 +15,8 @@ var invite_component_1 = require("../component/invite.component");
 var routes = [
     {
         path: '',
-        redirectTo: '/welcome',
+        redirectTo: '/signup',
         pathMatch: 'full'
-    },
-    {
-        path: 'welcome',
-        component: ms_welcome_component_1.WelcomeComponent
     },
     {
         path: 'login',
@@ -43,14 +38,14 @@ var routes = [
 var AppRoutingModule = (function () {
     function AppRoutingModule() {
     }
+    AppRoutingModule = __decorate([
+        core_1.NgModule({
+            imports: [router_1.RouterModule.forRoot(routes, { preloadingStrategy: router_1.PreloadAllModules })],
+            exports: [router_1.RouterModule]
+        })
+    ], AppRoutingModule);
     return AppRoutingModule;
 }());
-AppRoutingModule = __decorate([
-    core_1.NgModule({
-        imports: [router_1.RouterModule.forRoot(routes, { preloadingStrategy: router_1.PreloadAllModules })],
-        exports: [router_1.RouterModule]
-    })
-], AppRoutingModule);
 exports.AppRoutingModule = AppRoutingModule;
 ;
 

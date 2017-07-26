@@ -23,9 +23,10 @@ var app_http_1 = require("../data/app-http");
 var config_1 = require("../model/config");
 var app_service_1 = require("../service/app.service");
 var user_service_1 = require("../service/user.service");
+var stripe_service_1 = require("../service/stripe.service");
 var anim_util_1 = require("../util/anim.util");
 var AppComponent = (function () {
-    function AppComponent(config, _renderer, router, _route, _service, userService, pathLocationStrategy, http) {
+    function AppComponent(config, _renderer, router, _route, _service, userService, pathLocationStrategy, http, stripeService) {
         this._renderer = _renderer;
         this.router = router;
         this._route = _route;
@@ -33,6 +34,7 @@ var AppComponent = (function () {
         this.userService = userService;
         this.pathLocationStrategy = pathLocationStrategy;
         this.http = http;
+        this.stripeService = stripeService;
         this.scrollpos = 0;
         this.showToolbarScrollPosition = 20;
         this.scrollSource = new Subject_1.Subject();
@@ -58,20 +60,17 @@ var AppComponent = (function () {
         this.router.events.filter(function (event) { return event instanceof router_1.NavigationStart; }).subscribe(function (event) {
             _this.backgroundVisible = true;
             _this.backgroundRequested = false;
-            _this.showWhiteBrackets(false);
             _this.closeOverlays();
-            _this.showLoader();
-        });
-        this.router.events.filter(function (event) { return event instanceof router_1.NavigationEnd; }).subscribe(function (event) {
-            if (!_this.backgroundRequested) {
-                _this.backgroundVisible = false;
-            }
-            _this.hideLoader();
             if (event.url.indexOf('/app') > -1) {
                 _this.inApp = true;
             }
             else {
                 _this.inApp = false;
+            }
+        });
+        this.router.events.filter(function (event) { return event instanceof router_1.NavigationEnd; }).subscribe(function (event) {
+            if (!_this.backgroundRequested) {
+                _this.backgroundVisible = false;
             }
         });
         this.setUser(this.userService.getLoggedInUser());
@@ -109,6 +108,7 @@ var AppComponent = (function () {
                 _this.toast('There was a problem refreshing your login.');
             });
         }
+        this.stripeService.init(this.config.stripe);
         setTimeout(function () {
             var siteLoader = document.getElementById("siteLoader");
             siteLoader.style.opacity = "0";
@@ -162,7 +162,7 @@ var AppComponent = (function () {
             this.showBackdrop = this.showMenu;
         }
         else {
-            this.router.navigate(['/welcome']);
+            this.router.navigate(['/']);
         }
     };
     AppComponent.prototype.closeOverlays = function () {
@@ -259,7 +259,7 @@ var AppComponent = (function () {
     AppComponent.prototype.handleLogin = function (user) {
         this.closeOverlays();
         if (!user) {
-            this.router.navigate(['/welcome']);
+            // this.router.navigate(['/']);
         }
         else if (this.inApp || this.router.url == '/login') {
             this.router.navigate(['/app']);
@@ -322,30 +322,31 @@ var AppComponent = (function () {
         };
         requestAnimationFrame(scrollFunc);
     };
+    AppComponent = __decorate([
+        core_1.Component({
+            moduleId: module.id,
+            selector: 'improvplus',
+            templateUrl: '../template/app.component.html',
+            animations: [
+                anim_util_1.DialogAnim.dialog,
+                anim_util_1.ToggleAnim.fade,
+                anim_util_1.ToggleAnim.bubble,
+                anim_util_1.ShrinkAnim.vertical
+            ]
+        }),
+        __param(0, core_1.Inject(constants_1.CONFIG_TOKEN)),
+        __metadata("design:paramtypes", [config_1.Config,
+            core_1.Renderer2,
+            router_1.Router,
+            router_1.ActivatedRoute,
+            app_service_1.AppService,
+            user_service_1.UserService,
+            common_1.PathLocationStrategy,
+            app_http_1.AppHttp,
+            stripe_service_1.StripeService])
+    ], AppComponent);
     return AppComponent;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        moduleId: module.id,
-        selector: 'improvplus',
-        templateUrl: '../template/app.component.html',
-        animations: [
-            anim_util_1.DialogAnim.dialog,
-            anim_util_1.ToggleAnim.fade,
-            anim_util_1.ToggleAnim.bubble,
-            anim_util_1.ShrinkAnim.vertical
-        ]
-    }),
-    __param(0, core_1.Inject(constants_1.CONFIG_TOKEN)),
-    __metadata("design:paramtypes", [config_1.Config,
-        core_1.Renderer2,
-        router_1.Router,
-        router_1.ActivatedRoute,
-        app_service_1.AppService,
-        user_service_1.UserService,
-        common_1.PathLocationStrategy,
-        app_http_1.AppHttp])
-], AppComponent);
 exports.AppComponent = AppComponent;
 
 //# sourceMappingURL=app.component.js.map

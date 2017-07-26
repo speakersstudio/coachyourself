@@ -15,7 +15,7 @@ import { PreferenceUtil } from '../../util/preference.util';
 })
 export class DashboardComponent implements OnInit {
 
-    title: string = '<span class="light">improv</span><strong>plus</strong>';
+    title: string = 'The Speaker\'s Studio';
 
     constructor(
         public _app: AppComponent,

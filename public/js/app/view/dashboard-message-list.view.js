@@ -30,16 +30,6 @@ var DashboardMessageListView = (function () {
         this.PREFERENCE_KEY_PREFIX = 'hide_dash_message_';
         this.messages = [
             {
-                key: 'invite',
-                trigger: function () {
-                    var invites = _this.userService.getInvites();
-                    if (invites.length) {
-                        _this.invite = invites[0];
-                    }
-                    return invites.length;
-                }
-            },
-            {
                 key: 'no-subscription',
                 title: 'No Subscription',
                 body: "\n                <p>Your subscription is expired or otherwise invalid. If you own any materials or other content, you can still access them, but other areas of the app will be off-limits until you renew your subscription.</p>\n            ",
@@ -50,35 +40,6 @@ var DashboardMessageListView = (function () {
                 },
                 trigger: function () {
                     return _this.userService.isExpired();
-                }
-            },
-            {
-                key: 'welcome'
-            },
-            {
-                key: 'birthday-' + (new Date()).getFullYear(),
-                title: '<div class="columns"><i class="fa fa-birthday-cake"></i> <span>Happy Birthday!</span> <i class="fa fa-birthday-cake"></i></div>',
-                body: "\n                <p>It's your Special Day (or at least the day you told us was your Special Day). We here at ImprovPlus hope it's a great one!</p>\n            ",
-                trigger: function () {
-                    var birthday = _this.userService.getLoggedInUser().birthday;
-                    if (birthday) {
-                        var date = new Date(birthday), today = new Date();
-                        if (date.getDate() == today.getDate() && date.getMonth() == today.getMonth()) {
-                            return true;
-                        }
-                    }
-                }
-            },
-            {
-                key: 'username',
-                trigger: function () {
-                    return !_this.userService.getLoggedInUser().firstName || !_this.userService.getLoggedInUser().lastName;
-                }
-            },
-            {
-                key: 'birthday-enter',
-                trigger: function () {
-                    return !_this.userService.getLoggedInUser().birthday;
                 }
             }
         ];
@@ -189,23 +150,23 @@ var DashboardMessageListView = (function () {
             }, 100);
         });
     };
+    __decorate([
+        core_1.ViewChild('dashboardMessage', { read: bracket_card_directive_1.BracketCardDirective }),
+        __metadata("design:type", bracket_card_directive_1.BracketCardDirective)
+    ], DashboardMessageListView.prototype, "messageElement", void 0);
+    DashboardMessageListView = __decorate([
+        core_1.Component({
+            moduleId: module.id,
+            selector: 'dashboard-message-list',
+            templateUrl: '../template/view/dashboard-message-list.view.html',
+            animations: [anim_util_1.ShrinkAnim.height]
+        }),
+        __metadata("design:paramtypes", [user_service_1.UserService,
+            router_1.Router,
+            app_component_1.AppComponent])
+    ], DashboardMessageListView);
     return DashboardMessageListView;
 }());
-__decorate([
-    core_1.ViewChild('dashboardMessage', { read: bracket_card_directive_1.BracketCardDirective }),
-    __metadata("design:type", bracket_card_directive_1.BracketCardDirective)
-], DashboardMessageListView.prototype, "messageElement", void 0);
-DashboardMessageListView = __decorate([
-    core_1.Component({
-        moduleId: module.id,
-        selector: 'dashboard-message-list',
-        templateUrl: '../template/view/dashboard-message-list.view.html',
-        animations: [anim_util_1.ShrinkAnim.height]
-    }),
-    __metadata("design:paramtypes", [user_service_1.UserService,
-        router_1.Router,
-        app_component_1.AppComponent])
-], DashboardMessageListView);
 exports.DashboardMessageListView = DashboardMessageListView;
 
 //# sourceMappingURL=dashboard-message-list.view.js.map

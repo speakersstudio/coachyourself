@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 // import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { IPlusView } from '../view/iplus.view';
+import { LogoView } from '../view/logo.view';
 import { LoginView } from '../view/login.view';
 import { UserFormView } from '../view/user-form.view';
 import { LandingHeroView } from '../view/landing-hero.view';
@@ -14,6 +14,7 @@ import { LegalView } from '../view/legal.view';
 import { UserService } from "../service/user.service";
 import { CartService } from '../service/cart.service';
 import { AppService } from '../service/app.service';
+import { StripeService } from '../service/stripe.service';
 
 import { FormInputDirective } from '../directive/form-input.directive';
 import { BracketCardDirective } from '../directive/bracket-card.directive';
@@ -30,7 +31,7 @@ import { InfiniteScrollDirective } from '../directive/infinite-scroll.directive'
         RouterModule
     ],
     declarations: [
-        IPlusView,
+        LogoView,
         LoginView,
         UserFormView,
         LandingHeroView,
@@ -43,7 +44,7 @@ import { InfiniteScrollDirective } from '../directive/infinite-scroll.directive'
         InfiniteScrollDirective
     ],
     exports: [
-        IPlusView,
+        LogoView,
         LoginView,
         UserFormView,
         LandingHeroView,
@@ -58,7 +59,7 @@ import { InfiniteScrollDirective } from '../directive/infinite-scroll.directive'
     providers: [
         AppService,
         UserService,
-        CartService
+        StripeService
     ]
 })
 

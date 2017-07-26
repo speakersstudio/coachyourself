@@ -9,11 +9,6 @@ const
     ROLE_USER = 3,
     ROLE_TEAM_SUBSCRIBER = 4,
 
-    ROLE_FACILITATOR = 5,
-    ROLE_FACILITATOR_TEAM = 6,
-    ROLE_IMPROVISER = 7,
-    ROLE_IMPROVISER_TEAM = 8,
-
     ROLE_SUPER_ADMIN = 19;
 
 module.exports = {
@@ -23,11 +18,6 @@ module.exports = {
     ROLE_TEAM_SUBSCRIBER: ROLE_TEAM_SUBSCRIBER,
     ROLE_SUPER_ADMIN: ROLE_SUPER_ADMIN,
     ROLE_LOCKED: ROLE_LOCKED,
-
-    ROLE_FACILITATOR: ROLE_FACILITATOR,
-    ROLE_FACILITATOR_TEAM: ROLE_FACILITATOR_TEAM,
-    ROLE_IMPROVISER: ROLE_IMPROVISER,
-    ROLE_IMPROVISER_TEAM: ROLE_IMPROVISER_TEAM,
 
     _actionCache: {},
 
@@ -57,14 +47,6 @@ module.exports = {
                 'subscription_renew',
                 'history_view',
 
-                'invite_delete' // users can cancel invites that they sent, or reject ones sent to them
-            ]
-        },
-        {
-            id: ROLE_SUBSCRIBER,
-            name: "Subscriber",
-            inherits: [ROLE_USER],
-            actions: [
                 'game_page_view',
                 'game_view',
                 'game_filter',
@@ -93,46 +75,6 @@ module.exports = {
                 'user_page_view', // viewing a user directory page (if that's ever a thing)
                 'user_view', // viewing the list of users
 
-                'team_page_view',
-                'team_view', // get teams
-                'team_create' // users can create teams!
-            ]
-        },
-        {
-            id: ROLE_TEAM_SUBSCRIBER,
-            name: 'Team Member',
-            inherits: [ROLE_SUBSCRIBER],
-            actions: [
-                'note_team_create',
-                'note_team_view',
-                'note_team_edit', // you have to be admin to do this
-
-                'calendar_page_view',
-                'calendar_view',
-                'calendar_create', // this is just posting to the calendar API, not specifically creating calendars
-
-                'team_subscription_invite', // user must be admin of the team
-                'team_subscription_add', // admins
-                'team_invite', // user has to be admin of team
-                'team_edit', // user has to be admin of team
-                'team_user_promote', // user has to be admin of team
-                'team_user_remove', // admins can remove users from a team
-                'team_purchases_view', // admins only baby
-                'team_subscription_view',
-                'team_leave',
-
-                'blog_page_view',
-                'blog_view',
-
-                'hire_apply_page_view', // view the page to apply to become a hireable
-                'hire_apply' // apply to become a hireable
-            ]
-        },
-        {
-            id: ROLE_FACILITATOR,
-            name: 'Facilitator',
-            inherits: [ROLE_SUBSCRIBER],
-            actions: [
                 'material_page_view',
                 'material_view', // download material items that you own
 
@@ -140,34 +82,11 @@ module.exports = {
                 'coach_contact_send' // send a request to hire a facilitation coach
             ]
         },
-        {
-            id: ROLE_FACILITATOR_TEAM,
-            name: 'Facilitator Team Member',
-            inherits: [ROLE_FACILITATOR, ROLE_TEAM_SUBSCRIBER],
-            actions: [
-                // TDB
-            ]
-        },
-        {
-            id: ROLE_IMPROVISER,
-            name: 'Improviser',
-            inherits: [ROLE_SUBSCRIBER],
-            actions: [
-            ]
-        },
-        {
-            id: ROLE_IMPROVISER_TEAM,
-            name: 'Improv Team Member',
-            inherits: [ROLE_IMPROVISER, ROLE_TEAM_SUBSCRIBER],
-            actions: [
-                // TDB
-            ]
-        },
 
         {
             id: ROLE_SUPER_ADMIN,
             name: "Super Admin",
-            inherits: [ROLE_IMPROVISER_TEAM, ROLE_FACILITATOR_TEAM],
+            inherits: [ROLE_USER],
             actions: [
                 'blog_create',
                 'note_public_create',

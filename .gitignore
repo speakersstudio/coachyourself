@@ -35,3 +35,4 @@ temp
 
 aot-compile
 app/aot
+.env

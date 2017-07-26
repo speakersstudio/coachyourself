@@ -1,5 +1,7 @@
 <div class="toolbar-row" [class.search-open]="searchOpen">
-    <iplus *ngIf="!showBack" (click)="toggleNav()"></iplus>
+    <button *ngIf="!showBack" (click)="toggleNav()">
+        <i class="fa fa-bars"></i>
+    </button>
     <button *ngIf="showBack" (click)="back()">
         <i class="fa fa-arrow-left"></i>
     </button>

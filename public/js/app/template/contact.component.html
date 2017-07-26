@@ -1,60 +1,6 @@
-<div class="toolbar"
-    [class.on]="_app.toolbarVisible"
-    [title]="title"
-    ></div>
-
-<!--<div class="curtain" [style.top]="(-(scrollpos * 0.5)) + 'px'">
-    <h2>{{title}}</h2>
-</div>-->
-
 <div class="page">
 
-    <div class="tabs">
-        <span class="tab" 
-            *ngFor="let tab of tabs"
-            [class.active]="tab.id == selectedTab"
-            (click)="selectTab(tab)">
-            <i class="fa fa-{{tab.icon}}"></i>
-            <span>{{tab.name}}</span>
-        </span>
-    </div>
-
-    <div class="paper has-brackets" *ngIf="selectedTab == 'featurerequest' && !sent">
-
-        <div class="content">
-
-            <p>Would you like to see a feature added to ImprovPlus that we haven't managed to get working yet? Drop us a note and let us know what you want!</p>
-
-            <hr />
-
-            <h5>Dear Proprietors of <span class="light">improv</span><strong>plus</strong>,</h5>
-            
-            <textarea formInput placeholder="In order to make ImprovPlus even more awesome..." name="gordon" [(ngModel)]="featureMessage" rows="10"></textarea>
-
-            <div class="pull-right">
-                <p>Sincerely,</p>
-                
-                <div id="contactSigOutput">{{name}}</div>
-
-                <p>{{email}}</p>
-
-            </div>
-            <div class="clearfix"></div>
-
-            <div class="right button-group" *ngIf="!sending">
-                <p *ngIf="error" class="error">{{error}}</p>
-
-                <button class="button raised" (click)="sendFeatureRequest()">Send</button>
-            </div>
-
-        </div>
-
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>request a feature</h1></div>
-
-    </div>
-
-    <div class="paper has-brackets" *ngIf="selectedTab == 'reportbug' && !sent">
+    <div class="paper" *ngIf="!sent">
 
         <div class="content">
 
@@ -92,11 +38,9 @@
 
         </div>
 
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>report a bug</h1></div>
     </div>
 
-    <div class="paper has-brackets" *ngIf="sent">
+    <div class="paper" *ngIf="sent">
 
         <div class="content">
 
@@ -117,9 +61,6 @@
             </div>
             
         </div>
-
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>contact us</h1></div>
     
     </div>
 

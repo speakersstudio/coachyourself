@@ -50,16 +50,6 @@ export class DashboardMessageListView implements OnInit, OnDestroy {
 
     messages: DashboardMessage[] = [
         {
-            key: 'invite',
-            trigger: () => {
-                 let invites = this.userService.getInvites();
-                 if (invites.length) {
-                     this.invite = invites[0];
-                 }
-                 return invites.length;
-            }
-        },
-        {
             key: 'no-subscription',
             title: 'No Subscription',
             body: `
@@ -72,38 +62,6 @@ export class DashboardMessageListView implements OnInit, OnDestroy {
             },
             trigger: () => {
                 return this.userService.isExpired();
-            }
-        },
-        {
-            key: 'welcome'
-        },
-        {
-            key: 'birthday-' + (new Date()).getFullYear(),
-            title: '<div class="columns"><i class="fa fa-birthday-cake"></i> <span>Happy Birthday!</span> <i class="fa fa-birthday-cake"></i></div>',
-            body: `
-                <p>It's your Special Day (or at least the day you told us was your Special Day). We here at ImprovPlus hope it's a great one!</p>
-            `,
-            trigger: () => {
-                let birthday = this.userService.getLoggedInUser().birthday;
-                if (birthday) {
-                    let date = new Date(birthday),
-                        today = new Date();
-                    if (date.getDate() == today.getDate() && date.getMonth() == today.getMonth()) {
-                        return true;
-                    }
-                }
-            }
-        },
-        {
-            key: 'username',
-            trigger: () => {
-                return !this.userService.getLoggedInUser().firstName || !this.userService.getLoggedInUser().lastName
-            }
-        },
-        {
-            key: 'birthday-enter',
-            trigger: () => {
-                return !this.userService.getLoggedInUser().birthday;
             }
         }
     ];

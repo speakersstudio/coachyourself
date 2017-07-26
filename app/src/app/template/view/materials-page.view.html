@@ -8,11 +8,8 @@
     </span>
 </div>
 
-<div class="paper has-brackets" *ngIf="selectedTab == 'materials'">
+<div class="paper" *ngIf="selectedTab == 'materials'">
     <div class="content">
-        <!--<h4 class="right">Your Materials</h4>-->
-
-        <p *ngIf="team && library.materials.length">These materials are available to everyone in {{team.name}}.</p>
 
         <div class="card-list" *ngIf="library.materials.length">
 
@@ -35,23 +32,13 @@
 
         </div>
 
-        <p *ngIf="!library.materials.length">{{team ? team.name + ' doesn\'t' : 'You don\'t'}} own any materials yet.</p>
+        <p *ngIf="!library.materials.length">You don't own any materials yet.</p>
 
-    </div>
-
-    <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-
-    <div class="right-bracket">
-        <h1 *ngIf="!team">Your Materials</h1>
-        <h1 *ngIf="team">{{team.name}}</h1>
     </div>
 </div>
 
-<div class="paper has-brackets" *ngIf="selectedTab == 'packages'">
+<div class="paper" *ngIf="selectedTab == 'packages'">
     <div class="content">
-        <!--<h4 class="right">Your Materials</h4>-->
-
-        <p *ngIf="team && library.packages.length">These packages are available to everyone in {{team.name}}.</p>
 
         <div class="card-list" *ngIf="library.packages.length">
 
@@ -84,14 +71,8 @@
 
         </div>
 
-        <p *ngIf="!library.packages.length">{{team ? team.name + ' doesn\'t' : 'You don\'t'}} own any packages yet.</p>
+        <p *ngIf="!library.packages.length">You don't own any packages yet.</p>
 
     </div>
 
-    <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-
-    <div class="right-bracket">
-        <h1 *ngIf="!team">Your Packages</h1>
-        <h1 *ngIf="team">{{team.name}}</h1>
-    </div>
 </div>
