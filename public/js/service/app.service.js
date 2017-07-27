@@ -33,7 +33,7 @@ var AppService = (function () {
             .then(function (response) {
             var data = response.json();
             if (data.conflict == 'email') {
-                return 'That email address is already registered on ImprovPlus.';
+                return 'That email address is already registered with us.';
             }
             else {
                 return '';

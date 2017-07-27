@@ -14,7 +14,6 @@ import { UserService } from '../service/user.service';
 import { StripeService } from '../service/stripe.service';
 
 import { User } from '../model/user';
-import { Team } from '../model/team';
 import { Package } from '../model/package';
 
 import { ShrinkAnim, DialogAnim } from '../util/anim.util';
@@ -170,7 +169,7 @@ export class SignupComponent implements OnInit {
         if (msg.error && msg.error == 'email already exists') {
             this.emailError = "That email address is already registered.";
         } else if (msg.error) {
-            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by emailing contact@improvpl.us. Have a nice day, dude.', 'Okay bye', null, true);
+            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by emailing awesomedesk@thespeakers-studio.com.', 'Okay bye', null, true);
         }
     }
 

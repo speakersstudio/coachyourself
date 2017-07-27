@@ -313,7 +313,8 @@ nav {
     align-items: center;
 
     overflow: hidden;
-    padding: 25px 80px;
+    padding: $page-padding-v $page-padding-h;
+    height: $toolbar-height;
 
     background-color: $nav-bg;
 
@@ -324,7 +325,7 @@ nav {
         font-size: 18px;
         font-family: $font-futura;
         text-transform: uppercase;
-        letter-spacing: 12px;
+        letter-spacing: 10px;
         font-weight: 400;
         flex-grow: 1;
         margin: 0;

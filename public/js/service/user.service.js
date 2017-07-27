@@ -14,18 +14,15 @@ var Rx_1 = require("rxjs/Rx");
 require("rxjs/add/operator/toPromise");
 var app_http_1 = require("../data/app-http");
 var constants_1 = require("../constants");
-var util_1 = require("../util/util");
 var LoginResponse = (function () {
     function LoginResponse() {
     }
     return LoginResponse;
 }());
 var UserService = (function () {
-    function UserService(http
-        // private teamService: TeamService
-    ) {
+    function UserService(http) {
         this.http = http;
-        this.USER_STORAGE_KEY = 'improvplus_user';
+        this.USER_STORAGE_KEY = 'coachyourself_user';
         this.logginStateSource = new Rx_1.Subject();
         this.loginState$ = this.logginStateSource.asObservable();
         this.loadUserData();
@@ -158,17 +155,8 @@ var UserService = (function () {
             return null;
         }
     };
-    UserService.prototype.getAdminTeams = function () {
-        return this.getLoggedInUser().adminOfTeams;
-    };
-    UserService.prototype.getTeams = function () {
-        return this.getLoggedInUser().memberOfTeams;
-    };
     UserService.prototype.getUserName = function () {
         return this.loggedInUser.firstName + ' ' + this.loggedInUser.lastName;
-    };
-    UserService.prototype.getInvites = function () {
-        return this.loggedInUser.invites || [];
     };
     /**
      * Change information on the current user
@@ -214,25 +202,6 @@ var UserService = (function () {
             return this.loggedInUser.actions.indexOf(key) > -1;
         }
     };
-    UserService.prototype.isAdminOfTeam = function (team) {
-        return this.isUserAdminOfTeam(this.loggedInUser, team);
-    };
-    UserService.prototype.isUserAdminOfTeam = function (user, team) {
-        if (!user || !team) {
-            return false;
-        }
-        if (!user.adminOfTeams || !user.adminOfTeams.length) {
-            return false;
-        }
-        else if (user.adminOfTeams[0]._id) {
-            return user.adminOfTeams.findIndex(function (t) {
-                return t._id === team._id;
-            }) > -1;
-        }
-        else {
-            return user.adminOfTeams.indexOf(team._id) > -1;
-        }
-    };
     UserService.prototype.isSuperAdmin = function () {
         return this.loggedInUser && this.loggedInUser.superAdmin;
     };
@@ -242,51 +211,6 @@ var UserService = (function () {
     UserService.prototype.isExpired = function (user) {
         user = user || this.loggedInUser;
         return !user.subscription || (new Date(user.subscription.expiration)).getTime() <= Date.now();
-    };
-    UserService.prototype.cancelInvite = function (invite) {
-        var _this = this;
-        return this.http.delete(constants_1.API.cancelInvite(invite._id))
-            .toPromise()
-            .then(function (response) {
-            var inviteIndex = util_1.Util.indexOfId(_this.loggedInUser.invites, invite);
-            if (inviteIndex > -1) {
-                _this.loggedInUser.invites.splice(inviteIndex, 1);
-            }
-            return true;
-        });
-    };
-    UserService.prototype.acceptInvite = function (inviteId, email, password, name) {
-        var _this = this;
-        if (this.loggedInUser) {
-            return this.http.put(constants_1.API.acceptInvite(this.loggedInUser._id, inviteId), {}).toPromise()
-                .then(function (response) {
-                var user = response.json();
-                _this.saveUserData(user);
-                _this.announceLoginState();
-                return _this.loggedInUser;
-            });
-        }
-        else {
-            return this.http.post(constants_1.API.user, {
-                email: email,
-                password: password,
-                invite: inviteId,
-                name: name
-            }).toPromise()
-                .then(function (response) {
-                return response.json();
-            });
-        }
-    };
-    UserService.prototype.leaveTeam = function (team) {
-        var _this = this;
-        return this.http.put(constants_1.API.leaveTeam(this.loggedInUser._id, team._id), {}).toPromise()
-            .then(function (response) {
-            var user = response.json();
-            _this.saveUserData(user);
-            _this.announceLoginState();
-            return _this.loggedInUser;
-        });
     };
     /**
      * The following functions get various expanded properties on the user object. They don't change the logged in user data
@@ -310,9 +234,7 @@ var UserService = (function () {
     };
     UserService = __decorate([
         core_1.Injectable(),
-        __metadata("design:paramtypes", [app_http_1.AppHttp
-            // private teamService: TeamService
-        ])
+        __metadata("design:paramtypes", [app_http_1.AppHttp])
     ], UserService);
     return UserService;
 }());

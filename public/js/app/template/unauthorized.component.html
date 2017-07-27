@@ -1,9 +1,3 @@
-<div class="toolbar"
-    [class.on]="_app.toolbarVisible"
-    [tools]="_tools"
-    [title]="title"
-    ></div>
-
 <div class="page">
 
     <div class="paper has-brackets">
@@ -34,23 +28,20 @@
         <div class="content" *ngIf="userService.isLocked()">
             <h4 class="right">account locked</h4>
 
-            <p>Your account has been locked by an Administrator. If you feel this was in error, please contact us at contact@improvpl.us (be sure to include the Email address associated with your account so we can look it up).</p>
+            <p>Your account has been locked by an Administrator. If you feel this was in error, please contact us at awesomedesk@thespeakers-studio.com (be sure to include the Email address associated with your account so we can look it up).</p>
 
         </div>
 
         <!-- no subscription at all?! -->
         <div class="content" *ngIf="!can('subscription_view') && !userService.isLocked()">
-            <h4 class="right">join <span class="light">improv</span><strong>plus</strong></h4>
+            <h4 class="right">join</h4>
 
-            <p>Purchase a subscription to the ImprovPlus app and gain access to a wealth of incredible features.</p>
+            <p>Purchase a subscription to the app and gain access to a wealth of incredible features.</p>
 
             <div class="button-group center">
                 <button class="button brackets" routerLink="/signup">Sign Up</button>
             </div>
         </div>
-
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1></h1></div>
     </div>
 
 </div>

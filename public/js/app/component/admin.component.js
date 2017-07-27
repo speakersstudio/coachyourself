@@ -16,7 +16,6 @@ var constants_1 = require("../../constants");
 var app_service_1 = require("../../service/app.service");
 var library_service_1 = require("../service/library.service");
 var history_service_1 = require("../service/history.service");
-var game_database_service_1 = require("../service/game-database.service");
 var material_item_1 = require("../../model/material-item");
 var user_service_1 = require("../../service/user.service");
 var time_util_1 = require("../../util/time.util");
@@ -24,16 +23,14 @@ var app_http_1 = require("../../data/app-http");
 var util_1 = require("../../util/util");
 var anim_util_1 = require("../../util/anim.util");
 var AdminComponent = (function () {
-    function AdminComponent(_app, router, _service, libraryService, userService, historyService, gameService, http) {
+    function AdminComponent(_app, router, _service, libraryService, userService, historyService, http) {
         this._app = _app;
         this.router = router;
         this._service = _service;
         this.libraryService = libraryService;
         this.userService = userService;
         this.historyService = historyService;
-        this.gameService = gameService;
         this.http = http;
-        this.title = '<span class="light">super</span><strong>admin</strong>';
         this.tabs = [
             {
                 name: 'Material Items',
@@ -59,29 +56,29 @@ var AdminComponent = (function () {
         this.selectedTab = 'materials';
         this.historyDisplayCount = 0;
         this.historyShowStuff = true;
-        this._tools = [
-            {
-                icon: "fa-database",
-                name: "backup",
-                text: "Back Up Database"
-            },
-            {
-                icon: "fa-cloud-upload",
-                name: "restoredb",
-                text: "Restore Database from Backup"
-            }
-        ];
     }
-    AdminComponent.prototype.onToolClicked = function (tool) {
-        switch (tool.name) {
-            case "backup":
-                this.doBackup();
-                break;
-            case "restoredb":
-                this.restore();
-                break;
-        }
-    };
+    // _tools: Tool[] = [
+    //     {
+    //         icon: "fa-database",
+    //         name: "backup",
+    //         text: "Back Up Database"
+    //     },
+    //     {
+    //         icon: "fa-cloud-upload",
+    //         name: "restoredb",
+    //         text: "Restore Database from Backup"
+    //     }
+    // ]
+    // onToolClicked(tool: Tool): void {
+    //     switch (tool.name) {
+    //         case "backup":
+    //             this.doBackup();
+    //             break;
+    //         case "restoredb":
+    //             this.restore();
+    //             break;
+    //     }
+    // }
     AdminComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.showMaterials();
@@ -93,6 +90,8 @@ var AdminComponent = (function () {
     };
     AdminComponent.prototype.selectTab = function (tab) {
         this.selectedTab = tab.id;
+        this.selectedMaterial = null;
+        this.selectedPackage = null;
     };
     AdminComponent.prototype.back = function () {
         this.selectedMaterial = null;
@@ -165,7 +164,6 @@ var AdminComponent = (function () {
         event.preventDefault();
     };
     AdminComponent.prototype.expandHistory = function (history) {
-        var _this = this;
         if (this.expandedHistory == history ||
             history.action == 'login' || history.action == 'logout' || history.action == 'refresh') {
             this.expandedHistory = null;
@@ -175,39 +173,6 @@ var AdminComponent = (function () {
         var target = history.target, reference = history.reference;
         this.expandedHistoryTargetName = 'loading';
         switch (history.action) {
-            case 'game_edit':
-                this.gameService.getGame(target).then(function (game) {
-                    if (game.names.length) {
-                        _this.expandedHistoryTargetName = game.names[0].name;
-                    }
-                    else {
-                        _this.expandedHistoryTargetName = '';
-                    }
-                });
-                break;
-            case 'game_tag_add':
-                this.gameService.getGame(target).then(function (game) {
-                    _this.expandedHistoryTargetName = '';
-                    if (game.tags.length) {
-                        var index = util_1.Util.indexOfId(game.tags, reference);
-                        if (index > -1) {
-                            _this.expandedHistoryTargetName = '<span class="tag"><i class="fa fa-hashtag"></i> ' + game.tags[index].name + '</span> &gt; ';
-                        }
-                    }
-                    if (game.names.length) {
-                        _this.expandedHistoryTargetName += game.names[0].name;
-                    }
-                });
-                break;
-            case 'game_tag_remove':
-                this.gameService.getGame(target).then(function (game) {
-                    _this.expandedHistoryTargetName = '';
-                    _this.expandedHistoryTargetName = '<span class="tag"><i class="fa fa-remove"></i> ' + reference + '</span> &lt; ';
-                    if (game.names.length) {
-                        _this.expandedHistoryTargetName += game.names[0].name;
-                    }
-                });
-                break;
             default:
                 this.expandedHistoryTargetName = '';
                 break;
@@ -251,9 +216,11 @@ var AdminComponent = (function () {
     AdminComponent.prototype.selectMaterial = function (material) {
         this.newVersion = new material_item_1.MaterialItemVersion();
         this.selectedMaterial = material;
+        this.selectedTab = null;
     };
     AdminComponent.prototype.selectPackage = function (p) {
         this.selectedPackage = p;
+        this.selectedTab = null;
         this.selectedPackageDescription = p.description.join('\n');
     };
     AdminComponent.prototype.createMaterial = function () {
@@ -452,7 +419,6 @@ var AdminComponent = (function () {
             library_service_1.LibraryService,
             user_service_1.UserService,
             history_service_1.HistoryService,
-            game_database_service_1.GameDatabaseService,
             app_http_1.AppHttp])
     ], AdminComponent);
     return AdminComponent;

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {AppComponent    } from '../../component/app.component';
-import { Tool } from '../view/toolbar.view';
 
 import { UserService } from '../../service/user.service';
 
@@ -13,16 +12,11 @@ import { UserService } from '../../service/user.service';
 })
 export class UnauthorizedComponent implements OnInit {
 
-    title: string = '';
-
     constructor(
         public _app: AppComponent,
         private router: Router,
         public userService: UserService
     ) { }
-
-    _tools: Tool[] = [
-    ]
 
     ngOnInit(): void {
     }

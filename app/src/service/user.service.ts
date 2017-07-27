@@ -10,11 +10,7 @@ import { API } from '../constants';
 import { Util } from '../util/util';
 
 import { User } from "../model/user";
-import { Team } from '../model/team';
 import { Purchase } from '../model/purchase';
-import { Invite } from '../model/invite';
-
-// import { TeamService } from '../app/service/team.service';
 
 import { Library } from '../model/library';
 
@@ -27,7 +23,7 @@ class LoginResponse {
 @Injectable()
 export class UserService {
 
-    private USER_STORAGE_KEY = 'improvplus_user';
+    private USER_STORAGE_KEY = 'coachyourself_user';
 
     loggedInUser: User;
 
@@ -40,7 +36,6 @@ export class UserService {
 
     constructor(
         private http: AppHttp
-        // private teamService: TeamService
     ) {
         this.loadUserData();
     }
@@ -184,20 +179,8 @@ export class UserService {
         }
     }
 
-    getAdminTeams(): Team[] | string[] {
-        return this.getLoggedInUser().adminOfTeams;
-    }
-
-    getTeams(): Team[] | string[] {
-        return this.getLoggedInUser().memberOfTeams;
-    }
-
     getUserName(): string {
         return this.loggedInUser.firstName + ' ' + this.loggedInUser.lastName;
-    }
-
-    getInvites(): Invite[] {
-        return this.loggedInUser.invites || [];
     }
 
     /**
@@ -247,26 +230,6 @@ export class UserService {
         }
     }
 
-    isAdminOfTeam(team: Team): boolean {
-        return this.isUserAdminOfTeam(this.loggedInUser, team);
-    }
-
-    isUserAdminOfTeam(user: User, team: Team): boolean {
-        if (!user || !team) {
-            return false;
-        }
-
-        if (!user.adminOfTeams || !user.adminOfTeams.length) {
-            return false;
-        } else if ((<Team> user.adminOfTeams[0])._id) {
-            return (<Team[]> user.adminOfTeams).findIndex(t => {
-                return t._id === team._id;
-            }) > -1;
-        } else {
-            return (<string[]> user.adminOfTeams).indexOf(team._id) > -1;
-        }
-    }
-
     isSuperAdmin(): boolean {
         return this.loggedInUser && this.loggedInUser.superAdmin;
     }
@@ -278,53 +241,6 @@ export class UserService {
     isExpired(user?: User): boolean {
         user = user || this.loggedInUser;
         return !user.subscription || (new Date(user.subscription.expiration)).getTime() <= Date.now();
-    }
-
-    cancelInvite(invite: Invite): Promise<boolean> {
-        return this.http.delete(API.cancelInvite(invite._id))
-            .toPromise()
-            .then(response => {
-                let inviteIndex = Util.indexOfId(this.loggedInUser.invites, invite);
-                if (inviteIndex > -1) {
-                    this.loggedInUser.invites.splice(inviteIndex, 1);
-                }
-
-                return true;
-            })
-    }
-
-    acceptInvite(inviteId: string, email?: string, password?: string, name?: string): Promise<User> {
-        if (this.loggedInUser) {
-            return this.http.put(API.acceptInvite(this.loggedInUser._id, inviteId), {}).toPromise()
-                .then(response => {
-                    let user = response.json() as User;
-                    this.saveUserData(user);
-                    this.announceLoginState();
-                    return this.loggedInUser;
-                })
-        } else {
-            return this.http.post(API.user, {
-                email: email,
-                password: password,
-                invite: inviteId,
-                name: name
-            }).toPromise()
-            .then(response => {
-                return response.json() as User;
-            });
-        }
-    }
-
-    leaveTeam(team: Team): Promise<User> {
-        return this.http.put(API.leaveTeam(this.loggedInUser._id, team._id), {}).toPromise()
-            .then(response => {
-                let user = response.json() as User;
-
-                this.saveUserData(user);
-                this.announceLoginState();
-
-                return this.loggedInUser;
-            })
     }
 
     /**

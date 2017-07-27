@@ -19,10 +19,8 @@ var DashboardComponent = (function () {
         this.router = router;
         this.userService = userService;
         this.title = 'The Speaker\'s Studio';
-        this._tools = [];
     }
     DashboardComponent.prototype.ngOnInit = function () {
-        this._app.showBackground(true);
     };
     DashboardComponent = __decorate([
         core_1.Component({

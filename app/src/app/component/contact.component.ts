@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { AppHttp } from '../../data/app-http';
 
 import { AppComponent } from '../../component/app.component';
-import { Tool } from '../view/toolbar.view';
 
 import { TabData } from '../../model/tab-data';
 
@@ -28,7 +27,6 @@ import { UserService } from '../../service/user.service';
     `]
 })
 export class ContactComponent implements OnInit {
-    title: string = '<span class="light">contact</span><strong>us</strong>';
 
     month: string;
     day: number;
@@ -58,35 +56,9 @@ export class ContactComponent implements OnInit {
         private userService: UserService
     ) { }
 
-    private _tools: Tool[] = [
-
-    ]
-
     ngOnInit(): void {
         this.name = this.userService.getUserName() || 'A humble user';
         this.email = this.userService.getLoggedInUser().email;
-    }
-
-    sendFeatureRequest(): void {
-        if (!this.featureMessage) {
-            this.error = "We appreciate the attention, but you should actually say something."
-            this.errorField = 'message';
-        } else {
-            this.error = "";
-            this.errorField = "";
-
-            this.sending = true;
-            this._app.showLoader();
-            this.http.post('/api/contact/featurerequest', {
-                message: this.featureMessage
-            })
-                .toPromise()
-                .then(response => {
-                    this._app.hideLoader();
-                    this.sending = false;
-                    this.sent = true;
-                });
-        }
     }
 
     sendBugReport(): void {

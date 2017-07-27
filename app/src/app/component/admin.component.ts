@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import {AppComponent} from '../../component/app.component';
-import { Tool } from '../view/toolbar.view';
 
 import { API } from '../../constants';
 
@@ -11,14 +10,12 @@ import { TabData } from '../../model/tab-data';
 import { AppService } from '../../service/app.service';
 import { LibraryService } from '../service/library.service';
 import { HistoryService } from '../service/history.service';
-import { GameDatabaseService } from '../service/game-database.service';
 
 import { PackageConfig } from '../../model/config';
 import { Subscription } from '../../model/subscription';
 import { Package } from '../../model/package';
 import { MaterialItem, MaterialItemVersion } from '../../model/material-item';
 import { HistoryModel } from '../../model/history';
-import { Tag } from '../../model/tag';
 
 import { UserService } from '../../service/user.service';
 
@@ -38,8 +35,6 @@ import { DialogAnim } from '../../util/anim.util';
 export class AdminComponent implements OnInit {
 
     @ViewChild('versionFileInput') versionFileInput: ElementRef;
-
-    title: string = '<span class="light">super</span><strong>admin</strong>';
 
     tabs: TabData[] = [
         {
@@ -96,33 +91,32 @@ export class AdminComponent implements OnInit {
         private libraryService: LibraryService,
         private userService: UserService,
         private historyService: HistoryService,
-        private gameService: GameDatabaseService,
         private http: AppHttp
     ) { }
 
-    _tools: Tool[] = [
-        {
-            icon: "fa-database",
-            name: "backup",
-            text: "Back Up Database"
-        },
-        {
-            icon: "fa-cloud-upload",
-            name: "restoredb",
-            text: "Restore Database from Backup"
-        }
-    ]
+    // _tools: Tool[] = [
+    //     {
+    //         icon: "fa-database",
+    //         name: "backup",
+    //         text: "Back Up Database"
+    //     },
+    //     {
+    //         icon: "fa-cloud-upload",
+    //         name: "restoredb",
+    //         text: "Restore Database from Backup"
+    //     }
+    // ]
 
-    onToolClicked(tool: Tool): void {
-        switch (tool.name) {
-            case "backup":
-                this.doBackup();
-                break;
-            case "restoredb":
-                this.restore();
-                break;
-        }
-    }
+    // onToolClicked(tool: Tool): void {
+    //     switch (tool.name) {
+    //         case "backup":
+    //             this.doBackup();
+    //             break;
+    //         case "restoredb":
+    //             this.restore();
+    //             break;
+    //     }
+    // }
 
     ngOnInit(): void {
         this.showMaterials();
@@ -136,6 +130,9 @@ export class AdminComponent implements OnInit {
 
     selectTab(tab: TabData): void {
         this.selectedTab = tab.id;
+
+        this.selectedMaterial = null;
+        this.selectedPackage = null;
     }
 
     back(): void {
@@ -233,40 +230,6 @@ export class AdminComponent implements OnInit {
         this.expandedHistoryTargetName = 'loading';
 
         switch(history.action) {
-            case 'game_edit':
-                this.gameService.getGame(target).then(game => {
-                    if (game.names.length) {
-                        this.expandedHistoryTargetName = game.names[0].name;
-                    } else {
-                        this.expandedHistoryTargetName = '';
-                    }
-                });
-                break;
-            case 'game_tag_add':
-                this.gameService.getGame(target).then(game => {
-                    this.expandedHistoryTargetName = '';
-                    if (game.tags.length) {
-                        let index = Util.indexOfId(game.tags, reference);
-                        if (index > -1) {
-                            this.expandedHistoryTargetName = '<span class="tag"><i class="fa fa-hashtag"></i> ' + (<Tag> game.tags[index]).name + '</span> &gt; ';
-                        }
-                    }
-
-                    if (game.names.length) {
-                        this.expandedHistoryTargetName += game.names[0].name;
-                    }
-                })
-                break;
-            case 'game_tag_remove':
-                this.gameService.getGame(target).then(game => {
-                    this.expandedHistoryTargetName = '';
-                    this.expandedHistoryTargetName = '<span class="tag"><i class="fa fa-remove"></i> ' + reference + '</span> &lt; ';
-
-                    if (game.names.length) {
-                        this.expandedHistoryTargetName += game.names[0].name;
-                    }
-                })
-                break;
             default:
                 this.expandedHistoryTargetName = '';
                 break;
@@ -311,10 +274,12 @@ export class AdminComponent implements OnInit {
     selectMaterial(material: MaterialItem): void {
         this.newVersion = new MaterialItemVersion();
         this.selectedMaterial = material;
+        this.selectedTab = null;
     }
 
     selectPackage(p: Package): void {
         this.selectedPackage = p;
+        this.selectedTab = null;
 
         this.selectedPackageDescription = p.description.join('\n');
     }

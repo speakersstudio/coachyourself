@@ -22,7 +22,6 @@ var loggedin_module_1 = require("../app/module/loggedin.module");
 var login_screen_component_1 = require("../component/login-screen.component");
 var signup_component_1 = require("../component/signup.component");
 var change_password_component_1 = require("../component/change-password.component");
-var invite_component_1 = require("../component/invite.component");
 var marketing_toolbar_view_1 = require("../view/marketing-toolbar.view");
 // import { FormInputDirective } from '../view/form-input.directive';
 var AppModule = (function () {
@@ -44,7 +43,6 @@ var AppModule = (function () {
                 app_component_1.AppComponent,
                 signup_component_1.SignupComponent,
                 change_password_component_1.ChangePasswordComponent,
-                invite_component_1.InviteComponent,
                 marketing_toolbar_view_1.MarketingToolbarView
             ],
             bootstrap: [app_component_1.AppComponent],

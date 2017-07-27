@@ -18,8 +18,6 @@ var UnauthorizedComponent = (function () {
         this._app = _app;
         this.router = router;
         this.userService = userService;
-        this.title = '';
-        this._tools = [];
     }
     UnauthorizedComponent.prototype.ngOnInit = function () {
     };

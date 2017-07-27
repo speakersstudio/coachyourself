@@ -1,17 +1,21 @@
 footer {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    @include abs(null, 0, 0, 0, 5);
-    height: $toolbar-height;
-    padding: 0 ($toolbar-height / 2);
+    // @include abs(null, 0, 0, 0, 5);
+    box-sizing: border-box;
+    height: $footer-height;
+    margin-top: -$footer-height;
+    padding: $page-padding-v $page-padding-h;
     font-size: 13px;
-    font-weight: 300;
+    background-color: $color-footer-bg;
+    color: $color-footer-text;
 
     a {
-        color: $color-text;
-        text-decoration: underline;
+        color: $color-primary;
+        text-decoration: none;
         cursor: pointer;
+        text-transform: uppercase;
     }
 }

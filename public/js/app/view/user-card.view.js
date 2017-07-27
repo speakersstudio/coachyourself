@@ -15,7 +15,6 @@ var text_util_1 = require("../../util/text.util");
 var time_util_1 = require("../../util/time.util");
 var user_service_1 = require("../../service/user.service");
 var user_1 = require("../../model/user");
-var team_1 = require("../../model/team");
 var UserCardView = (function () {
     function UserCardView(userService) {
         this.userService = userService;
@@ -27,11 +26,6 @@ var UserCardView = (function () {
     UserCardView.prototype.ngOnInit = function () {
         this.descriptionText = text_util_1.TextUtil.stripTags(this.user.description);
         this.userIsMe = this.user._id == this.userService.getLoggedInUser()._id;
-        if (this.team) {
-            var teamId = this.team._id;
-            this.admin = this.userService.isUserAdminOfTeam(this.user, this.team);
-            this.amIAdmin = this.userService.isAdminOfTeam(this.team);
-        }
     };
     UserCardView.prototype.ngOnDestroy = function () {
     };
@@ -48,10 +42,6 @@ var UserCardView = (function () {
         core_1.Input(),
         __metadata("design:type", user_1.User)
     ], UserCardView.prototype, "user", void 0);
-    __decorate([
-        core_1.Input(),
-        __metadata("design:type", team_1.Team)
-    ], UserCardView.prototype, "team", void 0);
     __decorate([
         core_1.Output(),
         __metadata("design:type", core_1.EventEmitter)

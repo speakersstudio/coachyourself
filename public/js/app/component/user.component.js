@@ -24,50 +24,11 @@ var UserComponent = (function () {
         this.location = location;
         this._app = _app;
         this.fb = fb;
-        this.title = "Account";
-        this.tabs = [
-            {
-                name: 'Your Account',
-                id: 'user',
-                icon: 'user'
-            },
-            {
-                name: 'Your Subscription',
-                id: 'subscription',
-                icon: 'id-card-o'
-            },
-            {
-                name: 'Purchase History',
-                id: 'purchases',
-                icon: 'money'
-            }
-        ];
-        this.selectedTab = 'user';
-        this._tools = [
-            {
-                icon: "fa-sign-out",
-                name: "logout",
-                text: "Log Out",
-                active: false
-            }
-        ];
     }
     UserComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.errorCount = 0;
         this.weGood = true;
         this.user = this._app.user;
-        this.userService.fetchPurchases().then(function (p) {
-            _this.purchases = p;
-        });
-        this.userService.fetchSubscription().then(function (u) {
-            _this.subscription = u.subscription;
-        });
-    };
-    UserComponent.prototype.ngOnDestroy = function () {
-    };
-    UserComponent.prototype.selectTab = function (tab) {
-        this.selectedTab = tab.id;
     };
     UserComponent.prototype.logout = function () {
         this._app.logout();
@@ -85,22 +46,11 @@ var UserComponent = (function () {
             });
         }
     };
-    UserComponent.prototype.onToolClicked = function (tool) {
-        this._app.showLoader();
-        switch (tool.name) {
-            case "logout":
-                this._app.logout();
-                break;
-        }
-    };
     UserComponent.prototype.getDate = function (date) {
         return time_util_1.TimeUtil.simpleDate(date);
     };
     UserComponent.prototype.getTime = function (date) {
         return time_util_1.TimeUtil.simpleTime(date);
-    };
-    UserComponent.prototype.cancelSubscription = function () {
-        this._app.toast("This button doesn't work yet.");
     };
     UserComponent = __decorate([
         core_1.Component({

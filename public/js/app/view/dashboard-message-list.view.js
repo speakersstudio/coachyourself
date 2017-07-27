@@ -106,50 +106,6 @@ var DashboardMessageListView = (function () {
             }, 100);
         });
     };
-    DashboardMessageListView.prototype.acceptInvite = function () {
-        var _this = this;
-        this.isPosting = true;
-        this.userService.acceptInvite(this.invite._id).then(function () {
-            _this.isPosting = false;
-            _this.inviteAccepted = true;
-        });
-    };
-    DashboardMessageListView.prototype.rejectInvite = function () {
-        var _this = this;
-        this.isPosting = true;
-        this.userService.cancelInvite(this.invite).then(function () {
-            _this.isPosting = false;
-            _this.inviteRejected = true;
-        });
-    };
-    DashboardMessageListView.prototype.dismissInvite = function () {
-        var _this = this;
-        this.messageElement.close();
-        setTimeout(function () {
-            _this.inviteAccepted = false;
-            _this.inviteRejected = false;
-            _this.showNextMessage();
-        }, 300);
-    };
-    DashboardMessageListView.prototype.saveBirthday = function () {
-        var _this = this;
-        if (this.birthdayYear < 100) {
-            this.birthdayYear = this.birthdayYear + 1900; // Y2K compliant!
-        }
-        var birthday = new Date();
-        birthday.setDate(this.birthdayDay);
-        birthday.setMonth(this.birthdayMonth);
-        birthday.setFullYear(this.birthdayYear);
-        this.isPosting = true;
-        var user = this.userService.getLoggedInUser();
-        user.birthday = birthday.getTime() + '';
-        this.userService.updateUser(user).then(function (user) {
-            _this.isPosting = false;
-            setTimeout(function () {
-                _this.showNextMessage();
-            }, 100);
-        });
-    };
     __decorate([
         core_1.ViewChild('dashboardMessage', { read: bracket_card_directive_1.BracketCardDirective }),
         __metadata("design:type", bracket_card_directive_1.BracketCardDirective)

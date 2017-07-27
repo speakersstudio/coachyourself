@@ -1,15 +1,12 @@
 import { 
     Component,
-    OnInit,
-    OnDestroy
+    OnInit
 } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
 import { AppComponent } from '../../component/app.component';
-
-import { Tool } from '../view/toolbar.view';
 
 import { TabData } from '../../model/tab-data';
 
@@ -18,7 +15,6 @@ import { UserService } from "../../service/user.service";
 import { User } from "../../model/user";
 import { Subscription } from '../../model/subscription';
 import { Purchase } from '../../model/purchase';
-import { Team } from '../../model/team';
 
 import { TimeUtil } from '../../util/time.util';
 
@@ -29,28 +25,7 @@ const MAX_ATTEMPTS = 5;
     selector: "user",
     templateUrl: "../template/user.component.html"
 })
-export class UserComponent implements OnInit, OnDestroy {
-
-    title: string = "Account";
-
-    tabs = [
-        {
-            name: 'Your Account',
-            id: 'user',
-            icon: 'user'
-        },
-        {
-            name: 'Your Subscription',
-            id: 'subscription',
-            icon: 'id-card-o'
-        },
-        {
-            name: 'Purchase History',
-            id: 'purchases',
-            icon: 'money'
-        }
-    ];
-    selectedTab: string = 'user';
+export class UserComponent implements OnInit {
 
     email: string;
     password: string;
@@ -79,36 +54,11 @@ export class UserComponent implements OnInit, OnDestroy {
         private fb: FormBuilder
     ) { }
 
-    _tools: Tool[] = [
-        {
-            icon: "fa-sign-out",
-            name: "logout",
-            text: "Log Out",
-            active: false
-        }
-    ]
-
     ngOnInit(): void {
         this.errorCount = 0;
         this.weGood = true;
 
         this.user = this._app.user;
-
-        this.userService.fetchPurchases().then(p => {
-            this.purchases = p;
-        });
-
-        this.userService.fetchSubscription().then(u => {
-            this.subscription = u.subscription;
-        });
-    }
-
-    ngOnDestroy(): void {
-
-    }
-
-    selectTab(tab: TabData): void {
-        this.selectedTab = tab.id;
     }
 
     logout(): void {
@@ -128,16 +78,6 @@ export class UserComponent implements OnInit, OnDestroy {
         }
     }
 
-    onToolClicked(tool: Tool): void {
-        this._app.showLoader();
-        
-        switch (tool.name) {
-            case "logout":
-                this._app.logout();
-                break;
-        }
-    }
-
     getDate(date: string): string {
         return TimeUtil.simpleDate(date);
     }
@@ -145,8 +85,5 @@ export class UserComponent implements OnInit, OnDestroy {
     getTime(date: string): string {
         return TimeUtil.simpleTime(date);
     }
-
-    cancelSubscription(): void {
-        this._app.toast("This button doesn't work yet.");
-    }
+    
 }

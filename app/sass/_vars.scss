@@ -11,6 +11,9 @@ $color-bg: #FFFFFF; // the main window background
 $color-white: #FFFFFF;
 $color-black: #000000;
 
+$color-footer-bg: $color-black;
+$color-footer-text: $color-white;
+
 $color-shade: rgba(0,0,0,0.2); // the color for fullscreen 'shade' elements
 
 $color-text: #606060; // primary text color
@@ -18,12 +21,6 @@ $color-text-highlight: rgba(26,26,26, 0.7);
 
 $color-hr: rgba(96,96,96,0.5); // color for dividers
 $color-hr-light: rgba(96,96,96,0.1);
-
-$color-home-bg-black: rgba(0,0,0,0.3);
-$color-home-bg-white: rgba(255,255,255,0.3);
-
-$color-curtain: #CCCCCC; // the color for the app background (or curtain for paper-style pages)
-$color-curtain-fade: #e5e5e5; // the color that fades in at the top of the screen
 
 $color-transparent: rgba(0,0,0,0); //utility!
 
@@ -65,8 +62,8 @@ $border-radius: 2px;
 $fab-width: 56px;
 $icon-size: 24px;
 
-$curtain-height: 25vh;
-// $page-bracket-width: 8.7%;
+$page-padding-v: 25px;
+$page-padding-h: 80px;
 
 // BITS!
 $dropdown-max-height: 337px;
@@ -87,8 +84,8 @@ $tag-border-radius: $border-radius * 2;
 // toolbar
 $toolbar-height: 74px;
 $toolbar-font-weight: 400;
-$toolbar-padding: $std;
-//$toolbar-icon-spacing: 1%;
+
+$footer-height: 74px;
 
 // search
 $search-padding: 47px;

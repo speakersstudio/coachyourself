@@ -112,7 +112,7 @@ export class LoginView implements OnInit {
                     }
 
                 } else {
-                    this.loginError = 'Some sort of server error happened. If this keeps happening, please email contact@improvpl.us';
+                    this.loginError = 'Some sort of server error happened. If this keeps happening, please email awesomedesk@thespeakers-studio.com';
                 }
             });
     }

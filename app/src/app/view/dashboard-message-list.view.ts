@@ -22,8 +22,6 @@ import { BracketCardDirective } from '../../directive/bracket-card.directive';
 
 import { ShrinkAnim } from '../../util/anim.util';
 
-import { Invite } from '../../model/invite';
-
 class DashboardMessage {
     key: string;
     title?: string;
@@ -71,8 +69,6 @@ export class DashboardMessageListView implements OnInit, OnDestroy {
 
     firstName: string;
     lastName: string;
-
-    invite: Invite;
 
     constructor(
         private userService: UserService,
@@ -149,60 +145,5 @@ export class DashboardMessageListView implements OnInit, OnDestroy {
             });
 
     }
-
-    inviteAccepted: boolean;
-    inviteRejected: boolean;
-
-    acceptInvite(): void {
-        this.isPosting = true;
-        this.userService.acceptInvite(this.invite._id).then(() => {
-            this.isPosting = false;
-            this.inviteAccepted = true;
-        });
-    }
-
-    rejectInvite(): void {
-        this.isPosting = true;
-        this.userService.cancelInvite(this.invite).then(() => {
-            this.isPosting = false;
-            this.inviteRejected = true;
-        })
-    }
-
-    dismissInvite(): void {
-        this.messageElement.close();
-
-        setTimeout(() => {
-            this.inviteAccepted = false;
-            this.inviteRejected = false;
-            
-            this.showNextMessage();
-        }, 300);
-    }
-
-    birthdayMonth: number;
-    birthdayDay: number;
-    birthdayYear: number;
-
-    saveBirthday(): void {
-        if (this.birthdayYear < 100) {
-            this.birthdayYear = this.birthdayYear + 1900; // Y2K compliant!
-        }
-
-        let birthday = new Date();
-        birthday.setDate(this.birthdayDay);
-        birthday.setMonth(this.birthdayMonth);
-        birthday.setFullYear(this.birthdayYear);
-
-        this.isPosting = true;
-
-        let user = this.userService.getLoggedInUser();
-        user.birthday = birthday.getTime() + '';
-        this.userService.updateUser(user).then(user => {
-            this.isPosting = false;
-            setTimeout(() => {
-                this.showNextMessage();
-            }, 100);
-        })
-    }
+        
 }

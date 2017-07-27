@@ -29,16 +29,6 @@ var LibraryService = (function () {
             return response.json();
         });
     };
-    /**
-     * Get the materials that a team owns (will die )
-     */
-    LibraryService.prototype.getTeamMaterials = function (teamId) {
-        return this.http.get(constants_1.API.teamMaterials(teamId))
-            .toPromise()
-            .then(function (response) {
-            return response.json();
-        });
-    };
     LibraryService.prototype.downloadMaterial = function (id) {
         this.http.get(constants_1.API.getMaterial(id))
             .toPromise()

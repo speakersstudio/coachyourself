@@ -97,7 +97,7 @@ router.get('/*', function(req, res, next) {
   let template = process.env.NODE_ENV == 'production' || process.env.NODE_ENV == 'qa' ? 'index-prod' : 'index-dev';
 
   res.render(template, {
-       title: 'improvplus',
+       title: 'The Speaker\'s Studio',
        prod: process.env.NODE_ENV == 'production',
        baseHref: '/'
    });

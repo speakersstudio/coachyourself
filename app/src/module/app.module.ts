@@ -20,7 +20,6 @@ import { LoggedInModule } from '../app/module/loggedin.module';
 import { LoginScreenComponent } from '../component/login-screen.component';
 import { SignupComponent } from '../component/signup.component';
 import { ChangePasswordComponent } from '../component/change-password.component'
-import { InviteComponent } from '../component/invite.component';
 
 import { MarketingToolbarView } from '../view/marketing-toolbar.view';
 
@@ -41,7 +40,6 @@ import { MarketingToolbarView } from '../view/marketing-toolbar.view';
         AppComponent,
         SignupComponent,
         ChangePasswordComponent,
-        InviteComponent,
         MarketingToolbarView
     ],
     bootstrap: [ AppComponent ],

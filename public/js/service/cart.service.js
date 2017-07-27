@@ -66,20 +66,13 @@ var CartService = (function () {
             return result.json();
         });
     };
-    CartService.prototype.signup = function (token, email, password, userName, teamName) {
-        // if (pack && pack._id !== 'sub') {
-        //     this.addPackage(pack);
-        // }
-        // if (role) {
-        //     this.addSubscription(role);
-        // }
+    CartService.prototype.signup = function (token, email, password, userName) {
         return this.http.post(constants_1.API.signup, {
             stripeToken: token,
             purchase: this.purchase,
             email: email,
             password: password,
-            userName: userName,
-            teamName: teamName
+            userName: userName
         }).toPromise()
             .then(function (result) {
             return result.json();

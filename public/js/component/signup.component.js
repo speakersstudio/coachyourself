@@ -125,7 +125,7 @@ var SignupComponent = (function () {
             this.emailError = "That email address is already registered.";
         }
         else if (msg.error) {
-            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by emailing contact@improvpl.us. Have a nice day, dude.', 'Okay bye', null, true);
+            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by emailing awesomedesk@thespeakers-studio.com.', 'Okay bye', null, true);
         }
     };
     SignupComponent.prototype.showTerms = function () {

@@ -1,14 +1,4 @@
-<div class="tabs">
-    <span class="tab" 
-        *ngFor="let tab of tabs"
-        [class.active]="tab.id == selectedTab"
-        (click)="selectTab(tab)">
-        <i class="fa fa-{{tab.icon}}"></i>
-        <span>{{tab.name}}</span>
-    </span>
-</div>
-
-<div class="paper" *ngIf="selectedTab == 'materials'">
+<div class="paper">
     <div class="content">
 
         <div class="card-list" *ngIf="library.materials.length">
@@ -35,44 +25,4 @@
         <p *ngIf="!library.materials.length">You don't own any materials yet.</p>
 
     </div>
-</div>
-
-<div class="paper" *ngIf="selectedTab == 'packages'">
-    <div class="content">
-
-        <div class="card-list" *ngIf="library.packages.length">
-
-            <div class="card brackets {{package.color}}"
-                *ngFor="let package of library.packages">
-
-                <h4>{{package.name}}</h4>
-
-                <ul>
-                    <li *ngFor="let desc of package.description">{{desc}}</li>
-                </ul>
-
-                <ul class="taglist files">
-                    <li *ngFor="let packageId of package.packages" class="grey clickable"
-                        (click)="selectPackageById(packageId)">
-                        <i class="fa fa-book"></i>
-                        {{findPackageById(packageId).name}}
-                    </li>
-
-                    <li *ngFor="let material of package.materials" class="grey clickable"
-                        (click)="selectMaterial(material)">
-                        <i *ngIf="material.versions[0] && material.versions[0].extension == 'pdf'" class="fa fa-file-pdf-o large" title="PDF"></i>
-                        {{material.name}}
-                    </li>
-
-                    <li class="{{package.color}} clickable"
-                        (click)="selectPackage(package)"><i class="fa fa-book"></i>Download entire {{package.name}} package</li>
-                </ul>
-            </div>
-
-        </div>
-
-        <p *ngIf="!library.packages.length">You don't own any packages yet.</p>
-
-    </div>
-
 </div>

@@ -11,16 +11,11 @@ var router_1 = require("@angular/router");
 var auth_guard_service_1 = require("../service/auth-guard.service");
 var dashboard_component_1 = require("../component/dashboard.component");
 var materials_library_component_1 = require("../component/materials-library.component");
-var help_component_1 = require("../component/help.component");
 var unauthorized_component_1 = require("../component/unauthorized.component");
-var game_database_component_1 = require("../component/game-database.component");
-var about_component_1 = require("../component/about.component");
 var contact_component_1 = require("../component/contact.component");
-var game_details_component_1 = require("../component/game-details.component");
 var user_component_1 = require("../component/user.component");
 var legal_component_1 = require("../component/legal.component");
 var videos_component_1 = require("../component/videos.component");
-var glossary_component_1 = require("../component/glossary.component");
 var admin_component_1 = require("../component/admin.component");
 var not_found_component_1 = require("../component/not-found.component");
 var routes = [
@@ -62,20 +57,6 @@ var routes = [
                         }
                     },
                     {
-                        path: 'games',
-                        component: game_database_component_1.GameDatabaseComponent,
-                        data: {
-                            action: 'game_view'
-                        }
-                    },
-                    {
-                        path: 'game/:id',
-                        component: game_details_component_1.GameDetailsComponent,
-                        data: {
-                            action: 'game_view'
-                        }
-                    },
-                    {
                         path: 'user',
                         component: user_component_1.UserComponent,
                         data: {
@@ -109,23 +90,8 @@ var routes = [
                         data: {
                             action: 'video_page_view'
                         }
-                    },
-                    {
-                        path: 'glossary',
-                        component: glossary_component_1.GlossaryComponent,
-                        data: {
-                            action: 'glossary_page_view'
-                        }
                     }
                 ]
-            },
-            {
-                path: 'about',
-                component: about_component_1.AboutComponent
-            },
-            {
-                path: 'help',
-                component: help_component_1.HelpComponent
             },
             {
                 path: 'legal',

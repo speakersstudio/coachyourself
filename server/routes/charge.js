@@ -39,7 +39,9 @@ module.exports = {
             userId,
             token,
             stripeCustomerId,
-            error;
+            error,
+
+            mainPackage;
 
         // make sure stripe token is the actual string
         if (typeof tokenVal == 'object' && tokenVal.id) {
@@ -69,10 +71,14 @@ module.exports = {
                 }
             })
             .then(() => {
-                return Package.findOne({}).where('visible').equals(true).exec();
+                return Package.findOne({})
+                    .where('visible').equals(true)
+                    .where('slug').equals('main')
+                    .exec();
             })
             .then(package => {
 
+                mainPackage = package;
                 let price = package.price;
 
                 // TODO: charge the token here
@@ -104,6 +110,20 @@ module.exports = {
                 };
                 return userController.createUser(userData);
 
+            })
+            .then(user => {
+                // all purchases are for the one main package
+                let purchase = {
+                    total: mainPackage.price,
+                    packages: [{package: mainPackage._id, price: mainPackage.price}],
+                    user: user._id
+                };
+
+                return Purchase.create(purchase)
+                    .then(purchaseModel => {
+                        user.purchases.push(purchaseModel);
+                        return user.save();
+                    });
             })
             .then(user => {
                 // save the subscription data to the user

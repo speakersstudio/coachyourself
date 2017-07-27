@@ -9,7 +9,6 @@ import { API } from '../../constants';
 import { Package } from '../../model/package';
 import { MaterialItem, MaterialItemVersion } from '../../model/material-item';
 import { Subscription } from '../../model/subscription';
-import { Team } from '../../model/team';
 
 import { User } from '../../model/user';
 import { UserService } from '../../service/user.service';
@@ -32,17 +31,6 @@ export class LibraryService {
      */
     getOwnedMaterials(): Promise<Library> {
         return this.http.get(API.userMaterials(this.userService.getLoggedInUser()._id))
-            .toPromise()
-            .then(response => {
-                return response.json() as Library;
-            });
-    }
-
-    /**
-     * Get the materials that a team owns (will die )
-     */
-    getTeamMaterials(teamId: string): Promise<Library> {
-        return this.http.get(API.teamMaterials(teamId))
             .toPromise()
             .then(response => {
                 return response.json() as Library;

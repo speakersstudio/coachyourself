@@ -10,7 +10,6 @@ import {
 } from '@angular/core';
 
 import { Address } from '../../model/address';
-import { GameMetadata } from '../../model/game-metadata';
 
 export class DropdownOption {
     [key:string]: any;
@@ -32,7 +31,7 @@ export class EditableMetadataView implements OnInit, OnChanges {
 
     @Input() icon: string; // an icon to show if necessary
     @Input() text: string; // the text to show by default
-    @Input() model: string|GameMetadata|DropdownOption; // pass an object if you want, this will try to use the name property if it exists
+    @Input() model: string|DropdownOption; // pass an object if you want, this will try to use the name property if it exists
     @Input() blankText: string; // the fallback text to show if there is no text
     @Input() allowBlank: boolean = true;
     @Input() canEdit: boolean; // whether the user can edit this thing
@@ -54,7 +53,7 @@ export class EditableMetadataView implements OnInit, OnChanges {
     @Input() country: string;
 
     // for dropdowns, the items to show
-    @Input() options: DropdownOption[]|GameMetadata[];
+    @Input() options: DropdownOption[];
     @Input() optionId: string = '_id'; // the property to use as the ID for each option
     @Input() optionDescription: string = 'description'; // the property to use as the title attribute on each option
     @Input() optionText: string = 'name'; // the property to use to get the text for each option
@@ -154,7 +153,7 @@ export class EditableMetadataView implements OnInit, OnChanges {
     showEdit(): void {
         if (this.canEdit) {
             if (this.model) {
-                this.editModel = this.optionId ? (<GameMetadata|DropdownOption> this.model)[this.optionId] : this.text;
+                this.editModel = this.optionId ? (<DropdownOption> this.model)[this.optionId] : this.text;
             } else {
                 this.editModel = this.text
             }
@@ -169,7 +168,7 @@ export class EditableMetadataView implements OnInit, OnChanges {
     closeEdit(): void {
         this.editShown = false;
         if (this.model) {
-            this.editModel = this.optionId ? (<GameMetadata|DropdownOption> this.model)[this.optionId] : this.text;
+            this.editModel = this.optionId ? (<DropdownOption> this.model)[this.optionId] : this.text;
         } else {
             this.editModel = this.text
         }

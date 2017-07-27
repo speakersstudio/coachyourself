@@ -10,17 +10,11 @@ import {API} from '../constants';
 import { AppHttp } from '../data/app-http';
 
 import { User } from '../model/user';
-import { Team } from '../model/team';
 import { Package } from '../model/package';
 import { PackageConfig } from '../model/config';
 
 @Injectable()
 export class AppService {
-
-    // private packageUrl = '/api/package/';
-
-    // private userValidateUrl = '/api/user/validate';
-    // private teamValidateUrl = '/api/team/validate';
 
     private redirect: UrlSegment[];
 
@@ -49,7 +43,7 @@ export class AppService {
             .then((response) => {
                 let data = response.json();
                 if (data.conflict == 'email') {
-                    return 'That email address is already registered on ImprovPlus.';
+                    return 'That email address is already registered with us.';
                 } else {
                     return '';
                 }

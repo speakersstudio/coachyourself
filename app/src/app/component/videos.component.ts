@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import {AppComponent    } from '../../component/app.component';
-import { Tool } from '../view/toolbar.view';
+import { AppComponent } from '../../component/app.component';
 
 @Component({
     moduleId: module.id,
@@ -17,9 +16,6 @@ export class VideosComponent implements OnInit {
         public _app: AppComponent,
         private router: Router
     ) { }
-
-    _tools: Tool[] = [
-    ]
 
     ngOnInit(): void {
     }

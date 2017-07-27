@@ -22,34 +22,10 @@ var ContactComponent = (function () {
         this.route = route;
         this.http = http;
         this.userService = userService;
-        this.title = '<span class="light">contact</span><strong>us</strong>';
-        this._tools = [];
     }
     ContactComponent.prototype.ngOnInit = function () {
         this.name = this.userService.getUserName() || 'A humble user';
         this.email = this.userService.getLoggedInUser().email;
-    };
-    ContactComponent.prototype.sendFeatureRequest = function () {
-        var _this = this;
-        if (!this.featureMessage) {
-            this.error = "We appreciate the attention, but you should actually say something.";
-            this.errorField = 'message';
-        }
-        else {
-            this.error = "";
-            this.errorField = "";
-            this.sending = true;
-            this._app.showLoader();
-            this.http.post('/api/contact/featurerequest', {
-                message: this.featureMessage
-            })
-                .toPromise()
-                .then(function (response) {
-                _this._app.hideLoader();
-                _this.sending = false;
-                _this.sent = true;
-            });
-        }
     };
     ContactComponent.prototype.sendBugReport = function () {
         var _this = this;

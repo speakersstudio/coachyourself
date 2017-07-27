@@ -1,15 +1,6 @@
-<div class="toolbar"
-    [class.on]="_app.toolbarVisible"
-    [tools]="_tools"
-    [title]="title"
-    [showBack]="selectedMaterial || selectedPackage"
-    (goBack)="back()"
-    (toolClicked)="onToolClicked($event)"
-    ></div>
-
 <div class="page">
 
-    <div class="tabs" *ngIf="!selectedMaterial">
+    <div class="tabs">
         <span class="tab" 
             *ngFor="let tab of tabs"
             [class.active]="tab.id == selectedTab"
@@ -62,9 +53,6 @@
             </div>
 
         </div>
-
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>materials database</h1></div>
     </div>
 
     <!-- Edit Material Item -->
@@ -138,9 +126,6 @@
             </div>
 
         </div>
-
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>materials database</h1></div>
     </div>
 
 
@@ -189,8 +174,6 @@
 
         </div>
 
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>package database</h1></div>
     </div>
 
     <!-- Edit Package -->
@@ -273,8 +256,6 @@
 
         </div>
 
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>package</h1></div>
     </div>
 
     <!-- Package config settings -->
@@ -339,8 +320,6 @@
             </div>
         </div>
 
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>history</h1></div>
     </div>
 
     <!-- History List -->
@@ -420,8 +399,6 @@
 
         </div>
 
-        <div class="left-bracket"><h1><span class="light">improv</span><strong>plus</strong></h1></div>
-        <div class="right-bracket"><h1>history</h1></div>
     </div>
 
 </div>

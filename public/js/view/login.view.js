@@ -69,7 +69,7 @@ var LoginView = (function () {
                 }
             }
             else {
-                _this.loginError = 'Some sort of server error happened. If this keeps happening, please email contact@improvpl.us';
+                _this.loginError = 'Some sort of server error happened. If this keeps happening, please email awesomedesk@thespeakers-studio.com';
             }
         });
     };

@@ -2,7 +2,6 @@ import { MaterialItem } from './material-item';
 import { Package } from './package';
 
 import { User } from './user';
-import { Team } from './team';
 import { Subscription } from './subscription';
 
 export class PurchaseOther {
@@ -28,7 +27,6 @@ export class PurchaseMaterial {
 export class Purchase {
     _id?: string;
     user?: string|User;
-    team?: string|Team;
     date?: Date;
     materials?: PurchaseMaterial[];
     packages?: PurchasePackage[];

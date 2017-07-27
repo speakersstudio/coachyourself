@@ -1,4 +1,4 @@
-<div class="dialog-dismiss"></div>
+<div class="dialog-dismiss" *ngIf="show"></div>
 
 <div class="dialog login-form" *ngIf="show && !showRecoverPassword && !recoverPasswordDone" [@dialog]="state">
 

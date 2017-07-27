@@ -93,7 +93,7 @@ signup {
         box-sizing: border-box;
         position: relative;
         z-index: 4;
-        padding-top: $toolbar-height;
+        padding: $toolbar-height 0 $footer-height 0;
     }
 
     .blackbox {

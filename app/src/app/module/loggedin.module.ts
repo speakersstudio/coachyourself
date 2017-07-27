@@ -10,41 +10,27 @@ import { SharedModule } from '../../module/shared.module';
 import { LoggedInRoutingModule } from './loggedin-routing.module';
 
 // services
-import { GameDatabaseService } from "../service/game-database.service";
 import { LibraryService } from "../service/library.service";
 import { AuthGuard } from "../service/auth-guard.service";
-import { TeamService } from '../service/team.service';
 import { HistoryService } from '../service/history.service';
-import { GameNoteService } from '../service/game-note.service';
 
 // main components
 // import { AppComponent } from '../component/app.component';
 import { UnauthorizedComponent } from "../component/unauthorized.component";
 import { DashboardComponent } from '../component/dashboard.component';
 import { MaterialsLibraryComponent } from "../component/materials-library.component";
-import { GameDatabaseComponent } from '../component/game-database.component';
-import { AboutComponent } from '../component/about.component';
 import { ContactComponent } from '../component/contact.component';
 import { UserComponent } from '../component/user.component';
-import { GameDetailsComponent } from '../component/game-details.component';
-import { HelpComponent } from "../component/help.component";
 import { LegalComponent } from "../component/legal.component";
 import { AdminComponent } from '../component/admin.component';
-import { TeamListComponent } from '../component/team-list.component';
 import { VideosComponent } from '../component/videos.component';
-import { GlossaryComponent } from '../component/glossary.component';
 
 import { NotFoundComponent } from '../component/not-found.component';
 
 // sub-views
-import { ToolbarView } from '../view/toolbar.view';
-import { GameCardView } from '../view/game-card.view';
-import { CreateMetadataView } from '../view/create-metadata.view';
 import { MaterialsPageView } from '../view/materials-page.view';
-import { UserCardView } from '../view/user-card.view';
 import { EditableMetadataView } from '../view/editable-metadata.view';
 import { DashboardMessageListView } from '../view/dashboard-message-list.view';
-import { GameNoteView } from '../view/game-note.view';
 
 // utils
 
@@ -62,37 +48,23 @@ import { GameNoteView } from '../view/game-note.view';
         UnauthorizedComponent,
         DashboardComponent,
         MaterialsLibraryComponent,
-        GameDatabaseComponent,
-        AboutComponent,
         ContactComponent,
         UserComponent,
-        HelpComponent,
-        TeamListComponent,
-        GameDetailsComponent,
         LegalComponent,
         AdminComponent,
         VideosComponent,
-        GlossaryComponent,
         
         NotFoundComponent,
         
-        ToolbarView,
-        GameCardView,
-        CreateMetadataView,
         MaterialsPageView,
-        UserCardView,
         EditableMetadataView,
-        DashboardMessageListView,
-        GameNoteView
+        DashboardMessageListView
     ],
     // bootstrap: [ AppComponent ],
     providers: [
-        GameDatabaseService,
         LibraryService,
         AuthGuard,
-        TeamService,
-        HistoryService,
-        GameNoteService
+        HistoryService
     ]
 })
 

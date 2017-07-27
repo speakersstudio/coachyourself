@@ -17,7 +17,6 @@ var LegalComponent = (function () {
         this._app = _app;
         this.router = router;
         this.title = '<span class="light">legal</span><strong>stuff</strong>';
-        this._tools = [];
     }
     LegalComponent.prototype.ngOnInit = function () {
     };

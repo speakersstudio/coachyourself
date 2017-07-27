@@ -17,7 +17,6 @@ var VideosComponent = (function () {
         this._app = _app;
         this.router = router;
         this.title = '<span class="light">video</span><strong>gallery</strong>';
-        this._tools = [];
     }
     VideosComponent.prototype.ngOnInit = function () {
     };

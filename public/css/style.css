@@ -1271,13 +1271,14 @@ nav {
   align-items: center;
   overflow: hidden;
   padding: 25px 80px;
+  height: 74px;
   background-color: #FFFFFF;
   box-shadow: 1px 2px 30px rgba(0, 0, 0, 0.3); }
   nav h1 {
     font-size: 18px;
     font-family: "futura-pt";
     text-transform: uppercase;
-    letter-spacing: 12px;
+    letter-spacing: 10px;
     font-weight: 400;
     flex-grow: 1;
     margin: 0; }
@@ -1553,21 +1554,20 @@ nav {
 footer {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 5;
+  box-sizing: border-box;
   height: 74px;
-  padding: 0 37px;
+  margin-top: -74px;
+  padding: 25px 80px;
   font-size: 13px;
-  font-weight: 300; }
+  background-color: #000000;
+  color: #FFFFFF; }
   footer a {
-    color: #606060;
-    text-decoration: underline;
-    cursor: pointer; }
+    color: #ffa70f;
+    text-decoration: none;
+    cursor: pointer;
+    text-transform: uppercase; }
 
 login .login-form {
   max-width: 350px; }
@@ -1842,47 +1842,11 @@ user .user-form {
   improvplus > .right-bracket {
     display: none; } }
 
-.curtain {
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  z-index: 1;
-  height: 25vh;
-  background: #CCCCCC;
-  background: -moz-linear-gradient(top, #e5e5e5 12px, #CCCCCC 133.2px);
-  background: -webkit-linear-gradient(top, #e5e5e5 12px, #CCCCCC 133.2px);
-  background: linear-gradient(to bottom, #e5e5e5 12px, #CCCCCC 133.2px); }
-  .curtain img {
-    width: 100%; }
-
-.background {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 0;
-  background: #CCCCCC;
-  transform-origin: 50% 0; }
-
 .page {
-  min-height: 100vh;
+  min-height: calc(100vh - 74px);
   box-sizing: border-box;
   position: relative;
-  padding: 25px 80px; }
-  .page .curtain {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1;
-    height: 25vh;
-    background: #CCCCCC;
-    background: -moz-linear-gradient(top, #e5e5e5 12px, #CCCCCC 133.2px);
-    background: -webkit-linear-gradient(top, #e5e5e5 12px, #CCCCCC 133.2px);
-    background: linear-gradient(to bottom, #e5e5e5 12px, #CCCCCC 133.2px); }
+  padding: 25px 80px 99px; }
   .page .paper-label {
     font-size: 16px;
     padding: 16px;
@@ -2042,7 +2006,7 @@ signup .page {
   box-sizing: border-box;
   position: relative;
   z-index: 4;
-  padding-top: 74px; }
+  padding: 74px 0 74px 0; }
 
 signup .blackbox {
   background: #FFFFFF;
