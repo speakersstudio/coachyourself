@@ -25,13 +25,15 @@ var SignupComponent = (function () {
         this.userService = userService;
         this.stripeService = stripeService;
         this.packages = [];
+        this.country = 'United States';
         this.isPosting = false;
         this.cardComplete = false;
     }
     SignupComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this.userService.isLoggedIn()) {
-            this.router.navigate(['/app/dashboard'], { replaceUrl: true });
+            this.router.navigate(['dashboard'], { replaceUrl: true });
+            return;
         }
         this._service.getPackages().then(function (packages) {
             _this.packages = packages;
@@ -40,7 +42,6 @@ var SignupComponent = (function () {
     };
     SignupComponent.prototype.setup = function () {
         var _this = this;
-        this._app.showBackground(true);
         this.creditCard = this.stripeService.setupStripe(function (e) {
             _this.cardComplete = e.complete;
             if (e.error) {
@@ -103,7 +104,15 @@ var SignupComponent = (function () {
     };
     SignupComponent.prototype._signup = function (token) {
         var _this = this;
-        this._service.signup(this.email, this.password, this.userName, token)
+        var user = new user_1.User();
+        user.email = this.email;
+        user.password = this.password;
+        user.firstName = (this.userName + ' ').split(' ')[0];
+        user.lastName = (this.userName + ' ').split(' ')[0];
+        user.title = this.title;
+        user.company = this.company;
+        user.country = this.country;
+        this._service.signup(user, token)
             .then(function (user) {
             _this._app.hideLoader();
             if (user && user.email) {
@@ -125,7 +134,7 @@ var SignupComponent = (function () {
             this.emailError = "That email address is already registered.";
         }
         else if (msg.error) {
-            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by emailing awesomedesk@thespeakers-studio.com.', 'Okay bye', null, true);
+            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by contacting awesomedesk@thespeakers-studio.com.', 'Okay bye', null, true);
         }
     };
     SignupComponent.prototype.showTerms = function () {

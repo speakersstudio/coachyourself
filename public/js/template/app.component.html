@@ -1,60 +1,44 @@
-<!-- TODO: make this a view, only include inside the app -->
-<nav *ngIf="inApp">
+<nav [class.show-nav]="mobileNavShown">
     
-    <h1 routerLink="/" class="clickable">The Speaker's Studio</h1>
+    <h1 routerLink="/dashboard" *ngIf="user" class="clickable">Coach Yourself</h1>
+    <h1 *ngIf="!user"></h1>
+
+    <a class="menu-trigger" (click)="mobileNavShown = !mobileNavShown"><i class="fa fa-bars"></i></a>
     
-    <!-- <div class="nav-top">
-        <div class="content clickable" *ngIf="user && userService.can('account_edit')" routerLinkActive="active" routerLink="/app/user">
+    <div class="menu" *ngIf="!user">
+        <a routerLink="/signup" class="nav-item" routerLinkActive="active">Join</a>
 
-            <div class="user-picture">
-                <i class="fa fa-user"></i>
-            </div>
-            <div class="user-name">
-                {{user.email}}
-            </div>
-            <div class="link">Your account</div>
-            
-        </div>
-    </div> -->
+        <a (click)="login()" class="nav-item">Log In</a>
+    </div>
 
-    <a routerLink="/app/materials" routerLinkActive="active" class="nav-item"
-        *ngIf="userService.can('material_page_view')">
-        <span>Files</span>
-    </a>
+    <div class="menu" *ngIf="user">
+        <a routerLink="/materials" routerLinkActive="active" class="nav-item"
+            *ngIf="userService.can('material_page_view')">
+            <span>Files</span>
+        </a>
 
-    <a routerLink="/app/videos" routerLinkActive="active" class="nav-item"
-        *ngIf="userService.can('video_page_view')">
-        <span>Videos</span>
-    </a>
+        <a routerLink="/videos" routerLinkActive="active" class="nav-item"
+            *ngIf="userService.can('video_page_view')">
+            <span>Videos</span>
+        </a>
 
-    <a routerLink="/app/contact/reportbug" routerLinkActive="active" class="nav-item"
-        *ngIf="userService.can('contact_page_view')">
-        <span>Report a Bug</span>
-    </a>
-
-    <a routerLink="/app/admin" routerLinkActive="active" class="nav-item" 
-        *ngIf="userService.isSuperAdmin()">
-        <span>Admin</span>
-    </a>
-    
-    <a *ngIf="user" (click)="logout()" class="nav-item">
-        <span>Log Out</span> <i class="fa fa-sign-out"></i>
-    </a>
+        <a routerLink="/admin" routerLinkActive="active" class="nav-item" 
+            *ngIf="userService.isSuperAdmin()">
+            <span>Admin</span>
+        </a>
+        
+        <a *ngIf="user" (click)="logout()" class="nav-item">
+            <span>Log Out</span> <i class="fa fa-sign-out"></i>
+        </a>
+    </div>
     
 </nav>
 
 <div (click)="closeOverlays()" class="backdrop nav-backdrop" [@fade] [class.show]="showBackdrop"></div>
 
-<!-- <div class="curtain"
-    *ngIf="inApp"
-    [style.top]="(scrollpos * 0.75) + 'px'">
-</div> -->
-
-<!-- <div class="background" *ngIf="backgroundVisible" [@shrinkVertical]></div> -->
-
 <router-outlet></router-outlet>
 
-<div class="dialog-container" [class.show]="showDialog">
+<div class="dialog-container show" *ngIf="showDialog">
     <div class="dialog" [@dialog]="'default'" *ngIf="showDialog">
         <div class="dialog-content">
             <h2>{{dialogTitle}}</h2>
@@ -72,7 +56,7 @@
     <span [@bubble] *ngIf="toastMessage">{{toastMessage}}</span>
 </div>
 
-<login [show]="showLogin" (done)="handleLogin($event)" class="dialog-container" [class.show]="showLogin"></login>
+<login [show]="showLogin" (done)="handleLogin($event)" class="dialog-container show" *ngIf="showLogin"></login>
 
 <div class="loader" *ngIf="loaderVisible">
     <logo class="white"></logo>
@@ -80,10 +64,18 @@
 
 <footer (window:scroll)="onScroll()">
 
-    <span>&copy;2017 Kate Bringardner, LLC</span>
-    <a routerLink="/app/legal" *ngIf="user">Legal stuff</a>
+    <div class="footer-nav">
+        <!-- <a routerLink="/legal" *ngIf="user">Legal stuff</a> -->
+        <a *ngIf="user" routerLink="/user" routerLinkActive="active">Your Account</a>
+        <a routerLink="/contact/reportbug" routerLinkActive="active"
+            *ngIf="userService.can('contact_page_view')">
+            <span>Report a Bug</span>
+        </a>
+        <a href="http://katebringardner.com">KateBringardner.com</a>
+    </div>
+
     <img src="/images/comodo_secure_seal_76x26_transp.png" />
 
-    <a *ngIf="user" routerLink="/app/user">Your Account</a>
+    <span>&copy;2017 Kate Bringardner, LLC, All Rights Reserved</span>
 
 </footer>

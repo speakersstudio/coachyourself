@@ -126,7 +126,7 @@ export class AppHttp {
                     this.router.navigate(['/welcome']);
                 } else {
                     // redirect the user to the unauthorized page?
-                    this.router.navigate(['/app/unauthorized']);
+                    this.router.navigate(['unauthorized']);
                 }
                 return Observable.empty();
             } else {

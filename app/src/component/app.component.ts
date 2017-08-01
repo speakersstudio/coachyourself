@@ -43,10 +43,11 @@ export class AppComponent implements OnInit {
     showToolbarScrollPosition: number = 20;
     toolbarVisible: boolean;
 
+    mobileNavShown: boolean;
+
     private scrollSource = new Subject<number>();
     onScroll$ = this.scrollSource.asObservable()
 
-    inApp: boolean;
     backgroundRequested: boolean;
     backgroundVisible: boolean;
 
@@ -100,21 +101,9 @@ export class AppComponent implements OnInit {
         this.hideLoader();
 
         this.router.events.filter(event => event instanceof NavigationStart).subscribe(event => {
-            this.backgroundVisible = true;
-            this.backgroundRequested = false;
             this.closeOverlays();
 
-            if ((<NavigationStart> event).url.indexOf('/app') > -1) {
-                this.inApp = true;
-            } else {
-                this.inApp = false;
-            }
-        });
-
-        this.router.events.filter(event => event instanceof NavigationEnd).subscribe(event => {
-            if (!this.backgroundRequested) {
-                this.backgroundVisible = false;
-            }
+            this.mobileNavShown = false;
         });
 
         this.setUser(this.userService.getLoggedInUser());
@@ -125,12 +114,11 @@ export class AppComponent implements OnInit {
                 let path:string[] = [];
 
                 if (this._service.getRedirect()) {
-                    path.push('app');
                     this._service.getRedirect().forEach(segment => {
                         path.push(segment.path);
                     });
                 } else {
-                    path.push('app/dashboard');
+                    path.push('dashboard');
                 }
                 setTimeout(() => {
                     this.router.navigate(path, { replaceUrl: true });
@@ -187,13 +175,6 @@ export class AppComponent implements OnInit {
     hideLoader(): void {
         this.loaderVisible = false;
         this.showBackdrop = false;
-    }
-
-    showBackground(show: boolean): void {
-        this.backgroundRequested = true;
-        setTimeout(() => {
-            this.backgroundVisible = show;
-        }, 50);
     }
 
     showWhiteBrackets(show: boolean): void {
@@ -317,10 +298,10 @@ export class AppComponent implements OnInit {
     handleLogin(user: User): void {
         this.closeOverlays();
 
-        if (!user) {
-            // this.router.navigate(['/']);
-        } else if (this.inApp || this.router.url == '/login') {
-            this.router.navigate(['/app']);
+        if (user) {
+            this.router.navigate(['/dashboard']);
+        } else {
+            this.router.navigate(['/signup']);
         }
     }
 

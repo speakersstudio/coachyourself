@@ -19,10 +19,12 @@ export class LoginScreenComponent implements OnInit {
 
     ngOnInit(): void {
         if (this.userService.getLoggedInUser()) {
-            this.router.navigate(['/app/dashboard']);
+            this.router.navigate(['dashboard']);
         } else {
-            this._app.showBackground(true);
-            this._app.login();
+            // the timeout here will help avoid a "value changed after it was checked" error
+            setTimeout(() => {
+                this._app.login();
+            })
         }
     }
 

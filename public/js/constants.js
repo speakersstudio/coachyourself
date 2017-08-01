@@ -15,7 +15,6 @@ exports.API = {
     invite: '/api/invite',
     charge: '/charge',
     signup: '/signup',
-    packageConfig: '/packageConfig',
     package: '/api/package',
     materials: '/api/material',
     validateTeam: '/api/team/validate',

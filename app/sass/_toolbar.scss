@@ -305,10 +305,10 @@
 $nav-bg: $color-white;
 
 nav {
-
     position: relative;
-    z-index: 5000;
+    z-index: 10;
     box-sizing: border-box;
+
     display: flex;
     align-items: center;
 
@@ -320,7 +320,6 @@ nav {
 
     box-shadow: 1px 2px 30px rgba(0,0,0,0.3);
 
-
     h1 {
         font-size: 18px;
         font-family: $font-futura;
@@ -329,6 +328,16 @@ nav {
         font-weight: 400;
         flex-grow: 1;
         margin: 0;
+    }
+
+    .menu-trigger {
+        display: none;
+    }
+
+    .menu {
+        display: flex;
+        align-items: center;
+        height: 100%;
     }
 
     // nav menu items
@@ -362,6 +371,64 @@ nav {
 
         &.active {
             color: $color-secondary;
+        }
+    }
+
+    @media #{$media-mobile} {
+        padding: 20px;
+        position: static;
+
+        h1 {
+            font-size: 13px;
+            opacity: 1;
+            max-width: 100%;
+            overflow: hidden;
+            transition: max-width 500ms, opacity 400ms;
+        }
+
+        .menu-trigger {
+            display: block;
+            color: $color-text;
+
+            .fa {
+                margin: $small;
+            }
+        }
+
+        .menu {
+            @include abs(0, 0, 0, 100%, 5000);
+            background: $nav-bg;
+            flex-direction: column;
+            height: auto;
+            @include md-elevation-transition('left 500ms');
+            overflow: hidden;
+        }
+
+        .nav-item {
+            border-bottom: 1px solid $color-hr;
+            width: 100%;
+            margin: 0;
+            text-align: center;
+            line-height: $toolbar-height;
+            box-sizing: border-box;
+            opacity: 0;
+            transition: opacity 400ms;
+        }
+
+        &.show-nav {
+            h1 {
+                max-width: 0;
+                opacity: 0;
+            }
+
+            .menu {
+                left: 70px;
+                @include md-elevation($nav-elevation);
+            }
+
+            .nav-item {
+                opacity: 1;
+            }
         }
     }
 

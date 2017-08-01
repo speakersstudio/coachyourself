@@ -106,7 +106,7 @@ var AppHttp = (function () {
                 }
                 else {
                     // redirect the user to the unauthorized page?
-                    _this.router.navigate(['/app/unauthorized']);
+                    _this.router.navigate(['unauthorized']);
                 }
                 return Observable_1.Observable.empty();
             }

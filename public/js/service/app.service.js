@@ -40,28 +40,10 @@ var AppService = (function () {
             }
         });
     };
-    AppService.prototype.getPackageConfig = function () {
-        var _this = this;
-        if (this.config) {
-            return new Promise(function (resolve, reject) {
-                resolve(_this.config);
-            });
-        }
-        else {
-            return this.http.get(constants_1.API.packageConfig)
-                .toPromise()
-                .then(function (result) {
-                _this.config = result.json();
-                return _this.config;
-            });
-        }
-    };
-    AppService.prototype.signup = function (email, password, name, token) {
+    AppService.prototype.signup = function (user, token) {
         return this.http.post(constants_1.API.signup, {
             stripeToken: token,
-            email: email,
-            password: password,
-            name: name
+            user: user
         }).toPromise()
             .then(function (result) {
             return result.json();

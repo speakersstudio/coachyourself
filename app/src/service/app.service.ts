@@ -11,14 +11,11 @@ import { AppHttp } from '../data/app-http';
 
 import { User } from '../model/user';
 import { Package } from '../model/package';
-import { PackageConfig } from '../model/config';
 
 @Injectable()
 export class AppService {
 
     private redirect: UrlSegment[];
-
-    private config: PackageConfig;
     
     constructor(
         private http: AppHttp
@@ -49,28 +46,11 @@ export class AppService {
                 }
             })
     }
-    
-    getPackageConfig(): Promise<PackageConfig> {
-        if (this.config) {
-            return new Promise((resolve, reject) => {
-                resolve(this.config);
-            });
-        } else {
-            return this.http.get(API.packageConfig)
-                .toPromise()
-                .then(result => {
-                    this.config = result.json() as PackageConfig;
-                    return this.config;
-                });
-        }
-    }
 
-    signup (email: string, password: string, name: string, token: string): Promise<User> {
+    signup (user: User, token: string): Promise<User> {
         return this.http.post(API.signup, {
             stripeToken: token,
-            email: email,
-            password: password,
-            name: name
+            user: user
         }).toPromise()
             .then(result => {
                 return result.json() as User;

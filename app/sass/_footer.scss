@@ -1,6 +1,6 @@
 footer {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: center;
     // @include abs(null, 0, 0, 0, 5);
@@ -11,11 +11,28 @@ footer {
     font-size: 13px;
     background-color: $color-footer-bg;
     color: $color-footer-text;
+    position: relative;
+    z-index: 2;
+
+    .footer-nav {
+        background-color: $color-transparent;
+        display: flex;
+        margin: 20px 0;
+    }
 
     a {
         color: $color-primary;
-        text-decoration: none;
-        cursor: pointer;
         text-transform: uppercase;
+        text-decoration: none;
+        margin: 0 $std;
+        letter-spacing: 2px;
+    }
+
+    & > span { 
+        margin: 25px 0;
+    }
+
+    @media #{$media-mobile} {
+        
     }
 }

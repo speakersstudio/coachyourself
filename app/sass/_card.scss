@@ -24,6 +24,13 @@
             max-width: 100%;
             width: 100%;
         }
+
+        &.small {
+            @media #{$media-mobile} {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
     }
 
     .paper-label {

@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
 var common_1 = require("@angular/common");
-var app_component_1 = require("./app.component");
+var app_component_1 = require("../component/app.component");
 var user_service_1 = require("../service/user.service");
 var NotFoundComponent = (function () {
     function NotFoundComponent(_app, router, userService, _location) {
@@ -22,18 +22,21 @@ var NotFoundComponent = (function () {
         this._location = _location;
     }
     NotFoundComponent.prototype.ngOnInit = function () {
-        this._app.showBackground(true);
     };
     NotFoundComponent.prototype.goback = function () {
         this._location.back();
     };
     NotFoundComponent.prototype.dashboard = function () {
-        this.router.navigate(['/app/dashboard']);
+        this.router.navigate(['dashboard']);
     };
+    __decorate([
+        core_1.Input(),
+        __metadata("design:type", Boolean)
+    ], NotFoundComponent.prototype, "injected", void 0);
     NotFoundComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
-            selector: "signup",
+            selector: "not-found",
             templateUrl: '../template/not-found.component.html'
         }),
         __metadata("design:paramtypes", [app_component_1.AppComponent,

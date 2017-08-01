@@ -20,7 +20,6 @@ const Team = require('./models/team.model');
 const MaterialItem = require('./models/material-item.model');
 const Package = require('./models/package.model');
 const Preference = require('./models/preference.model');
-const PackageConfig = require('./models/packageconfig.model');
 const HistoryModel = require('./models/history.model');
 
 const Game = require('./models/game.model'),
@@ -45,10 +44,6 @@ const   databases = {
         'MaterialItem': {
             time: backuptime,
             model: MaterialItem
-        },
-        'PackageConfig': {
-            time: backuptime,
-            model: PackageConfig
         },
         'Package': {
             time: backuptime,

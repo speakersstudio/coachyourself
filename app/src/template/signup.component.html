@@ -1,90 +1,119 @@
-<marketing-toolbar [onWhenOpen]="true"></marketing-toolbar>
-
 <div class="page" #page>
 
-    <div class="blackbox">
-        <h1>The Speaker's Studio</h1>
+    <div class="banner">
+        <h1>Coach Yourself</h1>
         <h2>Sign up for access to our guides.</h2>
     </div>
 
     <div class="block card-list center">
 
         <div>
+            <form name="signup" class="content" (ngSubmit)="submitPayment()" #signupForm="ngForm">
 
-            <input name="email"
-                [(ngModel)]="email"
-                (input)="emailInput()"
-                [placeholder]="inviteId ? 'Verify your Email' : 'Email'"
-                formInput
-                required
-                autocomplete="off"
-                type="text" />
-            <span class="error" *ngIf="emailError">{{emailError}}</span>
-            
-            <input name="password" 
-                [(ngModel)]="password"
-                placeholder="Password"
-                formInput
-                required
-                autocomplete="off"
-                type="password" />
+                <input name="email"
+                    [(ngModel)]="email"
+                    (input)="emailInput()"
+                    [placeholder]="inviteId ? 'Verify your Email' : 'Email'"
+                    formInput
+                    required
+                    autocomplete="off"
+                    type="text" />
+                <span class="error" *ngIf="emailError">{{emailError}}</span>
                 
-            <input
-                autocomplete="off"
-                formInput
-                name="userName"
-                placeholder="Your Name"
-                [(ngModel)]="userName"
-                type="text" />
+                <input name="password" 
+                    [(ngModel)]="password"
+                    placeholder="Password"
+                    formInput
+                    required
+                    autocomplete="off"
+                    type="password" />
+                    
+                <input
+                    autocomplete="off"
+                    formInput
+                    name="userName"
+                    placeholder="Your Name"
+                    [(ngModel)]="userName"
+                    type="text" />
+                    
+                <input
+                    autocomplete="off"
+                    formInput
+                    name="title"
+                    placeholder="Your Title / Position"
+                    [(ngModel)]="title"
+                    type="text" />
+                    
+                <input
+                    autocomplete="off"
+                    formInput
+                    name="company"
+                    placeholder="Company"
+                    [(ngModel)]="company"
+                    type="text" />
+                    
+                <input
+                    autocomplete="off"
+                    formInput
+                    name="country"
+                    placeholder="Country"
+                    [(ngModel)]="country"
+                    required
+                    type="text" />
 
-            <div class="payment-info">
-                <form id="payment-form" #paymentForm="ngForm">
-                    <div class="form-row">
+                <div class="payment-info">
+                    <form id="payment-form" #paymentForm="ngForm">
+                        <div class="form-row">
 
-                        <label for="card-element">
-                            Credit or debit card number
+                            <label for="card-element">
+                                Credit or debit card number
+                            </label>
+                            <div id="card-element">
+                            <!-- a Stripe Element will be inserted here. -->
+                            </div>
+
+                            <!-- Used to display form errors -->
+                            <div class="StripeCardErrors" *ngIf="cardError">{{cardError}}</div>
+
+                            <div *ngIf="packages.length" class="columns fill">
+                                <span>{{packages[0].name}}</span>
+                                <span>${{packages[0].price}}</span>
+                            </div>
+
+                            <label><em>Payment processing is all handled securely by <a href="https://www.stripe.com" target="_blank">Stripe</a>, so your information is safe.</em></label>
+                            
+                        </div>
+                    </form>
+                </div>
+
+                <p class="error" *ngIf="inviteError" [@shrinkHeight]>{{inviteError}}</p>
+
+
+                <!--<p>Just to make sure we're all on the same page, you'll have to <a (click)="showTerms()">check out our terms</a> and give them the thumbs up.</p>
+
+                    <p>
+                        <label class="icon-choice">
+                            <i class="fa fa-thumbs-o-down"></i>
+                            <input type="checkbox" formSwitch class="inline-block" name="terms-accepted" [(ngModel)]="termsAccepted" />
+                            <i class="fa fa-thumbs-o-up"></i>
                         </label>
-                        <div id="card-element">
-                        <!-- a Stripe Element will be inserted here. -->
-                        </div>
+                    </p>-->
 
-                        <!-- Used to display form errors -->
-                        <div class="StripeCardErrors" *ngIf="cardError">{{cardError}}</div>
+                <div class="button-group">
+                    <!-- <button
+                        *ngIf="!isPosting"
+                        class="button raised"
+                        (click)="submitPayment()"
+                        [class.disabled]="!isFormValid()">Join</button> -->
+                    <input type="submit" class="button raised"
+                        *ngIf="!isPosting"
+                        [value]="'Join'"
+                        [disabled]="!signupForm.form.valid || emailValidating || cardError || !cardComplete" />
 
-                        <div *ngIf="packages.length" class="columns fill">
-                            <span>{{packages[0].name}}</span>
-                            <span>${{packages[0].price}}</span>
-                        </div>
+                    <button class="button" *ngIf="isPosting"><i class="loading"></i></button>
+                </div>
 
-                        <label><em>Payment processing is all handled securely by <a href="https://www.stripe.com" target="_blank">Stripe</a>, so your information is safe.</em></label>
-                        
-                    </div>
-                </form>
-            </div>
-
-            <p class="error" *ngIf="inviteError" [@shrinkHeight]>{{inviteError}}</p>
-
-
-            <!--<p>Just to make sure we're all on the same page, you'll have to <a (click)="showTerms()">check out our terms</a> and give them the thumbs up.</p>
-
-                <p>
-                    <label class="icon-choice">
-                        <i class="fa fa-thumbs-o-down"></i>
-                        <input type="checkbox" formSwitch class="inline-block" name="terms-accepted" [(ngModel)]="termsAccepted" />
-                        <i class="fa fa-thumbs-o-up"></i>
-                    </label>
-                </p>-->
-
-            <div class="button-group">
-                <button
-                    *ngIf="!isPosting"
-                    class="button raised"
-                    (click)="submitPayment()"
-                    [class.disabled]="!isFormValid()">Join</button>
-
-                <button class="button" *ngIf="isPosting"><i class="loading"></i></button>
-            </div>
-
+            </form>
         </div>
 
     </div>

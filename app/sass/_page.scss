@@ -13,10 +13,48 @@ $paper-bg: $color-white;
 }
 
 .page {
-    min-height: calc(100vh - #{$toolbar-height});
+    min-height: calc(100vh - #{($toolbar-height)});
     box-sizing: border-box;
     position: relative;
-    padding: $page-padding-v $page-padding-h ($page-padding-v + $toolbar-height);
+    padding: $page-padding-v $page-padding-h ($page-padding-v + $footer-height);
+
+    @media #{$media-mobile} {
+        padding-left: $std;
+        padding-right: $std;
+    }
+
+    .banner {
+        background: $color-white;
+        padding: 80px;
+        color: $color-black;
+        // box-shadow: 1px 2px 30px rgba(0,0,0,.3) inset;
+        position: relative;
+        overflow: hidden;
+        margin: (-$page-padding-v) (-$page-padding-h) 50px;
+
+        &:after {
+            display: block;
+            width: 100%;
+            content: "";
+            @include abs(100%, 0, null, 0);
+            height: 50px;
+            box-shadow: 1px 2px 30px rgba(0,0,0,.3)
+        }
+
+        h1 {
+            font-size: 2.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.159em;
+            font-weight: 400;
+            font-family: $font-futura;
+        }
+
+        h2 {
+            margin: 25px 0 0 0;
+            font-size: 1.2em;
+        }
+
+    }
 
     .paper-label {
         font-size: 16px;
@@ -86,6 +124,7 @@ $paper-bg: $color-white;
 
         @media #{$media-mobile} {
             margin: 0 0 $std;
+            padding: 0;
         }
 
         &.list {

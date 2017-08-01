@@ -12,23 +12,12 @@ const charge = require('../charge'),
     util = require('../../util');
 
 let databases = {
-    'Invite': require('../../models/invite.model'),
     'MaterialItem': require('../../models/material-item.model'),
-    'PackageConfig': require('../../models/packageconfig.model'),
-    'Package': require('../../models/package.model'),
     'Preference': require('../../models/preference.model'),
     'Purchase': require('../../models/purchase.model'),
     'Subscription': require('../../models/subscription.model'),
-    'Team': require('../../models/team.model'),
     'User': require('../../models/user.model'),
-    'History': require('../../models/history.model'),
-
-    'GameMetadata': require('../../models/game-metadata.model'),
-    'Game': require('../../models/game.model'),
-    'Name': require('../../models/name.model'),
-    'NameVote': require('../../models/name-vote.model'),
-    'Note': require('../../models/note.model'),
-    'Tag': require('../../models/tag.model')
+    'History': require('../../models/history.model')
 };
 
 module.exports = {

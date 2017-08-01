@@ -911,7 +911,7 @@ button,
     display: flex;
     justify-content: center;
     align-items: center;
-    @include fixed(0, 0, 0, 0, 0);
+    @include fixed(0, 0, 0, 0, -1);
     transition: z-index 1ms 1s;
 
     &.show {

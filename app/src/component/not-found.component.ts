@@ -1,27 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
-import { AppComponent } from './app.component';
+import { AppComponent } from '../component/app.component';
 import { UserService } from '../service/user.service';
 
 @Component({
     moduleId: module.id,
-    selector: "signup",
+    selector: "not-found",
     templateUrl: '../template/not-found.component.html'
 })
 export class NotFoundComponent implements OnInit {
 
+    @Input() injected: boolean;
+
     constructor(
-        private _app: AppComponent,
+        public _app: AppComponent,
         private router: Router,
         private userService: UserService,
         private _location: Location
     ) { }
 
     ngOnInit(): void {
-        
-        this._app.showBackground(true);
 
     }
 
@@ -30,7 +30,7 @@ export class NotFoundComponent implements OnInit {
     }
 
     dashboard(): void {
-        this.router.navigate(['/app/dashboard']);
+        this.router.navigate(['dashboard']);
     }
 
 }

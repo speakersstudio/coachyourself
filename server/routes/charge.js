@@ -10,7 +10,6 @@ let util = require('../util'),
     findModelUtil = require('./api/find-model.util');
 
 let userController = require('./api/user.controller'),
-    teamController = require('./api/team.controller'),
     auth = require('../auth'),
     roles = require('../roles');
 
@@ -29,14 +28,14 @@ module.exports = {
 
         let stripe = require('stripe')(config.stripe.secret),
 
-            email = req.body.email,
-            password = req.body.password,
-            userName = req.body.name,
+            userPostData = req.body.user,
+            email = userPostData.email,
+            password = userPostData.password,
+            // userName = userPostData.name,
             
             tokenVal = req.body.stripeToken,
 
             role = roles.ROLE_USER, // the user role defaults to USER - fancy that
-            userId,
             token,
             stripeCustomerId,
             error,
@@ -94,19 +93,22 @@ module.exports = {
             })
             .then(stripeCustomer => {
 
-                // figure out the user's name
-                let firstName, lastName;
-                if (userName) {
-                    firstName = userName.substr(0, (userName+' ').indexOf(' ')).trim();
-                    lastName = userName.substr((userName+' ').indexOf(' '), userName.length).trim();
-                }
+                // // figure out the user's name
+                // let firstName, lastName;
+                // if (userName) {
+                //     firstName = userName.substr(0, (userName+' ').indexOf(' ')).trim();
+                //     lastName = userName.substr((userName+' ').indexOf(' '), userName.length).trim();
+                // }
 
                 // create a new user
                 let userData = {
                     email: email,
                     password: password,
-                    firstName: firstName,
-                    lastName: lastName
+                    firstName: userPostData.firstName,
+                    lastName: userPostData.lastName,
+                    title: userPostData.title,
+                    company: userPostData.company,
+                    country: userPostData.country
                 };
                 return userController.createUser(userData);
 
@@ -134,29 +136,23 @@ module.exports = {
                 // send the confirmation / welcome email!
 
                 let body = `
-                    <p>Thank you for signing up for The Speaker's Studio!</p>
-                    <p>Your subscription is now active. You can log into the app and browse all of our fabulous features.</p>
+                    <p>Thank you for signing up for Coach Yourself!</p>
+                    <p>Your account is now active. You can log into the app and browse all of our fabulous features.</p>
                 `;
 
                 emailUtil.send({
                     to: user.email,
                     toName: user.firstName + ' ' + user.lastName,
-                    subject: 'Welcome to the Speaker\'s Studio',
+                    subject: 'Welcome to Coach Yourself',
                     content: {
                         type: 'text',
                         baseUrl: 'https://' + req.headers.host,
-                        greeting: 'Welcome to The Speaker\'s Studio!',
+                        greeting: 'Welcome to Coach Yourself!',
                         body: body,
                         action: 'https://' + req.headers.host + '/app',
                         actionText: 'Log In Now',
                         afterAction: `
-                            <p>If you have any questions about how to use the app, do not hesitate to reach out to me. You can use the "Request a feature" or "Report a Bug" options in the App Menu to send your feedback, or you can respond directly to this email.</p>
-
-                            <p>Be excellent to each other, and party on.</p>
-
-                            <p>Sincerely,</p>
-
-                            <p>Shauvon McGill, creator.</p>
+                            <p>If you have any questions about how to use the app, do not hesitate to reach out to us. You can respond directly to this email to connect with us.</p>
                         `
                     }
                 }, (error, response) => {

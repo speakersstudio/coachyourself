@@ -15,7 +15,6 @@ export const API = {
 
     charge: '/charge',
     signup: '/signup',
-    packageConfig: '/packageConfig',
 
     package: '/api/package',
     materials: '/api/material',

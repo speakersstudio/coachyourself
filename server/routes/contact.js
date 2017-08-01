@@ -5,7 +5,7 @@ const util = require('../util');
 
 const emailUtil = require('../email'),
     ContactModel = require('../models/contact.model'),
-    contactGreeting = 'Dear Proprietors of <span>improv</span><strong>plus</strong>,';
+    contactGreeting = 'Dear creators of Coach Yourself,';
 
 router.post('/featurerequest', function(req, res) {
   
@@ -23,11 +23,11 @@ router.post('/featurerequest', function(req, res) {
         let sendObject = {
             from: email,
             fromName: name,
-            subject: 'ImprovPlus Feature Request',
+            subject: 'Coach Yourself Feature Request',
             content: {
                 type: 'text',
                 greeting: contactGreeting,
-                body: '<p>In order to make ImprovPlus even more awesome...</p>' + body,
+                body: '<p>In order to make Coach Yourself even more awesome...</p>' + body,
                 afterAction: '<p></p><p>Sincerely,</p><p>' + name + '</p><p>' + email + '</p><p>User ID: ' + req.user._id + '</p>'
             }
         }
@@ -73,8 +73,9 @@ router.post('/bugreport', function(req, res) {
     }).then(data => {
         let sendObject = {
             from: email,
+            to: 'shauvon.mcgill@gmail.com',
             fromName: name,
-            subject: 'ImprovPlus Bug Report',
+            subject: 'Coach Yourself Bug Report',
             content: {
                 type: 'text',
                 baseUrl: 'https://' + req.get('host'),

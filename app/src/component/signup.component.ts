@@ -20,8 +20,6 @@ import { ShrinkAnim, DialogAnim } from '../util/anim.util';
 
 import { BracketCardDirective } from '../directive/bracket-card.directive';
 
-import { PackageConfig } from '../model/config';
-
 declare var Stripe: any;
 
 @Component({
@@ -41,6 +39,9 @@ export class SignupComponent implements OnInit {
     email: string;
     password: string;
     userName: string;
+    title: string;
+    company: string;
+    country: string = 'United States';
 
     isPosting: boolean = false;
 
@@ -65,7 +66,8 @@ export class SignupComponent implements OnInit {
     ngOnInit(): void {
 
         if (this.userService.isLoggedIn()) {
-            this.router.navigate(['/app/dashboard'], {replaceUrl: true});
+            this.router.navigate(['dashboard'], {replaceUrl: true});
+            return;
         }
 
         this._service.getPackages().then(packages => {
@@ -76,8 +78,6 @@ export class SignupComponent implements OnInit {
     }
 
     setup(): void {
-
-        this._app.showBackground(true);
 
         this.creditCard = this.stripeService.setupStripe(e => {
             this.cardComplete = e.complete;
@@ -148,7 +148,16 @@ export class SignupComponent implements OnInit {
     }
 
     private _signup(token?: any): void {
-        this._service.signup(this.email, this.password, this.userName, token)
+        let user = new User();
+        user.email = this.email;
+        user.password = this.password;
+        user.firstName = (this.userName + ' ').split(' ')[0];
+        user.lastName = (this.userName + ' ').split(' ')[0];
+        user.title = this.title;
+        user.company = this.company;
+        user.country = this.country;
+
+        this._service.signup(user, token)
             .then(user => {
                 this._app.hideLoader();
                 if (user && user.email) {
@@ -169,7 +178,7 @@ export class SignupComponent implements OnInit {
         if (msg.error && msg.error == 'email already exists') {
             this.emailError = "That email address is already registered.";
         } else if (msg.error) {
-            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by emailing awesomedesk@thespeakers-studio.com.', 'Okay bye', null, true);
+            this._app.dialog('An error has occurred.', 'We are so sorry. Something happened, and we can\'t be sure what. Please try again, and if this keeps happening, reach out to us by contacting awesomedesk@thespeakers-studio.com.', 'Okay bye', null, true);
         }
     }
 

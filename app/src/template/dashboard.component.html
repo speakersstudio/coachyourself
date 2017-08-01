@@ -1,0 +1,24 @@
+<div class="page">
+
+    <div class="banner">
+        <h1>Dashboard</h1>
+        <h2>Welcome to the Coach Yourself App</h2>
+    </div>
+
+    <dashboard-message-list></dashboard-message-list>
+
+    <div class="card-list">
+
+        <div routerLink="/materials" class="card brackets clickable" *ngIf="userService.can('material_page_view')">
+            <h4>Files</h4>
+            <p>Browse and download your content.</p>
+        </div>
+
+        <div routerLink="/videos" class="card brackets clickable" *ngIf="userService.can('video_page_view')">
+            <h4>Videos</h4>
+            <p>Browse examples, lessons, tips and tricks, and other exciting video content.</p>
+        </div>
+
+    </div>
+
+</div>

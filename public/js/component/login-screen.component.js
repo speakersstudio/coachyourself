@@ -20,12 +20,15 @@ var LoginScreenComponent = (function () {
         this.userService = userService;
     }
     LoginScreenComponent.prototype.ngOnInit = function () {
+        var _this = this;
         if (this.userService.getLoggedInUser()) {
-            this.router.navigate(['/app/dashboard']);
+            this.router.navigate(['dashboard']);
         }
         else {
-            this._app.showBackground(true);
-            this._app.login();
+            // the timeout here will help avoid a "value changed after it was checked" error
+            setTimeout(function () {
+                _this._app.login();
+            });
         }
     };
     LoginScreenComponent = __decorate([

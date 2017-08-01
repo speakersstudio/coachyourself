@@ -58,20 +58,8 @@ var AppComponent = (function () {
         var _this = this;
         this.hideLoader();
         this.router.events.filter(function (event) { return event instanceof router_1.NavigationStart; }).subscribe(function (event) {
-            _this.backgroundVisible = true;
-            _this.backgroundRequested = false;
             _this.closeOverlays();
-            if (event.url.indexOf('/app') > -1) {
-                _this.inApp = true;
-            }
-            else {
-                _this.inApp = false;
-            }
-        });
-        this.router.events.filter(function (event) { return event instanceof router_1.NavigationEnd; }).subscribe(function (event) {
-            if (!_this.backgroundRequested) {
-                _this.backgroundVisible = false;
-            }
+            _this.mobileNavShown = false;
         });
         this.setUser(this.userService.getLoggedInUser());
         this.userSubscription = this.userService.loginState$.subscribe(function (user) {
@@ -79,13 +67,12 @@ var AppComponent = (function () {
                 // we just logged in
                 var path_1 = [];
                 if (_this._service.getRedirect()) {
-                    path_1.push('app');
                     _this._service.getRedirect().forEach(function (segment) {
                         path_1.push(segment.path);
                     });
                 }
                 else {
-                    path_1.push('app/dashboard');
+                    path_1.push('dashboard');
                 }
                 setTimeout(function () {
                     _this.router.navigate(path_1, { replaceUrl: true });
@@ -132,13 +119,6 @@ var AppComponent = (function () {
     AppComponent.prototype.hideLoader = function () {
         this.loaderVisible = false;
         this.showBackdrop = false;
-    };
-    AppComponent.prototype.showBackground = function (show) {
-        var _this = this;
-        this.backgroundRequested = true;
-        setTimeout(function () {
-            _this.backgroundVisible = show;
-        }, 50);
     };
     AppComponent.prototype.showWhiteBrackets = function (show) {
         this.whiteBrackets = show;
@@ -248,11 +228,11 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.handleLogin = function (user) {
         this.closeOverlays();
-        if (!user) {
-            // this.router.navigate(['/']);
+        if (user) {
+            this.router.navigate(['/dashboard']);
         }
-        else if (this.inApp || this.router.url == '/login') {
-            this.router.navigate(['/app']);
+        else {
+            this.router.navigate(['/signup']);
         }
     };
     AppComponent.prototype.logout = function () {

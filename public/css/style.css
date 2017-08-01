@@ -953,7 +953,7 @@ button,
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 0;
+  z-index: -1;
   transition: z-index 1ms 1s; }
   .dialog-container.show {
     z-index: 500;
@@ -1265,7 +1265,7 @@ label.icon-choice .form-switch {
 
 nav {
   position: relative;
-  z-index: 5000;
+  z-index: 10;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -1282,6 +1282,12 @@ nav {
     font-weight: 400;
     flex-grow: 1;
     margin: 0; }
+  nav .menu-trigger {
+    display: none; }
+  nav .menu {
+    display: flex;
+    align-items: center;
+    height: 100%; }
   nav .nav-item {
     font-size: 12px;
     text-transform: uppercase;
@@ -1303,6 +1309,51 @@ nav {
       color: rgba(26, 26, 26, 0.7); }
     nav .nav-item.active {
       color: #017c8b; }
+  @media only screen and (max-width: 500px) {
+    nav {
+      padding: 20px;
+      position: static; }
+      nav h1 {
+        font-size: 13px;
+        opacity: 1;
+        max-width: 100%;
+        overflow: hidden;
+        transition: max-width 500ms, opacity 400ms; }
+      nav .menu-trigger {
+        display: block;
+        color: #606060; }
+        nav .menu-trigger .fa {
+          margin: 8px; }
+      nav .menu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 100%;
+        z-index: 5000;
+        background: #FFFFFF;
+        flex-direction: column;
+        height: auto;
+        transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1), left 500ms;
+        will-change: box-shadow;
+        overflow: hidden; }
+      nav .nav-item {
+        border-bottom: 1px solid rgba(96, 96, 96, 0.5);
+        width: 100%;
+        margin: 0;
+        text-align: center;
+        line-height: 74px;
+        box-sizing: border-box;
+        opacity: 0;
+        transition: opacity 400ms; }
+      nav.show-nav h1 {
+        max-width: 0;
+        opacity: 0; }
+      nav.show-nav .menu {
+        left: 70px;
+        box-shadow: 0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12); }
+      nav.show-nav .nav-item {
+        opacity: 1; } }
 
 .card-list {
   display: flex;
@@ -1323,6 +1374,10 @@ nav {
     .card-list .card.full {
       max-width: 100%;
       width: 100%; }
+    @media only screen and (max-width: 500px) {
+      .card-list .card.small {
+        max-width: 100%;
+        width: 100%; } }
   .card-list .paper-label {
     width: 100%; }
   .card-list.span3 .card {
@@ -1553,21 +1608,30 @@ nav {
 
 footer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
   box-sizing: border-box;
-  height: 74px;
-  margin-top: -74px;
+  height: 213px;
+  margin-top: -213px;
   padding: 25px 80px;
   font-size: 13px;
   background-color: #000000;
-  color: #FFFFFF; }
+  color: #FFFFFF;
+  position: relative;
+  z-index: 2; }
+  footer .footer-nav {
+    background-color: transparent;
+    display: flex;
+    margin: 20px 0; }
   footer a {
     color: #ffa70f;
+    text-transform: uppercase;
     text-decoration: none;
-    cursor: pointer;
-    text-transform: uppercase; }
+    margin: 0 16px;
+    letter-spacing: 2px; }
+  footer > span {
+    margin: 25px 0; }
 
 login .login-form {
   max-width: 350px; }
@@ -1846,7 +1910,37 @@ user .user-form {
   min-height: calc(100vh - 74px);
   box-sizing: border-box;
   position: relative;
-  padding: 25px 80px 99px; }
+  padding: 25px 80px 238px; }
+  @media only screen and (max-width: 500px) {
+    .page {
+      padding-left: 16px;
+      padding-right: 16px; } }
+  .page .banner {
+    background: #FFFFFF;
+    padding: 80px;
+    color: #000000;
+    position: relative;
+    overflow: hidden;
+    margin: -25px -80px 50px; }
+    .page .banner:after {
+      display: block;
+      width: 100%;
+      content: "";
+      position: absolute;
+      top: 100%;
+      right: 0;
+      left: 0;
+      height: 50px;
+      box-shadow: 1px 2px 30px rgba(0, 0, 0, 0.3); }
+    .page .banner h1 {
+      font-size: 2.8em;
+      text-transform: uppercase;
+      letter-spacing: 0.159em;
+      font-weight: 400;
+      font-family: "futura-pt"; }
+    .page .banner h2 {
+      margin: 25px 0 0 0;
+      font-size: 1.2em; }
   .page .paper-label {
     font-size: 16px;
     padding: 16px;
@@ -1894,7 +1988,8 @@ user .user-form {
     will-change: box-shadow; }
     @media only screen and (max-width: 500px) {
       .page .paper {
-        margin: 0 0 16px; } }
+        margin: 0 0 16px;
+        padding: 0; } }
     .page .paper.list {
       padding: 0; }
     .page .paper > .content {
@@ -2005,26 +2100,7 @@ marketing-toolbar .toolbar {
 signup .page {
   box-sizing: border-box;
   position: relative;
-  z-index: 4;
-  padding: 74px 0 74px 0; }
-
-signup .blackbox {
-  background: #FFFFFF;
-  padding: 80px;
-  position: relative;
-  z-index: 5;
-  color: #000000;
-  box-shadow: 1px 2px 30px rgba(0, 0, 0, 0.3) inset;
-  margin-bottom: 50px; }
-  signup .blackbox h1 {
-    font-size: 2.8em;
-    text-transform: uppercase;
-    letter-spacing: 0.159em;
-    font-weight: 400;
-    font-family: "futura-pt"; }
-  signup .blackbox h2 {
-    margin: 25px 0 0 0;
-    font-size: 1.2em; }
+  z-index: 4; }
 
 signup .payment-info {
   max-width: 500px;
