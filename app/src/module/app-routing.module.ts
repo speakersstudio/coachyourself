@@ -11,6 +11,7 @@ import { ChangePasswordComponent } from '../component/change-password.component'
 import { AuthGuard } from '../service/auth-guard.service';
 import { DashboardComponent } from "../component/dashboard.component";
 import { MaterialsLibraryComponent } from "../component/materials-library.component";
+import { LessonsLibraryComponent } from "../component/lessons-library.component";
 import { UnauthorizedComponent } from "../component/unauthorized.component";
 import { ContactComponent } from "../component/contact.component";
 import { UserComponent } from '../component/user.component';
@@ -70,6 +71,13 @@ const routes: Routes = [
                 component: MaterialsLibraryComponent,
                 data: {
                     action: 'material_page_view'
+                }
+            },
+            {
+                path: 'lessons',
+                component: LessonsLibraryComponent,
+                data: {
+                    action: 'lesson_page_view'
                 }
             },
             {

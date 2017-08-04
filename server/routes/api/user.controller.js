@@ -10,9 +10,7 @@ const   mongoose = require('mongoose'),
 
         Subscription = require('../../models/subscription.model'),
         User = require('../../models/user.model'),
-        Team = require('../../models/team.model'),
         Purchase = require('../../models/purchase.model'),
-        Invite = require('../../models/invite.model'),
         HistoryModel = require('../../models/history.model');
 
 module.exports = {

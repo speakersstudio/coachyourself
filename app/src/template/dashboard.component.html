@@ -14,6 +14,11 @@
             <p>Browse and download your content.</p>
         </div>
 
+        <div routerLink="/lessons" class="card brackets clickable" *ngIf="userService.can('lesson_page_view')">
+            <h4>Lessons</h4>
+            <p>Listen to these expertly crafted guides.</p>
+        </div>
+
         <div routerLink="/videos" class="card brackets clickable" *ngIf="userService.can('video_page_view')">
             <h4>Videos</h4>
             <p>Browse examples, lessons, tips and tricks, and other exciting video content.</p>

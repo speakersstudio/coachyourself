@@ -25,6 +25,7 @@ import { UserComponent } from '../component/user.component';
 import { LegalComponent } from "../component/legal.component";
 import { AdminComponent } from '../component/admin.component';
 import { VideosComponent } from '../component/videos.component';
+import { LessonsLibraryComponent } from '../component/lessons-library.component';
 
 // sub-views
 import { MaterialsPageView } from '../view/materials-page.view';
@@ -40,6 +41,7 @@ import { UserService } from "../service/user.service";
 import { AppService } from '../service/app.service';
 import { StripeService } from '../service/stripe.service';
 import { LibraryService } from "../service/library.service";
+import { LessonService } from '../service/lesson.service';
 import { AuthGuard } from "../service/auth-guard.service";
 import { HistoryService } from '../service/history.service';
 
@@ -83,6 +85,7 @@ import { InfiniteScrollDirective } from '../directive/infinite-scroll.directive'
         LegalComponent,
         AdminComponent,
         VideosComponent,
+        LessonsLibraryComponent,
         
         NotFoundComponent,
         
@@ -90,18 +93,6 @@ import { InfiniteScrollDirective } from '../directive/infinite-scroll.directive'
         EditableMetadataView,
         DashboardMessageListView
     ],
-    // exports: [
-    //     LogoView,
-    //     LoginView,
-    //     UserFormView,
-    //     LegalView,
-    //     FormInputDirective,
-    //     BracketCardDirective,
-    //     DraggableDirective,
-    //     DroppableDirective,
-    //     FormSwitchDirective,
-    //     InfiniteScrollDirective
-    // ],
     bootstrap: [ AppComponent ],
     providers: [
         PathLocationStrategy,
@@ -110,6 +101,7 @@ import { InfiniteScrollDirective } from '../directive/infinite-scroll.directive'
         UserService,
         StripeService,
         LibraryService,
+        LessonService,
         AuthGuard,
         HistoryService
     ]

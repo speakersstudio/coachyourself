@@ -95,9 +95,16 @@ exports.API = {
     teamMaterials: function (teamId) {
         return this.getTeam(teamId) + "/materials";
     },
-    team: '/api/team',
-    getTeam: function (teamId) {
-        return this.team + "/" + teamId;
+    lessons: '/api/lesson',
+    getDashboardLessons: '/api/lesson/dashboard',
+    getLesson: function (id) {
+        return this.lessons + "/" + id;
+    },
+    lessonVersion: function (id) {
+        return this.getLesson(id) + "/version";
+    },
+    getLessonVersion: function (id, versionId) {
+        return this.getLesson(id) + "/version/" + versionId;
     },
     getMaterial: function (id) {
         return this.materials + "/" + id;

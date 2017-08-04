@@ -106,9 +106,17 @@ export const API = {
         return `${this.getTeam(teamId)}/materials`;
     },
 
-    team: '/api/team',
-    getTeam: function(teamId: string): string {
-        return `${this.team}/${teamId}`;
+    lessons: '/api/lesson',
+    getDashboardLessons: '/api/lesson/dashboard',
+    getLesson: function(id: string): string {
+        return `${this.lessons}/${id}`
+    },
+
+    lessonVersion: function(id: string): string {
+        return `${this.getLesson(id)}/version`
+    },
+    getLessonVersion: function(id: string, versionId: string): string {
+        return `${this.getLesson(id)}/version/${versionId}`;
     },
 
     getMaterial: function(id: string): string {

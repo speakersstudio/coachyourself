@@ -28,6 +28,7 @@ var user_component_1 = require("../component/user.component");
 var legal_component_1 = require("../component/legal.component");
 var admin_component_1 = require("../component/admin.component");
 var videos_component_1 = require("../component/videos.component");
+var lessons_library_component_1 = require("../component/lessons-library.component");
 // sub-views
 var materials_page_view_1 = require("../view/materials-page.view");
 var editable_metadata_view_1 = require("../view/editable-metadata.view");
@@ -41,6 +42,7 @@ var user_service_1 = require("../service/user.service");
 var app_service_1 = require("../service/app.service");
 var stripe_service_1 = require("../service/stripe.service");
 var library_service_1 = require("../service/library.service");
+var lesson_service_1 = require("../service/lesson.service");
 var auth_guard_service_1 = require("../service/auth-guard.service");
 var history_service_1 = require("../service/history.service");
 var form_input_directive_1 = require("../directive/form-input.directive");
@@ -85,23 +87,12 @@ var AppModule = (function () {
                 legal_component_1.LegalComponent,
                 admin_component_1.AdminComponent,
                 videos_component_1.VideosComponent,
+                lessons_library_component_1.LessonsLibraryComponent,
                 not_found_component_1.NotFoundComponent,
                 materials_page_view_1.MaterialsPageView,
                 editable_metadata_view_1.EditableMetadataView,
                 dashboard_message_list_view_1.DashboardMessageListView
             ],
-            // exports: [
-            //     LogoView,
-            //     LoginView,
-            //     UserFormView,
-            //     LegalView,
-            //     FormInputDirective,
-            //     BracketCardDirective,
-            //     DraggableDirective,
-            //     DroppableDirective,
-            //     FormSwitchDirective,
-            //     InfiniteScrollDirective
-            // ],
             bootstrap: [app_component_1.AppComponent],
             providers: [
                 common_1.PathLocationStrategy,
@@ -110,6 +101,7 @@ var AppModule = (function () {
                 user_service_1.UserService,
                 stripe_service_1.StripeService,
                 library_service_1.LibraryService,
+                lesson_service_1.LessonService,
                 auth_guard_service_1.AuthGuard,
                 history_service_1.HistoryService
             ]

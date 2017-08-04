@@ -7,6 +7,7 @@ const ops     = {
         "package": require('./package.controller'),
         "subscription": require('./subscription.controller'),
         "material": require('./material-item.controller'),
+        "lesson": require('./lesson.controller'),
         "purchase": require('./purchase.controller'),
         "history": require('./history.controller')
     };

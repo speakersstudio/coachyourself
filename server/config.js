@@ -19,7 +19,8 @@ module.exports = function () {
             },
             s3_buckets: {
                 materials: 'coachyourself.dev.materials',
-                backups: 'coachyourself.backups'
+                backups: 'coachyourself.backups',
+                lessons: 'coachyourself.lessons'
             },
             pdftkPath: 'C:\\Program Files (x86)\\PDFtk Server\\bin\\pdftk.exe',
             port: 1919,
@@ -43,7 +44,8 @@ module.exports = function () {
             },
             s3_buckets: {
                 materials: 'coachyourself.materials',
-                backups: 'coachyourself.backups'
+                backups: 'coachyourself.backups',
+                lessons: 'coachyourself.lessons'
             },
             port: process.env.PORT || 5000,
             saltRounds: 10

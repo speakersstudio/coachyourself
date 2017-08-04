@@ -47,9 +47,11 @@ router.use('/api', api);
 
 // DOWNLOAD MATERIALS
 let materialCtrl = require('./api/material-item.controller'),
-    packageCtrl = require('./api/package.controller');
-router.get('/download/:token', materialCtrl.download);
-router.get('/downloadPackage/:token', packageCtrl.download);
+    packageCtrl = require('./api/package.controller'),
+    lessonCtrl = require('./api/lesson.controller');
+router.get('/download/material/:token', materialCtrl.download);
+router.get('/download/package/:token', packageCtrl.download);
+router.get('/download/lesson/:token', lessonCtrl.download);
 
 
 // MAIN HOME PAGE HTML

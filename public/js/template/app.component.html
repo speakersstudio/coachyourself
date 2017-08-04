@@ -16,6 +16,11 @@
             *ngIf="userService.can('material_page_view')">
             <span>Files</span>
         </a>
+        
+        <a routerLink="/lessons" routerLinkActive="active" class="nav-item"
+            *ngIf="userService.can('lesson_page_view')">
+            <span>Lessons</span>
+        </a>
 
         <a routerLink="/videos" routerLinkActive="active" class="nav-item"
             *ngIf="userService.can('video_page_view')">
@@ -53,7 +58,7 @@
 </div>
 
 <div class="toast" (click)="hideToast()">
-    <span [@bubble] *ngIf="toastMessage">{{toastMessage}}</span>
+    <span [@shrinkVertical] *ngIf="toastMessage">{{toastMessage}}</span>
 </div>
 
 <login [show]="showLogin" (done)="handleLogin($event)" class="dialog-container show" *ngIf="showLogin"></login>
@@ -67,8 +72,7 @@
     <div class="footer-nav">
         <!-- <a routerLink="/legal" *ngIf="user">Legal stuff</a> -->
         <a *ngIf="user" routerLink="/user" routerLinkActive="active">Your Account</a>
-        <a routerLink="/contact/reportbug" routerLinkActive="active"
-            *ngIf="userService.can('contact_page_view')">
+        <a routerLink="/contact/reportbug" routerLinkActive="active" *ngIf="user">
             <span>Report a Bug</span>
         </a>
         <a href="http://katebringardner.com">KateBringardner.com</a>

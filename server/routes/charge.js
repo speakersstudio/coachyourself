@@ -14,11 +14,9 @@ let userController = require('./api/user.controller'),
     roles = require('../roles');
 
 let User = require('../models/user.model'),
-    Team = require('../models/team.model'),
     Package = require('../models/package.model'),
     Purchase = require('../models/purchase.model'),
     Subscription = require('../models/subscription.model'),
-    Invite = require('../models/invite.model'),
     HistoryModel = require('../models/history.model');
 
 

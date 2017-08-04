@@ -2,9 +2,7 @@ const   mongoose = require('mongoose'),
         bcrypt = require('bcrypt'),
         Promise = require('bluebird'),
 
-        Team = require('../../models/team.model'),
-        User = require('../../models/user.model'),
-        Note = require('../../models/note.model');
+        User = require('../../models/user.model');
 
 module.exports = {
 
@@ -28,20 +26,6 @@ module.exports = {
         'birthday'
     ],
 
-    TEAM_WHITELIST: [
-        'email',
-        'name',
-        'company',
-        'phone',
-        'address',
-        'city',
-        'state',
-        'zip',
-        'country',
-        'url',
-        'description'
-    ],
-
     findUser: (key, select, populate) => {
         if (!key) {
             return Promise.reject('no id or email');
@@ -49,7 +33,7 @@ module.exports = {
 
         let query = User.findOne({})
             .select(module.exports.USER_WHITELIST.join(' ') + 
-            ' subscription preferences invites memberOfTeams adminOfTeams role dateAdded dateModified superAdmin locked dateLoggedIn ' + select);
+            ' subscription preferences role dateAdded dateModified superAdmin locked dateLoggedIn ' + select);
 
         // catch a mongoose ObjectID, which looks like a string but isn't really
         if (typeof(key) == 'object' && key.toString) {
@@ -63,17 +47,6 @@ module.exports = {
         }
 
         query.populate('preferences')
-            .populate({
-                path: 'invites',
-                populate: {
-                    path: 'team user',
-                    select: 'name firstName lastName'
-                },
-                match: {
-                    accepted: false,
-                    dateDeleted: null
-                }
-            })
             .populate({
                 path: 'subscription',
                 select: '-stripeCustomerId'
@@ -94,114 +67,6 @@ module.exports = {
 
             //     return Promise.resolve(user);
             // });
-    },
-    
-    findTeam: (teamId, select, populate) => {
-        let promise = Team.findOne({}).where('_id').equals(teamId)
-            .populate({
-                path: 'admins members',
-                select: '-password',
-                populate: {
-                    path: 'subscription',
-                    select: '-stripeCustomerId'
-                }
-            })
-            .populate({
-                path: 'subscription',
-                select:'-stripeCustomerId',
-                populate: {
-                    path: 'invites',
-                    match: {
-                        accepted: false,
-                        dateDeleted: undefined
-                    }
-                }
-            });
-
-        if (select) {
-            promise.select(select);
-        }
-
-        if (populate) {
-            promise.populate(populate);
-        }
-
-        return promise.exec();
-    },
-
-    findNotes: (noteId, user, gameId, metadataIds, tagIds) => {
-
-        let userOr = []
-        
-        // if (!user.superAdmin) {
-            userOr.push({addedUser: user._id});
-
-            if (user.actions.indexOf('note_public_view') > -1) {
-                userOr.push({public: true});
-            }
-
-            if (user.actions.indexOf('note_team_view') > -1) {
-                let teams = [].concat(user.memberOfTeams, user.adminOfTeams);
-                userOr.push({teams: { $in: teams }});
-            }
-        // }
-
-        let query;
-
-        if (noteId) {
-            query = Note.findOne({});
-            query.where('_id').equals(noteId);
-        } else {
-            query = Note.find({});
-        }
-
-        let whereOr = [],
-            and = [];
-
-        if (gameId) {
-            whereOr.push({game: gameId});
-        }
-        if (metadataIds && metadataIds.length) {
-            whereOr.push({metadata: {$in: metadataIds}});
-        }
-        if (tagIds && tagIds.length) {
-            whereOr.push({tag: { $in: tagIds }});
-        }
-
-        if (userOr.length) {
-            and.push({ $or: userOr });
-        }
-
-        if (whereOr.length) {
-            and.push({ $or: whereOr })
-        }
-
-        if (and && and.length) {
-            query = query.and(and);
-        }
-
-        return query
-            .where('dateDeleted').equals(null)
-            .populate({
-                path: 'teams',
-                select: 'name'
-            })
-            .populate({
-                path: 'tag',
-                select: 'name description games'
-            })
-            .populate({
-                path: 'metadata',
-                select: 'name description type games'
-            })
-            .populate({
-                path: 'addedUser',
-                select: 'firstName lastName'
-            })
-            .populate({
-                path: 'modifiedUser',
-                select: 'firstName lastName'
-            })
-            .exec();
     }
+        
 }

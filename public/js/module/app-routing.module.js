@@ -14,6 +14,7 @@ var change_password_component_1 = require("../component/change-password.componen
 var auth_guard_service_1 = require("../service/auth-guard.service");
 var dashboard_component_1 = require("../component/dashboard.component");
 var materials_library_component_1 = require("../component/materials-library.component");
+var lessons_library_component_1 = require("../component/lessons-library.component");
 var unauthorized_component_1 = require("../component/unauthorized.component");
 var contact_component_1 = require("../component/contact.component");
 var user_component_1 = require("../component/user.component");
@@ -70,6 +71,13 @@ var routes = [
                 component: materials_library_component_1.MaterialsLibraryComponent,
                 data: {
                     action: 'material_page_view'
+                }
+            },
+            {
+                path: 'lessons',
+                component: lessons_library_component_1.LessonsLibraryComponent,
+                data: {
+                    action: 'lesson_page_view'
                 }
             },
             {

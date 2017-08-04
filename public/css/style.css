@@ -191,6 +191,9 @@ em {
 strong {
   font-weight: bold; }
 
+audio {
+  width: 100%; }
+
 .light {
   font-weight: 300; }
 
@@ -991,9 +994,8 @@ button,
 
 .toast {
   position: fixed;
-  right: 0;
-  bottom: 48px;
-  left: 0;
+  top: 99px;
+  right: 80px;
   z-index: 500;
   display: flex;
   justify-content: center; }

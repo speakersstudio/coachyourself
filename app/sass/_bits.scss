@@ -960,7 +960,7 @@ button,
 }
 
 .toast {
-    @include fixed(null, 0, $large * 2, 0, 500);
+    @include fixed(($toolbar-height + $page-padding-v), $page-padding-h, null, null, 500);
     display: flex;
     justify-content: center;
 

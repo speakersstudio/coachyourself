@@ -129,7 +129,7 @@
     </div>
 
 
-    <!-- Material Item List -->
+    <!-- Package List -->
     <div class="paper has-brackets" *ngIf="selectedTab == 'packages' && !selectedPackage">
 
         <div class="content">
@@ -257,6 +257,119 @@
         </div>
 
     </div>
+
+
+    <!-- Lesson List -->
+    <div class="paper has-brackets" *ngIf="selectedTab == 'lessons' && !selectedLesson">
+
+        <div class="content">
+
+            <h4 class="right">All of the Lessons</h4>
+
+            <div class="card-list">
+
+                <div class="card small clickable blue"
+                    *ngFor="let lesson of lessons"
+                    (click)="selectLesson(lesson)">
+
+                    <div class="top">
+                        <i *ngIf="lesson.versions[0] && lesson.versions[0].extension == 'mp3'" class="fa fa-file-audio-o" title="MP3"></i>
+                        <h3>{{lesson.name}}</h3>
+                    </div>
+                    <div class="body">
+                        <p>{{lesson.description}}</p>
+                        <ul class="taglist grey">
+                            <li *ngIf="!lesson.visible"><i class="fa fa-eye-slash"></i> Hidden!</li>
+                            <li>{{lesson.versions.length}} version(s)</li>
+                        </ul>
+                    </div>
+                    <!--<div class="action">
+                        <a href="#" class="button">Download</a>
+                    </div>-->
+                </div>
+
+                <div class="card small clickable blue" (click)="createLesson()">
+                    <div class="top">
+                        <i class="fa fa-plus"></i>
+                        <h3>Create New</h3>
+                    </div>
+                    <div class="body">
+                        <p>Create a new Lesson</p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Edit Lesson -->
+    <div class="paper has-brackets" *ngIf="selectedLesson">
+
+        <div class="content">
+
+            <input name="name" formInput [(ngModel)]="selectedLesson.name" type="text" placeholder="Name" />
+
+            <textarea name="description" formInput placeholder="Description" [(ngModel)]="selectedLesson.description" rows="4"></textarea>
+
+            <div class="columns">
+                <label class="checkbox">
+                    <input type="checkbox" class="inline-block" name="visible" [checked]="selectedLesson.visible" (change)="selectedLesson.visible = !selectedLesson.visible" />
+                    Visible?
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" class="inline-block" name="visible" [checked]="selectedLesson.showOnDashboard" (change)="selectedLesson.showOnDashboard = !selectedLesson.showOnDashboard" />
+                    Show on the Dashboard?
+                </label>
+            </div>
+
+            <div class="section right">
+                <div class="button" (click)="deleteLesson()">Delete</div>
+                <div class="button raised" (click)="saveLesson()">Save</div>
+            </div>
+
+            <div class="section">
+
+                <h5>Versions</h5>
+
+                <div class="columns data-row centered" *ngIf="!selectedLesson.versions.length">
+                    <span><em>None!</em></span>
+                </div>
+
+                <div class="columns data-row centered" *ngFor="let version of selectedLesson.versions">
+                    <span class="fit">{{version.ver}}</span>
+                    
+                    <span>{{version.description || 'No description'}}</span>
+
+                    <span class="fit nowrap">{{simpleDate(version.dateAdded)}}</span>
+
+                    <span class="fit"><i class="fa fa-close clickable" (click)="deleteLessonVersion(version)"></i></span>
+                </div>
+
+                <div class="section columns centered">
+                    <label class="fit">
+                        Version
+                        <input name="ver" [(ngModel)]="newVersion.ver" type="text" placeholder="Ver" />
+                    </label>
+
+                    <label>Description
+                        <textarea name="description" [(ngModel)]="newVersion.description" rows="2"></textarea>
+                    </label>
+
+                    <label class="fit">File
+                        <input type="file" (change)="lessonFileChange()" #lessonVersionFileInput name="newVersionFile" />
+                    </label>
+                </div>
+
+                <div class="section right">
+                    <div class="button raised" (click)="saveLessonVersion()">Add Version</div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
 
     <!-- History List -->
     <div class="paper has-brackets" *ngIf="selectedTab == 'history'">

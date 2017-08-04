@@ -1,0 +1,62 @@
+
+<div class="page">
+
+    <div class="banner">
+        <h1>Lessons</h1>
+        <h2>Listen to these expertly crafted guides.</h2>
+    </div>
+
+    <div class="paper">
+        <div class="content">
+
+            <div class="card-list" *ngIf="lessons.length">
+
+                <div class="card small clickable blue"
+                    *ngFor="let lesson of lessons"
+                    (click)="selectLesson(lesson)">
+
+                    <div class="top">
+                        <i *ngIf="lesson.versions[0]" class="fa fa-audio-file-o" title="{{lesson.versions[0].extension}}"></i>
+                        <h3>{{lesson.name}}</h3>
+                    </div>
+                    <div class="body">
+                        <p>{{lesson.description}}</p>
+                        <ul class="taglist grey">
+                            <li class="dull">{{versionTag(lesson)}}</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <p *ngIf="!lessons.length">You don't have access to any Lessons.</p>
+
+        </div>
+    </div>
+
+</div>
+
+<!-- dialog that shows the lesson content -->
+<div class="dialog-container" [class.show]="selectedLesson && lessonUrl">
+    <div class="dialog-dismiss" (click)="selectLesson(null)"></div>
+
+    <div class="dialog invite-form" *ngIf="selectedLesson && lessonUrl" [@dialog]="'default'">
+
+            <div class="dialog-content">
+                <h2>{{selectedLesson.name}}</h2>
+                
+                <p>{{selectedLesson.description}}</p>
+
+                <audio controls preload="auto" autoplay>
+                    <source src="{{lessonUrl}}" type="{{getMimeType(selectedLesson)}}">
+                    Your browser does not support embedded audio. Please visit this app with Microsoft Edge, or Google Chrome.
+                </audio>
+
+            </div>
+
+            <div class="button-group">
+                <a (click)="selectLesson(null)" class="button">Cancel</a>
+            </div>
+
+    </div>
+</div>

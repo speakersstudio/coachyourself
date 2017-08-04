@@ -9,12 +9,14 @@ import { TabData } from '../model/tab-data';
 
 import { AppService } from '../service/app.service';
 import { LibraryService } from '../service/library.service';
+import { LessonService } from '../service/lesson.service';
 import { HistoryService } from '../service/history.service';
 
 import { Subscription } from '../model/subscription';
 import { Package } from '../model/package';
 import { MaterialItem, MaterialItemVersion } from '../model/material-item';
 import { HistoryModel } from '../model/history';
+import { Lesson, LessonVersion } from '../model/lesson';
 
 import { UserService } from '../service/user.service';
 
@@ -34,6 +36,7 @@ import { DialogAnim } from '../util/anim.util';
 export class AdminComponent implements OnInit {
 
     @ViewChild('versionFileInput') versionFileInput: ElementRef;
+    @ViewChild('lessonVersionFileInput') versionFileInputLesson: ElementRef;
 
     tabs: TabData[] = [
         {
@@ -47,6 +50,11 @@ export class AdminComponent implements OnInit {
             icon: 'book'
         },
         {
+            name: 'Lessons',
+            id: 'lessons',
+            icon: 'microphone'
+        },
+        {
             name: 'History',
             id: 'history',
             icon: 'history'
@@ -56,6 +64,9 @@ export class AdminComponent implements OnInit {
 
     materialItems: MaterialItem[];
     selectedMaterial: MaterialItem;
+
+    lessons: Lesson[];
+    selectedLesson: Lesson;
 
     newVersion: MaterialItemVersion;
     newVersionFile: File;
@@ -81,6 +92,7 @@ export class AdminComponent implements OnInit {
         private router: Router,
         private _service: AppService,
         private libraryService: LibraryService,
+        private lessonService: LessonService,
         private userService: UserService,
         private historyService: HistoryService,
         private http: AppHttp
@@ -113,6 +125,7 @@ export class AdminComponent implements OnInit {
     ngOnInit(): void {
         this.showMaterials();
         this.showPackages();
+        this.showLessons();
         this.getHistory();
     }
 
@@ -121,6 +134,7 @@ export class AdminComponent implements OnInit {
 
         this.selectedMaterial = null;
         this.selectedPackage = null;
+        this.selectedLesson = null;
     }
 
     back(): void {
@@ -149,6 +163,13 @@ export class AdminComponent implements OnInit {
             .then(packages => {
                 this.packages = packages;
             })
+    }
+
+    showLessons(): void {
+        this.lessonService.getAllLessons()
+            .then(lessons => {
+                this.lessons = lessons;
+            });
     }
 
     getHistory(): void {
@@ -265,6 +286,12 @@ export class AdminComponent implements OnInit {
         this.selectedPackageDescription = p.description.join('\n');
     }
 
+    selectLesson(lesson: Lesson): void {
+        this.newVersion = new LessonVersion();
+        this.selectedLesson = lesson;
+        this.selectedTab = null;
+    }
+
     createMaterial(): void {
         this.libraryService.createMaterial().then(m => {
             this.materialItems.push(m);
@@ -277,6 +304,13 @@ export class AdminComponent implements OnInit {
             this.packages.push(p);
             this.selectPackage(p);
         })
+    }
+
+    createLesson(): void {
+        this.lessonService.createLesson().then(l => {
+            this.lessons.push(l);
+            this.selectLesson(l);
+        });
     }
 
     saveMaterial(): void {
@@ -302,6 +336,12 @@ export class AdminComponent implements OnInit {
         });
     }
 
+    saveLesson(): void {
+        this.lessonService.saveLesson(this.selectedLesson).then(() => {
+            this._app.toast('It is done.');
+        });
+    }
+
     fileChange(): void {
         let fileInput = this.versionFileInput.nativeElement;
         this.newVersionFile = fileInput.files[0];
@@ -316,6 +356,23 @@ export class AdminComponent implements OnInit {
     deleteVersion(version: MaterialItemVersion): void {
         this.libraryService.deleteVersion(this.selectedMaterial._id, version).then(m => {
             this.selectedMaterial.versions = m.versions;
+        })
+    }
+
+    lessonFileChange(): void {
+        let fileInput = this.versionFileInputLesson.nativeElement;
+        this.newVersionFile = fileInput.files[0];
+    }
+
+    saveLessonVersion(): void {
+        this.lessonService.postNewVersion(this.selectedLesson._id, this.newVersion, this.newVersionFile).then(l => {
+            this.selectedLesson.versions = l.versions;
+        });
+    }
+
+    deleteLessonVersion(version: MaterialItemVersion): void {
+        this.lessonService.deleteVersion(this.selectedLesson._id, version).then(l => {
+            this.selectedLesson.versions = l.versions;
         })
     }
 
@@ -347,6 +404,7 @@ export class AdminComponent implements OnInit {
                 this.materialItems.splice(index, 1);
             }
             this.selectedMaterial = null;
+            this.selectedTab = 'materials';
             this._app.hideLoader();
         });
     }
@@ -359,6 +417,20 @@ export class AdminComponent implements OnInit {
                 this.packages.splice(index, 1);
             }
             this.selectedPackage = null;
+            this.selectedTab = 'packages';
+            this._app.hideLoader();
+        });
+    }
+
+    deleteLesson(): void {
+        this._app.showLoader();
+        this.lessonService.deleteLesson(this.selectedLesson).then(() => {
+            let index = Util.indexOfId(this.lessons, this.selectedLesson);
+            if (index > -1) {
+                this.lessons.splice(index, 1);
+            }
+            this.selectedLesson = null;
+            this.selectedTab = 'lessons';
             this._app.hideLoader();
         });
     }

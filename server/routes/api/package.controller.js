@@ -104,7 +104,7 @@ module.exports = {
                         }, config.token);
 
                         res.json({
-                            url: '/downloadPackage/' + token
+                            url: '/download/package/' + token
                         });
 
                     } else {

@@ -78,6 +78,9 @@ module.exports = {
                 'material_page_view',
                 'material_view', // download material items that you own
 
+                'lesson_page_view',
+                'lesson_view',
+
                 'coach_page_view', // hire a facilitation coach
                 'coach_contact_send' // send a request to hire a facilitation coach
             ]
@@ -118,6 +121,10 @@ module.exports = {
                 'material_edit',
                 'material_create',
                 'material_delete',
+
+                'lesson_edit',
+                'lesson_create',
+                'lesson_delete',
 
                 'package_edit',
                 'package_create',

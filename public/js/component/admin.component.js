@@ -14,19 +14,22 @@ var router_1 = require("@angular/router");
 var app_component_1 = require("../component/app.component");
 var app_service_1 = require("../service/app.service");
 var library_service_1 = require("../service/library.service");
+var lesson_service_1 = require("../service/lesson.service");
 var history_service_1 = require("../service/history.service");
 var material_item_1 = require("../model/material-item");
+var lesson_1 = require("../model/lesson");
 var user_service_1 = require("../service/user.service");
 var time_util_1 = require("../util/time.util");
 var app_http_1 = require("../data/app-http");
 var util_1 = require("../util/util");
 var anim_util_1 = require("../util/anim.util");
 var AdminComponent = (function () {
-    function AdminComponent(_app, router, _service, libraryService, userService, historyService, http) {
+    function AdminComponent(_app, router, _service, libraryService, lessonService, userService, historyService, http) {
         this._app = _app;
         this.router = router;
         this._service = _service;
         this.libraryService = libraryService;
+        this.lessonService = lessonService;
         this.userService = userService;
         this.historyService = historyService;
         this.http = http;
@@ -40,6 +43,11 @@ var AdminComponent = (function () {
                 name: 'Packages',
                 id: 'packages',
                 icon: 'book'
+            },
+            {
+                name: 'Lessons',
+                id: 'lessons',
+                icon: 'microphone'
             },
             {
                 name: 'History',
@@ -76,12 +84,14 @@ var AdminComponent = (function () {
     AdminComponent.prototype.ngOnInit = function () {
         this.showMaterials();
         this.showPackages();
+        this.showLessons();
         this.getHistory();
     };
     AdminComponent.prototype.selectTab = function (tab) {
         this.selectedTab = tab.id;
         this.selectedMaterial = null;
         this.selectedPackage = null;
+        this.selectedLesson = null;
     };
     AdminComponent.prototype.back = function () {
         this.selectedMaterial = null;
@@ -106,6 +116,13 @@ var AdminComponent = (function () {
         this.libraryService.getAllPackages()
             .then(function (packages) {
             _this.packages = packages;
+        });
+    };
+    AdminComponent.prototype.showLessons = function () {
+        var _this = this;
+        this.lessonService.getAllLessons()
+            .then(function (lessons) {
+            _this.lessons = lessons;
         });
     };
     AdminComponent.prototype.getHistory = function () {
@@ -206,6 +223,11 @@ var AdminComponent = (function () {
         this.selectedTab = null;
         this.selectedPackageDescription = p.description.join('\n');
     };
+    AdminComponent.prototype.selectLesson = function (lesson) {
+        this.newVersion = new lesson_1.LessonVersion();
+        this.selectedLesson = lesson;
+        this.selectedTab = null;
+    };
     AdminComponent.prototype.createMaterial = function () {
         var _this = this;
         this.libraryService.createMaterial().then(function (m) {
@@ -218,6 +240,13 @@ var AdminComponent = (function () {
         this.libraryService.createPackage().then(function (p) {
             _this.packages.push(p);
             _this.selectPackage(p);
+        });
+    };
+    AdminComponent.prototype.createLesson = function () {
+        var _this = this;
+        this.lessonService.createLesson().then(function (l) {
+            _this.lessons.push(l);
+            _this.selectLesson(l);
         });
     };
     AdminComponent.prototype.saveMaterial = function () {
@@ -242,6 +271,12 @@ var AdminComponent = (function () {
             _this._app.toast('It is done.');
         });
     };
+    AdminComponent.prototype.saveLesson = function () {
+        var _this = this;
+        this.lessonService.saveLesson(this.selectedLesson).then(function () {
+            _this._app.toast('It is done.');
+        });
+    };
     AdminComponent.prototype.fileChange = function () {
         var fileInput = this.versionFileInput.nativeElement;
         this.newVersionFile = fileInput.files[0];
@@ -256,6 +291,22 @@ var AdminComponent = (function () {
         var _this = this;
         this.libraryService.deleteVersion(this.selectedMaterial._id, version).then(function (m) {
             _this.selectedMaterial.versions = m.versions;
+        });
+    };
+    AdminComponent.prototype.lessonFileChange = function () {
+        var fileInput = this.versionFileInputLesson.nativeElement;
+        this.newVersionFile = fileInput.files[0];
+    };
+    AdminComponent.prototype.saveLessonVersion = function () {
+        var _this = this;
+        this.lessonService.postNewVersion(this.selectedLesson._id, this.newVersion, this.newVersionFile).then(function (l) {
+            _this.selectedLesson.versions = l.versions;
+        });
+    };
+    AdminComponent.prototype.deleteLessonVersion = function (version) {
+        var _this = this;
+        this.lessonService.deleteVersion(this.selectedLesson._id, version).then(function (l) {
+            _this.selectedLesson.versions = l.versions;
         });
     };
     AdminComponent.prototype.doBackup = function () {
@@ -287,6 +338,7 @@ var AdminComponent = (function () {
                 _this.materialItems.splice(index, 1);
             }
             _this.selectedMaterial = null;
+            _this.selectedTab = 'materials';
             _this._app.hideLoader();
         });
     };
@@ -299,6 +351,20 @@ var AdminComponent = (function () {
                 _this.packages.splice(index, 1);
             }
             _this.selectedPackage = null;
+            _this.selectedTab = 'packages';
+            _this._app.hideLoader();
+        });
+    };
+    AdminComponent.prototype.deleteLesson = function () {
+        var _this = this;
+        this._app.showLoader();
+        this.lessonService.deleteLesson(this.selectedLesson).then(function () {
+            var index = util_1.Util.indexOfId(_this.lessons, _this.selectedLesson);
+            if (index > -1) {
+                _this.lessons.splice(index, 1);
+            }
+            _this.selectedLesson = null;
+            _this.selectedTab = 'lessons';
             _this._app.hideLoader();
         });
     };
@@ -381,6 +447,10 @@ var AdminComponent = (function () {
         core_1.ViewChild('versionFileInput'),
         __metadata("design:type", core_1.ElementRef)
     ], AdminComponent.prototype, "versionFileInput", void 0);
+    __decorate([
+        core_1.ViewChild('lessonVersionFileInput'),
+        __metadata("design:type", core_1.ElementRef)
+    ], AdminComponent.prototype, "versionFileInputLesson", void 0);
     AdminComponent = __decorate([
         core_1.Component({
             moduleId: module.id,
@@ -392,6 +462,7 @@ var AdminComponent = (function () {
             router_1.Router,
             app_service_1.AppService,
             library_service_1.LibraryService,
+            lesson_service_1.LessonService,
             user_service_1.UserService,
             history_service_1.HistoryService,
             app_http_1.AppHttp])
