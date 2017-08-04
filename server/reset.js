@@ -28,10 +28,6 @@ if (!mongoose.connection.readyState) {
 
 const backuptime = 1496284211374;
 const   databases = {
-        'Invite': {
-            time: backuptime,
-            model: InviteModel
-        },
         'MaterialItem': {
             time: backuptime,
             model: MaterialItem
@@ -51,10 +47,6 @@ const   databases = {
         'Subscription': {
             time: backuptime,
             model: Subscription
-        },
-        'Team': {
-            time: backuptime,
-            model: Team
         },
         'User': {
             time: backuptime,
@@ -76,51 +68,6 @@ const   databases = {
         'History': {
             time: backuptime,
             model: HistoryModel
-        },
-        'GameMetadata': {
-            time: backuptime,
-            model: GameMetadata
-        },
-        'Game': {
-            time: backuptime,
-            model: Game,
-            seed: (timestamp) => {
-                return doSeed('Game', timestamp, (data) => {
-                    data.forEach(item => {
-                        if (item.tags.length && item.tags[0].tag) {
-                            let newTags = [];
-                            item.tags.forEach(taggame => {
-                                newTags.push(taggame.tag);
-                                HistoryModel.create({
-                                    user: taggame.addedUser,
-                                    date: taggame.dateAdded,
-                                    action: 'game_tag_add',
-                                    target: item._id,
-                                    reference: taggame.tag
-                                });
-                            });
-                            item.tags = newTags;
-                        }
-                    })
-                    return data;
-                });
-            }
-        },
-        'Name': {
-            time: backuptime,
-            model: Name
-        },
-        'NameVote': {
-            time: backuptime,
-            model: NameVote
-        },
-        'Note': {
-            time: backuptime,
-            model: Note
-        },
-        'Tag': {
-            time: backuptime,
-            model: Tag
         }
     };
 
