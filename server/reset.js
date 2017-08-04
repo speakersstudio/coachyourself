@@ -12,22 +12,13 @@ const charge = require('./routes/charge'),
     util = require('./util');
 
 const Contact = require('./models/contact.model.js');
-const InviteModel = require('./models/invite.model');
 const Subscription = require('./models/subscription.model');
 const Purchase = require('./models/purchase.model');
 const User = require('./models/user.model');
-const Team = require('./models/team.model');
 const MaterialItem = require('./models/material-item.model');
 const Package = require('./models/package.model');
 const Preference = require('./models/preference.model');
 const HistoryModel = require('./models/history.model');
-
-const Game = require('./models/game.model'),
-    GameMetadata = require('./models/game-metadata.model'),
-    NameVote = require('./models/name-vote.model'),
-    Name = require('./models/name.model'),
-    Note = require('./models/note.model'),
-    Tag = require('./models/tag.model');
 
     
 mongoose.Promise = Promise;
